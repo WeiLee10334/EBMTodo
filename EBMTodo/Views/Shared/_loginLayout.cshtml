@@ -1,0 +1,81 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>EBM TODO</title>
+    <meta name="keywords" content="RIS" />
+    <meta name="description" content="EBM US RIS">
+    <meta name="author" content="Wei">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
+
+    <!-- Theme CSS -->
+    <!--<link rel="stylesheet" type="text/css" href="~/Content/assets/skin/default_skin/css/theme.css">-->
+    <link href="~/Content/vendor/skin/default_skin/css/theme.css" rel="stylesheet" />
+    <!-- Admin Forms CSS -->
+    <link href="~/Content/admin-forms.css" rel="stylesheet" />
+    <!-- Favicon -->
+    @*<link rel="shortcut icon" href="~/Content/assets/img/favicon.ico">*@
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+     <![endif]-->
+
+    <!-- jQuery -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ajax")
+    @Scripts.Render("~/bundles/jqueryui")
+
+</head>
+
+<body class="external-page sb-l-c sb-r-c">
+
+    @RenderBody()
+
+
+    <!-- BEGIN: PAGE SCRIPTS -->
+
+
+    <!-- CanvasBG Plugin(creates mousehover effect) -->
+    <script src="~/Content/vendor/canvasbg/canvasbg.js"></script>
+
+    <!-- Theme Javascript -->
+    <script src="~/Scripts/vendor/utility/utility.js"></script>
+    <script src="~/Scripts/vendor/demo/demo.js"></script>
+    <script src="~/Scripts/vendor/main.js"></script>
+
+    <!-- Page Javascript -->
+    <script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    "use strict";
+
+    // Init Theme Core
+    Core.init();
+
+    // Init Demo JS
+    //Demo.init();
+
+    // Init CanvasBG and pass target starting location
+    CanvasBG.init({
+      Loc: {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 3.3
+      },
+    });
+
+  });
+    </script>
+
+    <!-- END: PAGE SCRIPTS -->
+
+</body>
+
+</html>

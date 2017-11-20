@@ -1,0 +1,21 @@
+﻿@model DateTime?
+@if (Model.HasValue)
+{ 
+    @Html.TextBox("", Model.Value.ToString("yyyy/MM/dd HH:mm:ss"), new { @class = "form-control DateTimePicker" })
+}
+else
+{
+    @Html.TextBox("",DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") , new { @class = " DateTimePicker form-control" }) 
+}
+
+<script>
+    $('.DateTimePicker').datetimepicker({
+        //hourGrid: 4,
+        //minuteGrid: 10,
+        //timeFormat: 'hh:mm tt'
+        timeFormat: 'HH:mm:ss',
+        stepHour: 2,
+        stepMinute: 10,
+        stepSecond: 10
+    });
+</script>

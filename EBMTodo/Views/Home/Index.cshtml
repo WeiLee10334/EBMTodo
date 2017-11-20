@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+<div class="row">
+    <div class="col-md-3 col-lg-3" style="border-right:1px solid #808080">
+        <div id="MyWorking">
+            @{
+                Html.RenderAction("MyWork", "Home");
+            }
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4" style="border-right:1px solid #808080">
+        <div id="Working_Form">
+            @{
+                Html.RenderAction("Create", "Home");
+            }
+        </div>
+    </div>
+    
+    <div class="col-md-5 col-lg-5">
+        <div id="Working_List">
+            @{
+                Html.RenderAction("WorkList", "Home");
+            }
+        </div>
+    </div>
+
+</div>
+
+
+

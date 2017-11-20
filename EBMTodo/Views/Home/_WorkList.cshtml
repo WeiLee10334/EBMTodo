@@ -1,0 +1,64 @@
+﻿@model IEnumerable<EBMTodo.Models.Todo.EBMProjectWorking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "";
+}
+<h4>Record</h4>
+<hr />
+<table class="table" id="TB_workList">
+    <thead>
+        <tr>
+            
+            <th>
+               專案
+            </th>
+            <th>
+                時間
+            </th>
+            <th>
+              內容
+            </th>
+            <th>
+             時數
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EBMProject.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WokingHour)
+                </td>
+                <td>
+                    @Ajax.ActionLink("Delete", "Delete", "Home", new { area = "", id = item.PWID },
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "Working_List"
+            }, new { id = "ajax_Delete" + item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<script>
+
+    $(document).ready(function () {
+        var table = $('#TB_workList').DataTable();
+    });
+</script>

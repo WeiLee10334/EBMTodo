@@ -1,0 +1,58 @@
+ #GYNE2 {
+    display: none;
+}
+#table2 {
+    display: none;
+}
+
+.navbar-default {
+    background-color: #208EC3;
+    margin: 0px;
+}
+
+.navbar-brand img {
+    width: 150px;
+}
+
+.nav {
+    padding: 0 0 0 -100px;
+}
+
+.navbar-right > li > span {
+    font-size: 15px;
+    color: #fff;
+}
+
+.col-md-3 p {
+    text-align: center;
+    width: 180px;
+    border-right: 1px solid #B1B1B1;
+    margin: 5px 0 5px 0;
+    height: 40px;
+    line-height: 40px;
+}
+
+.col-md-9 p {
+    padding: 0 0 0 0;
+    margin: 5px 0 5px -50px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.col-md-2 {
+    padding: 0 0 0 30px;
+    width: 180px;
+}
+
+.btn-default.active {
+    color: #fff;
+    background-color: #208EC3;
+}
+
+.li span {
+    float: left;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+    height: 50px;
+}

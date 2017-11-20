@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/imanges/EBM_Logo.ico" />
+    <title>EBM Pathology EDU</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    <link href="~/Scripts/dataTable/DataTables-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/ajax")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/dataTable/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
+</head>
+<body style="background-color:#D1DCDC">
+    @{
+        if (ViewContext.RouteData.GetRequiredString("action") == "Login")
+        {
+            <div style="margin-left:15px;margin-right:15px">
+                @RenderBody()
+            </div>
+        }
+        else
+        {
+            <div class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("EBM TODO", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    @Html.Partial("_Menu")
+                </div>
+            </div>
+            <div class="container body-content">
+                <section class="content-header">
+                    @{
+
+            string nowController = (HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"] ?? "").ToString();
+                string nowAction = (HttpContext.Current.Request.RequestContext.RouteData.Values["Action"] ?? "").ToString();
+                string nowArea = (HttpContext.Current.Request.RequestContext.RouteData.DataTokens["Area"] ?? "").ToString();
+                    }
+                    <ol class="breadcrumb" style="color:#706868;background-color:#C7C6C6">
+                        <li>@nowController</li>
+                        <li class="active"> @nowAction</li>
+                    </ol>
+                </section>
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - EBM TODO</p>
+                </footer>
+            </div>
+        }
+    }
+</body>
+@RenderSection("scripts", required: false)
+</html>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<EBMTodo.Models.Todo.EBMProjectWorking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="TB_workList">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EBMProject.ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WokingHour)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EBMProject.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WokingHour)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PWID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.PWID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PWID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+
+    $(document).ready(function () {
+        var table = $('#TB_workList').DataTable();
+    });
+</script>

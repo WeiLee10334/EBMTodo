@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EBMTodo.Models.ViewModel.TodoListViewModel>
+
+<h4>MyWork</h4>
+<hr />
+<table class="table"  id="TB_Todo">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompleteRate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompleteRate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+    //$(document).ready(function () {
+    //    var table = $('#TB_Todo').DataTable();
+    //});
+</script>

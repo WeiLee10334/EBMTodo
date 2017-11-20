@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+}
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("首頁", "Index", "Home")</li>
+        <li>@Html.ActionLink("歷史紀錄", "Index", "EBMProjectWorkings")</li>
+        @{
+            if (User.IsInRole("AccountManage"))
+            {
+                <li>@Html.ActionLink("帳戶管理", "Index", "UsersAdmin")</li>
+            }
+            if (User.IsInRole("UnitManage"))
+            {
+                <li>@Html.ActionLink("組織單位", "Index", "RBUnits", new { area = "" }, null)</li>
+            }
+            if (User.IsInRole("GroupManage"))
+            {
+                <li>@Html.ActionLink("群組管理", "Index", "GroupsAdmin", new { area = "" }, null)</li>
+            }
+            <li>@Html.ActionLink("專案管理", "Index", "EBMProjects", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("專案人員", "Index", "EBMProjectMembers", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("專案工作清單", "Index", "EBMProjectTodoLists", new { area = "" }, null)</li>
+
+        }
+    </ul>
+    @Html.Partial("_LoginPartial")
+</div>
+

@@ -1,0 +1,143 @@
+﻿@using EBMTodo.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "EBM Pathology EDU";
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
+}
+
+<!-- Start: Main -->
+<div id="main" class="animated fadeIn">
+
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
+
+        <!-- begin canvas animation bg -->
+        <div id="canvas-wrapper">
+            <canvas id="demo-canvas"></canvas>
+        </div>
+
+        <!-- Begin: Content -->
+        <section id="content">
+
+            <div class="admin-form theme-info" id="login1">
+
+                <div class="row mb15 table-layout">
+
+                    <div class="col-xs-6 va-m pln">
+                        <span style="color:white; font-size:larger">
+                            <img src="~/Content/imanges/EBM_Logo.ico " title=" EBM US RIS logo" class="img-responsive w50" style="display:inline">
+                            EBM TODO
+                        </span>
+                    </div>
+
+                    <div class="col-xs-6 text-right va-b pr5">
+                        <div class="login-links">
+                            @*<a href="#" class="active" title="Sign In">Sign In</a>*@
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="panel panel-info mt10 br-n">
+
+
+                    <!-- end .form-header section -->
+                    @using (Html.BeginForm("login", "account", new { returnurl = ViewBag.returnurl }, FormMethod.Post, new { role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="panel-body bg-light p30">
+                            <div class="row">
+                                <div class="col-sm-7 pr30">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="section">
+                                        <label for="username" class="field-label text-muted fs18 mb10">Username</label>
+                                        <label for="username" class="field prepend-icon">
+                                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                            <label for="username" class="field-icon">
+                                                <i class="fa fa-user"></i>
+                                            </label>
+                                        </label>
+
+                                    </div>
+                                    <!-- end section -->
+
+                                    <div class="section">
+                                        <label for="username" class="field-label text-muted fs18 mb10">Password</label>
+                                        <label for="password" class="field prepend-icon">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            <label for="password" class="field-icon">
+                                                <i class="fa fa-lock"></i>
+                                            </label>
+                                        </label>
+                                    </div>
+                                    <!-- end section -->
+
+                                </div>
+                                @*<div class="col-sm-5 br-l br-grey pl30">
+                                        <h3 class="mb25"> EBM US RIS </h3>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span>
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> Unlimited Photo Sharing/Storage
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> Unlimited Downloads
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> Unlimited Service Tickets
+                                        </p>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <!-- end .form-body section -->
+                        <div class="panel-footer clearfix p10 ph15">
+                            <button type="submit" class="button btn-primary mr10 pull-right">Sign In</button>
+
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            @Html.CheckBoxFor(a => a.IsADUser)
+                            @Html.LabelFor(a => a.IsADUser)
+                            @*<label class="switch ib switch-primary pull-left input-align mt10">
+
+                                    <input type="checkbox" name="remember" id="remember" checked>
+                                    <label for="remember" data-on="YES" data-off="NO"></label>
+                                    <span>Remember me</span>
+                                </label>*@
+                        </div>
+                        <!-- end .form-footer section -->
+                    }
+                </div>
+            </div>
+
+        </section>
+        <!-- End: Content -->
+
+    </section>
+    <!-- End: Content-Wrapper -->
+
+</div>
+<!-- End: Main -->
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Init CanvasBG and pass target starting location
+    CanvasBG.init({
+      Loc: {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 3.3
+      },
+    });
+
+  });
+</script>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
