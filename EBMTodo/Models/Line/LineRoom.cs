@@ -9,17 +9,17 @@ using System.Runtime.Serialization;
 namespace EBMTodo.Models.Todo
 {
     [DataContract(Namespace = "")]
-    [Table("Line_Group")]
-    public partial class LineGroup
+    [Table("Line_Room")]
+    public partial class LineRoom
     {
-        public LineGroup()
+        public LineRoom()
         {
             CreateDateTime = DateTime.Now;
         }
 
         [Key]
         [StringLength(128)]
-        public string GroupID { get; set; }
+        public string RoomID { get; set; }
 
       
         [DataMember(Order = 2)]

@@ -31,6 +31,11 @@ namespace EBMTodo.Models.Todo
 
         [DataMember(Order = 3)]
         [StringLength(100)]
+        [Display(Name = "工作項目")]
+        public string Target { set; get; }
+
+        [DataMember(Order = 3)]
+        [StringLength(100)]
         [DataType(DataType.MultilineText)]
         [Display(Name = "工作內容")]
         public string Description { set; get; }
@@ -43,7 +48,14 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "型態")]
         public WorkingType workingType { set; get; }
 
-        
+        [DataMember(Order = 6)]
+        [Display(Name = "回報時間")]
+        public DateTime RecordDateTime { set; get; }
+
+        [DataMember(Order = 7)]
+        [StringLength(128)]
+        [Display(Name = "LINE UID")]
+        public string LineUID { set; get; }
 
         [Required(AllowEmptyStrings =true)]
         public string Id { set; get; }

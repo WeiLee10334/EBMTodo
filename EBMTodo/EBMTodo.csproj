@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="LineBot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LineBotSDK.0.5.9\lib\net45\LineBot.dll</HintPath>
     </Reference>
@@ -181,6 +185,8 @@
     <Compile Include="Areas\Line\Controllers\ConversationCollectionController.cs" />
     <Compile Include="Areas\Line\Controllers\RDCICController.cs" />
     <Compile Include="Areas\Line\LineAreaRegistration.cs" />
+    <Compile Include="Areas\Wei\Controllers\RDCICController.cs" />
+    <Compile Include="Areas\Wei\WeiAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EBMProjectMembersController.cs" />
     <Compile Include="Controllers\EBMProjects1Controller.cs" />
@@ -223,12 +229,26 @@
     <Compile Include="Migrations\201711140956265_target4.Designer.cs">
       <DependentUpon>201711140956265_target4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711161616485_target5.cs" />
+    <Compile Include="Migrations\201711161616485_target5.Designer.cs">
+      <DependentUpon>201711161616485_target5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711161626553_target6.cs" />
+    <Compile Include="Migrations\201711161626553_target6.Designer.cs">
+      <DependentUpon>201711161626553_target6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711201531140_target7.cs" />
+    <Compile Include="Migrations\201711201531140_target7.Designer.cs">
+      <DependentUpon>201711201531140_target7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Base\Enum\CommandType.cs" />
     <Compile Include="Models\Base\Enum\CommandStatus.cs" />
     <Compile Include="Models\Base\Enum\ParticipantLevel.cs" />
     <Compile Include="Models\Base\Enum\WorkingType.cs" />
     <Compile Include="Models\Base\Enum\UserManage.cs" />
+    <Compile Include="Models\Line\LineRoom.cs" />
+    <Compile Include="Models\Line\LineUser.cs" />
     <Compile Include="Models\Line\LineGroup.cs" />
     <Compile Include="Models\Line\LineCommand.cs" />
     <Compile Include="Models\ViewModel\LineWebhookModels.cs" />
@@ -256,6 +276,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Elmah.Errors\ElmahErrors.txt" />
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\admin-forms.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -486,7 +508,9 @@
     <Content Include="Content\vendor\skin\default_skin\less\theme_settings.less" />
     <Content Include="Content\vendor\skin\default_skin\less\theme_variables.less" />
     <Content Include="Areas\Line\Views\web.config" />
+    <Content Include="Areas\Wei\Views\web.config" />
     <None Include="Properties\PublishProfiles\EBMEMRLineBot - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ebmLineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ebmLineBot - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ebmtodo.pubxml" />
     <None Include="Properties\PublishProfiles\EDUZIP.pubxml" />
@@ -711,9 +735,10 @@
     <Content Include="Views\Home\_MyWork.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Line\Models\" />
     <Folder Include="Areas\Line\Views\Shared\" />
+    <Folder Include="Areas\Wei\Models\" />
+    <Folder Include="Areas\Wei\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -734,6 +759,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711140956265_target4.resx">
       <DependentUpon>201711140956265_target4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711161616485_target5.resx">
+      <DependentUpon>201711161616485_target5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711161626553_target6.resx">
+      <DependentUpon>201711161626553_target6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711201531140_target7.resx">
+      <DependentUpon>201711201531140_target7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

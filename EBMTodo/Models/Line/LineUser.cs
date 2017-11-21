@@ -9,17 +9,17 @@ using System.Runtime.Serialization;
 namespace EBMTodo.Models.Todo
 {
     [DataContract(Namespace = "")]
-    [Table("Line_Group")]
-    public partial class LineGroup
+    [Table("Line_User")]
+    public partial class LineUser
     {
-        public LineGroup()
+        public LineUser()
         {
             CreateDateTime = DateTime.Now;
         }
 
         [Key]
         [StringLength(128)]
-        public string GroupID { get; set; }
+        public string UID { get; set; }
 
       
         [DataMember(Order = 2)]
@@ -27,11 +27,10 @@ namespace EBMTodo.Models.Todo
         public DateTime CreateDateTime { set; get; }
 
 
-        [Display(Name = "群組名稱")]
+        [Display(Name = "UserName")]
         [StringLength(200)]
         public string Name { get; set; }
 
-        //public CommandType CommandType { get; set; }
-        //public CommandStatus CommandStatus { get; set; }
+
     }
 }

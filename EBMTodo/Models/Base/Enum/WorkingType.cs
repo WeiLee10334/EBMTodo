@@ -7,10 +7,10 @@ namespace EBMTodo.Models.Base.Enum
 {
     public enum WorkingType
     {
-        開發 = 0,
-        會議 = 1,
-        外出 = 2,
-        維護 = 3
+        一般 =1,
+        加班 = 2,
+        公出 = 3,
+        急Call = 4
 
     }
 }

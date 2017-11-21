@@ -54,6 +54,11 @@ namespace EBMTodo.Models.Todo
         [StringLength(2000)]
         public string Message { get; set; }
 
+
+        [Display(Name = "指定人")]
+        [StringLength(100)]
+        public string assignUserName { get; set; }
+
         [StringLength(128)]
         public string ReplyToken { get; set; }
         [StringLength(50)]
