@@ -56,6 +56,9 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -188,6 +191,9 @@
     <Compile Include="Areas\Wei\Controllers\RDCICController.cs" />
     <Compile Include="Areas\Wei\WeiAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\BaseController.cs" />
+    <Compile Include="Controllers\Api\EBMPWorkingController.cs" />
+    <Compile Include="Controllers\Api\Models\QueryModel.cs" />
     <Compile Include="Controllers\EBMProjectMembersController.cs" />
     <Compile Include="Controllers\EBMProjects1Controller.cs" />
     <Compile Include="Controllers\EBMProjectsController.cs" />
@@ -251,6 +257,7 @@
     <Compile Include="Models\Line\LineUser.cs" />
     <Compile Include="Models\Line\LineGroup.cs" />
     <Compile Include="Models\Line\LineCommand.cs" />
+    <Compile Include="Controllers\Api\Models\EBMPWorkingViewModel.cs" />
     <Compile Include="Models\ViewModel\LineWebhookModels.cs" />
     <Compile Include="Models\ViewModel\ReplyBody.cs" />
     <Compile Include="Models\TODO\EBMProjectTodoList.cs" />
@@ -739,6 +746,7 @@
     <Folder Include="Areas\Line\Views\Shared\" />
     <Folder Include="Areas\Wei\Models\" />
     <Folder Include="Areas\Wei\Views\Shared\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
