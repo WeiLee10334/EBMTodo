@@ -10,6 +10,10 @@ namespace EBMTodo.Controllers.Api.Models
     {
         public Guid PWID { set; get; }
 
+        public string PID { set; get; }
+
+        public string ProjectName { set; get; }
+
         public string Target { set; get; }
 
         public string Description { set; get; }
@@ -24,6 +28,16 @@ namespace EBMTodo.Controllers.Api.Models
 
         public string WorkerName { set; get; }
 
-        public string ProjectName { set; get; }
+    }
+    public class EBMPWorkingGroupByTime
+    {
+        public string TimeRange { set; get; }
+        public List<EBMMemberViewModel> List { set; get; }
+    }
+    public class EBMPWorkingGroupByUID
+    {
+        public string LineUID { set; get; }
+        public string WorkerName { set; get; }
+        public List<EBMMemberViewModel> List { set; get; }
     }
 }

@@ -4,46 +4,50 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<form class="form-inline">
+<form class="form-inline" id="query-form">
     <div class="form-group">
-        <label for="staticEmail2" class="sr-only">Email</label>
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
+        <label for="start">StartDate</label>
+        <input type="date" class="form-control" name="start" id="start" placeholder="StartDate">
     </div>
-    <div class="form-group mx-sm-3">
-        <label for="inputPassword2" class="sr-only">Password</label>
-        <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+    <div class="form-group">
+        <label for="end">EndDate</label>
+        <input type="date" class="form-control" name="end" id="end" placeholder="EndDate">
     </div>
-    <button type="submit" class="btn btn-primary">Confirm identity</button>
+    <div class="form-group">
+        <label for="member">Member</label>
+        <select name="UID" class="form-control" id="member" multiple="multiple">
+            @foreach (var item in ViewBag.memberList)
+            {
+                <option value="@item.UID">@item.Name</option>
+            }        
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="project">Project</label>
+        <select name="PID" class="form-control" id="project" multiple="multiple">
+            @foreach (var item in ViewBag.projectList)
+            {
+                <option value="@item.PID">@item.ProjectName</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
 </form>
 <hr />
-<table class="table table-bordered" id="TB_workList">
-
-
-</table>
-@*public Guid PWID { set; get; }
-
-    public string Target { set; get; }
-
-    public string Description { set; get; }
-
-    public decimal WokingHour { set; get; }
-
-    public string workingType { set; get; }
-
-    public DateTime RecordDateTime { set; get; }
-
-    public string LineUID { set; get; }
-
-    public string WorkerName { set; get; }
-
-    public string ProjectName { set; get; }*@
+<table class="table table-responsive" id="TB_workList"></table>
 <script>
     $(document).ready(function () {
         var table = $('#TB_workList').DataTable({
-            data: @Html.Raw(ViewBag.jsonData),
+            ajax: {
+                url: '/api/ebmpworking/getDataByTime',
+                contentType: "application/json",
+                type: 'GET',
+                dataSrc: "",
+                data: function (d) {
+                    console.log($('#query-form').serialize());
+                    return $('#query-form').serialize();
+                }
+            },
             columns: [
                 { data: "WorkerName", title: "LastName" },
                 { data: "ProjectName", title: "專案名稱" },
@@ -52,19 +56,11 @@
                 { data: "WokingHour", title: "工作時數" }
             ]
         });
-        // Apply the search
-        table.columns().every(function () {
-            var that = this;
-
-            $('input', this.footer()).on('keyup change', function () {
-                if (that.search() !== this.value) {
-                    that.search(this.value)
-                        .draw();
-                }
-            });
+  
+        $("#query-form").submit(function (e) {
+            e.preventDefault();
+            table.ajax.reload();
+            @*table.ajax.url('@Url.Action("getData")?' + $('#query-form').serialize()).load();*@
         });
     });
-    //$(document).ready(function () {
-    //    var table = $('#TB_workList').DataTable();
-    //});
 </script>

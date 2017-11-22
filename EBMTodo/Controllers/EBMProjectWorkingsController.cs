@@ -18,14 +18,13 @@ namespace EBMTodo.Controllers
     public class EBMProjectWorkingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: EBMProjectWorkings
-        //public async Task<ActionResult> Index()
-        //{
-        //    var eBMProjectWorking = db.EBMProjectWorking.Include(e => e.ApplicationUser).Include(e => e.EBMProject);
-        //    return View(await eBMProjectWorking.ToListAsync());
-        //}
-        public ActionResult Index(DateTime? start, DateTime? end)
+        public ActionResult Index()
+        {
+            ViewBag.memberList = db.LineUser.ToList();
+            ViewBag.projectList = db.EBMProject.ToList();
+            return View();
+        }
+        public ActionResult getData(DateTime? start, DateTime? end, string[] UIDs, string[] PIDs)
         {
             start = start == null ? DateTime.Now.Date.AddDays(-7) : start.Value.Date;
             end = end == null ? DateTime.Now.Date.AddDays(1) : end.Value.Date.AddDays(1);
@@ -34,18 +33,39 @@ namespace EBMTodo.Controllers
                 PWID = x.PWID,
                 Description = x.Description,
                 LineUID = x.LineUID,
+                PID = x.PID.ToString(),
                 ProjectName = x.EBMProject.ProjectName,
                 RecordDateTime = x.RecordDateTime,
                 Target = x.Target,
                 WokingHour = x.WokingHour,
                 workingType = x.workingType.ToString(),
-                WorkerName = x.ApplicationUser.LastName
+                WorkerName = db.LineUser.FirstOrDefault(y => y.UID == x.LineUID).Name
             });
             var query = model.Where(x => x.RecordDateTime >= start && x.RecordDateTime <= end);
+            if (UIDs != null && UIDs.Length > 0)
+            {
+                var id0 = UIDs[0];
+                query = query.Where(x => x.LineUID == id0);
+                for (int i = 1; i < UIDs.Length; i++)
+                {
+                    var id = UIDs[i];
+                    query = query.Union(query.Where(x => x.LineUID == id));
+                }
+            }
+            if (PIDs != null && PIDs.Length > 0)
+            {
+                var id0 = PIDs[0];
+                query = query.Where(x => x.PID == id0);
+                for (int i = 1; i < PIDs.Length; i++)
+                {
+                    var id = UIDs[i];
+                    query = query.Union(query.Where(x => x.PID == id));
+                }
+            }
             var data = query.ToList();
-            ViewBag.jsonData = JsonConvert.SerializeObject(data);
-            return View();
+            return Content(JsonConvert.SerializeObject(data));
         }
+
         // GET: EBMProjectWorkings/Details/5
         public async Task<ActionResult> Details(Guid? id)
         {

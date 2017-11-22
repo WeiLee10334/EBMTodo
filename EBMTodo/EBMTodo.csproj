@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BootstrapMvc.Core, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BootstrapMvc.Core.2.3.0\lib\net451\BootstrapMvc.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
@@ -193,10 +196,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\BaseController.cs" />
     <Compile Include="Controllers\Api\EBMPWorkingController.cs" />
-    <Compile Include="Controllers\Api\Models\EBMPWorkingRepository.cs" />
-    <Compile Include="Controllers\Api\Models\IRepository.cs" />
-    <Compile Include="Controllers\Api\Models\QueryModel.cs" />
-    <Compile Include="Controllers\Api\Services\DataService.cs" />
+    <Compile Include="Controllers\Api\Models\EBMMemberViewModel.cs" />
+    <Compile Include="Controllers\Api\Models\EBMProjectViewModel.cs" />
     <Compile Include="Controllers\EBMProjectMembersController.cs" />
     <Compile Include="Controllers\EBMProjects1Controller.cs" />
     <Compile Include="Controllers\EBMProjectsController.cs" />

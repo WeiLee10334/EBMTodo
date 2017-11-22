@@ -10,7 +10,11 @@ namespace EBMTodo
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/Datatables/jquery.dataTables.min.js"));
+                        "~/Scripts/Datatables/jquery.dataTables.min.js",
+                        "~/Scripts/Datatables/dataTables.buttons.min.js",
+                        "~/Scripts/Datatables/buttons.flash.min.js",
+                        "~/Scripts/Datatables/buttons.html5.min.js",
+                        "~/Scripts/Datatables/buttons.print.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
