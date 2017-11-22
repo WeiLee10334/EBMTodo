@@ -9,7 +9,8 @@ namespace EBMTodo
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/Datatables/jquery.dataTables.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -48,7 +49,8 @@ namespace EBMTodo
               "~/Content/themes/base/datepicker.css",
               "~/Content/themes/base/progressbar.css",
               "~/Content/themes/base/theme.css",
-              "~/Content/themes/jquery-ui-timepicker-addon.css"));
+              "~/Content/themes/jquery-ui-timepicker-addon.css",
+              "~/Content/Datatables/css/jquery.dataTables.min.css"));
         }
     }
 }

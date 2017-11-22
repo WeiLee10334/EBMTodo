@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using EBMTodo.Models;
 using EBMTodo.Models.Todo;
 using Microsoft.AspNet.Identity;
+using EBMTodo.Controllers.Api.Models;
+using Newtonsoft.Json;
 
 namespace EBMTodo.Controllers
 {
@@ -18,12 +20,32 @@ namespace EBMTodo.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: EBMProjectWorkings
-        public async Task<ActionResult> Index()
+        //public async Task<ActionResult> Index()
+        //{
+        //    var eBMProjectWorking = db.EBMProjectWorking.Include(e => e.ApplicationUser).Include(e => e.EBMProject);
+        //    return View(await eBMProjectWorking.ToListAsync());
+        //}
+        public ActionResult Index(DateTime? start, DateTime? end)
         {
-            var eBMProjectWorking = db.EBMProjectWorking.Include(e => e.ApplicationUser).Include(e => e.EBMProject);
-            return View(await eBMProjectWorking.ToListAsync());
+            start = start == null ? DateTime.Now.Date.AddDays(-7) : start.Value.Date;
+            end = end == null ? DateTime.Now.Date.AddDays(1) : end.Value.Date.AddDays(1);
+            var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
+            {
+                PWID = x.PWID,
+                Description = x.Description,
+                LineUID = x.LineUID,
+                ProjectName = x.EBMProject.ProjectName,
+                RecordDateTime = x.RecordDateTime,
+                Target = x.Target,
+                WokingHour = x.WokingHour,
+                workingType = x.workingType.ToString(),
+                WorkerName = x.ApplicationUser.LastName
+            });
+            var query = model.Where(x => x.RecordDateTime >= start && x.RecordDateTime <= end);
+            var data = query.ToList();
+            ViewBag.jsonData = JsonConvert.SerializeObject(data);
+            return View();
         }
-
         // GET: EBMProjectWorkings/Details/5
         public async Task<ActionResult> Details(Guid? id)
         {
@@ -62,7 +84,7 @@ namespace EBMTodo.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            
+
             ViewBag.PID = new SelectList(db.EBMProject, "PID", "ProjectName", eBMProjectWorking.PID);
             return View(eBMProjectWorking);
         }

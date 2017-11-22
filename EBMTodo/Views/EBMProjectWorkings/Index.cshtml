@@ -4,64 +4,67 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table" id="TB_workList">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EBMProject.ProjectName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WokingHour)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EBMProject.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreateDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WokingHour)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.PWID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.PWID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.PWID })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<script>
+<form class="form-inline">
+    <div class="form-group">
+        <label for="staticEmail2" class="sr-only">Email</label>
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
+    </div>
+    <div class="form-group mx-sm-3">
+        <label for="inputPassword2" class="sr-only">Password</label>
+        <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Confirm identity</button>
+</form>
+<hr />
+<table class="table table-bordered" id="TB_workList">
 
+
+</table>
+@*public Guid PWID { set; get; }
+
+    public string Target { set; get; }
+
+    public string Description { set; get; }
+
+    public decimal WokingHour { set; get; }
+
+    public string workingType { set; get; }
+
+    public DateTime RecordDateTime { set; get; }
+
+    public string LineUID { set; get; }
+
+    public string WorkerName { set; get; }
+
+    public string ProjectName { set; get; }*@
+<script>
     $(document).ready(function () {
-        var table = $('#TB_workList').DataTable();
+        var table = $('#TB_workList').DataTable({
+            data: @Html.Raw(ViewBag.jsonData),
+            columns: [
+                { data: "WorkerName", title: "LastName" },
+                { data: "ProjectName", title: "專案名稱" },
+                { data: "RecordDateTime", title: "工作時間" },
+                { data: "Description", title: "工作內容" },
+                { data: "WokingHour", title: "工作時數" }
+            ]
+        });
+        // Apply the search
+        table.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value)
+                        .draw();
+                }
+            });
+        });
     });
+    //$(document).ready(function () {
+    //    var table = $('#TB_workList').DataTable();
+    //});
 </script>
