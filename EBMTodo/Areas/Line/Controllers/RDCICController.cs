@@ -25,6 +25,9 @@ namespace EBMTodo.Areas.Line.Controllers
             string ChannelAccessToken = "JezMOCW65vjOAMH43Hr/lNI/bFUt9gEhXIF1pk4U+X9NknvRG7Fu0LRS9NaJo2uyucCdn+JeJ+a9l/IgrvGXU3eLGOHcwn5ivn5H9ZqZC5qkq4Ek5FbZNwlpB6TMHhVM/vE2TzWfzwg4IOd5UrSN7QdB04t89/1O/w1cDnyilFU=";
             var responseMsg = "";
 
+            isRock.LineBot.Bot bot;
+            bot = new isRock.LineBot.Bot(ChannelAccessToken);
+
             try
             {
 
@@ -36,9 +39,11 @@ namespace EBMTodo.Areas.Line.Controllers
                 string postData = Request.Content.ReadAsStringAsync().Result;
                 //剖析JSON
                 var ReceivedMessage = isRock.LineBot.Utility.Parsing(postData);
+                var userName = bot.GetUserInfo(ReceivedMessage.events[0].source.userId).displayName;
 
 
                 var projectList = db.EBMProject.Where(x => x.IsHode == false).Select(x => new { ProjectName = x.ProjectName, ProjectNo = x.ProjectNo }).ToList();
+
                 CIC.OnMessageTypeCheck += (s, e) =>
                 {
                     switch (e.CurrentPropertyName)
@@ -120,22 +125,30 @@ namespace EBMTodo.Areas.Line.Controllers
                         break;
                     case ProcessResultStatus.Done:
                         responseMsg += result.ResponseMessageCandidate;
-                        responseMsg += $"辛苦你了!!";
                         try
                         {
                             var pID = db.EBMProject.Where(x => x.ProjectName.ToUpper() == result.ConversationState.ConversationEntity.專案).FirstOrDefault().PID;
                             var token = ReceivedMessage.events[0].replyToken;
-                            var getUser = db.Users.Where(x => x.LineID == token).FirstOrDefault();
+                            var lineUID = ReceivedMessage.events[0].source.userId;
+                            var getLineUser = db.LineUser.Where(x => x.UID == lineUID).FirstOrDefault();
+                            if (getLineUser == null)
+                            {
+                                db.LineUser.Add(new Models.Todo.LineUser() {UID = lineUID,Name = userName });
+                                db.SaveChanges();
+                            }
+
+
 
                             var newWork = new Models.Todo.EBMProjectWorking();
                             newWork.RecordDateTime = result.ConversationState.ConversationEntity.回報日期.ToUpper() == "T" ? DateTime.Now : Convert.ToDateTime(result.ConversationState.ConversationEntity.回報日期);
 
                             newWork.Target = result.ConversationState.ConversationEntity.您的工作項目;
                             newWork.Description = result.ConversationState.ConversationEntity.內容;
-                            newWork.LineUID = token;
+                            newWork.LineUID = lineUID;
                             newWork.PID = pID;
                             newWork.WokingHour = Convert.ToDecimal(result.ConversationState.ConversationEntity.花費時數);
                             newWork.workingType = Models.Base.Enum.WorkingType.一般;
+                            var getUser = db.Users.Where(x => x.LineID == lineUID).FirstOrDefault();
                             if (getUser == null)
                             {
                                 getUser = db.Users.Where(x => x.UserName == "admin").FirstOrDefault();
@@ -168,7 +181,9 @@ namespace EBMTodo.Areas.Line.Controllers
 
                         }
 
-                        //responseMsg += Newtonsoft.Json.JsonConvert.SerializeObject(result.ConversationState.ConversationEntity);
+                        responseMsg += Newtonsoft.Json.JsonConvert.SerializeObject(result.ConversationState.ConversationEntity);
+                        responseMsg += $"\n辛苦你了 ， "+ userName + "!!";
+
                         break;
                     case ProcessResultStatus.Pass:
                         responseMsg = $"你說的 '{ReceivedMessage.events[0].message.text}' 我看不懂，如果想要回報工作進度，請跟我說 : 『回報』";
