@@ -7,13 +7,19 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Linq.Dynamic;
+using System.Globalization;
+using LinqKit;
 
 namespace EBMTodo.Controllers.Api
 {
+    /// <summary>
+    /// /api/ebmworking/...
+    /// </summary>
     [RoutePrefix("api/ebmpworking")]
     public class EBMPWorkingController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        [HttpPost]
         [Route("initData")]
         public IHttpActionResult initData()
         {
@@ -31,12 +37,12 @@ namespace EBMTodo.Controllers.Api
             }).ToList();
             return Ok(new { members = members, projects = projects });
         }
-
+        [HttpPost]
         [Route("getData")]
-        public IHttpActionResult getData(DateTime? start, DateTime? end, string UID = null, string PID = null)
+        public IHttpActionResult getData(WorkingQueryModel para)
         {
-            start = start == null ? DateTime.Now.Date.AddDays(-7) : start.Value.Date;
-            end = end == null ? DateTime.Now.Date.AddDays(1) : end.Value.Date.AddDays(1);
+            para.start = para.start == null ? DateTime.Now.Date.AddDays(-7) : para.start.Value.Date;
+            para.end = para.end == null ? DateTime.Now.Date.AddDays(1) : para.end.Value.Date.AddDays(1);
             var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
             {
                 PWID = x.PWID,
@@ -50,17 +56,38 @@ namespace EBMTodo.Controllers.Api
                 workingType = x.workingType.ToString(),
                 WorkerName = db.LineUser.FirstOrDefault(y => y.UID == x.LineUID).Name
             });
-            var query = model.Where(x => x.RecordDateTime >= start && x.RecordDateTime <= end);
-            query = UID == null ? query : query.Where(x => x.LineUID == UID);
-            query = PID == null ? query : query.Where(x => x.PID == PID);
-            var data = query.ToList();
+            var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
+            predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
+          
+            if (para.UIDs != null)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
+                foreach (var id in para.UIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.LineUID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            if (para.PIDs != null)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
+                foreach (var id in para.PIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.PID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            var data = model.Where(predicate).ToList();
             return Ok(data);
         }
+        [HttpPost]
         [Route("getDataByTime")]
-        public IHttpActionResult getDataByTime(DateTime? start, DateTime? end, int groupby = 1, string UID = null, string PID = null)
+        public IHttpActionResult getDataByTime(WorkingQueryModel para)
         {
-            start = start == null ? DateTime.Now.Date.AddDays(-7) : start.Value.Date;
-            end = end == null ? DateTime.Now.Date.AddDays(1) : end.Value.Date.AddDays(1);
+            para.start = para.start == null ? DateTime.Now.Date.AddDays(-7) : para.start.Value.Date;
+            para.end = para.end == null ? DateTime.Now.Date.AddDays(1) : para.end.Value.Date.AddDays(1);
             var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
             {
                 PWID = x.PWID,
@@ -74,41 +101,61 @@ namespace EBMTodo.Controllers.Api
                 workingType = x.workingType.ToString(),
                 WorkerName = db.LineUser.FirstOrDefault(y => y.UID == x.LineUID).Name
             });
-            var query = model.Where(x => x.RecordDateTime >= start && x.RecordDateTime <= end);
-            query = UID == null ? query : query.Where(x => x.LineUID == UID);
-            query = PID == null ? query : query.Where(x => x.PID == PID);
+            var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
+            predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
 
+            if (para.UIDs != null)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
+                foreach (var id in para.UIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.LineUID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
 
-            var data = query.ToList()
+            if (para.PIDs != null)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
+                foreach (var id in para.PIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.PID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            var data = model.Where(predicate).ToList()
                 .GroupBy(x =>
                 {
-                    switch (groupby)
+                    switch (para.groupby)
                     {
-                        case 1:
+                        case "day":
                             return x.RecordDateTime.ToString("yyyy-MM-dd");
-                        case 2:
-                            //x.RecordDateTime.Ticks / TimeSpan.FromHours(1).Ticks
-                            return x.RecordDateTime.StartOfWeek(DayOfWeek.Monday).ToString("yyyy-MM-dd");
-                        case 3:
-                            return x.RecordDateTime.ToString("yyyy-MM-01");
+                        case "week":
+                            return x.RecordDateTime.FirstDayOfWeek().ToString("yyyy-MM-dd") + "~" + x.RecordDateTime.LastDayOfWeek().ToString("yyyy-MM-dd");
+                        case "month":
+                            DateTime date = x.RecordDateTime;
+                            var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+                            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                            return firstDayOfMonth.ToString("yyyy-MM-dd") + "~" + lastDayOfMonth.ToString("yyyy-MM-dd");
                         default:
-                            break;
+                            return x.RecordDateTime.ToString("yyyy-MM-dd");
                     }
-
-                    return "";
                 })
                .Select(x => new
                {
                    date = x.Key,
                    list = x.ToList()
-               }).ToList();
+               }).OrderBy(x => x.date).ToList();
             return Ok(data);
         }
+        [HttpPost]
         [Route("getDataByUID")]
-        public IHttpActionResult getDataByUID(DateTime? start, DateTime? end, string UID = null, string PID = null)
+        public IHttpActionResult getDataByUID(WorkingQueryModel para)
         {
-            start = start == null ? DateTime.Now.Date.AddDays(-7) : start.Value.Date;
-            end = end == null ? DateTime.Now.Date.AddDays(1) : end.Value.Date.AddDays(1);
+            //預設一個禮拜
+            para.start = para.start == null ? DateTime.Now.Date.AddDays(-7) : para.start.Value.Date;
+            para.end = para.end == null ? DateTime.Now.Date.AddDays(1) : para.end.Value.Date.AddDays(1);
             var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
             {
                 PWID = x.PWID,
@@ -122,12 +169,30 @@ namespace EBMTodo.Controllers.Api
                 workingType = x.workingType.ToString(),
                 WorkerName = db.LineUser.FirstOrDefault(y => y.UID == x.LineUID).Name
             });
-            var query = model.Where(x => x.RecordDateTime >= start && x.RecordDateTime <= end);
-            query = UID == null ? query : query.Where(x => x.LineUID == UID);
-            query = PID == null ? query : query.Where(x => x.PID == PID);
+            var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
+            predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
 
+            if (para.UIDs != null)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
+                foreach (var id in para.UIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.LineUID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
 
-            var data = query.ToList()
+            if (para.PIDs != null)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
+                foreach (var id in para.PIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.PID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            var data = model.Where(predicate).ToList()
                 .GroupBy(x => new
                 {
                     UID = x.LineUID,
@@ -135,23 +200,35 @@ namespace EBMTodo.Controllers.Api
                 })
                .Select(x => new
                {
-                   LineUID = x.Key.UID,
-                   WorkerName = x.Key.Name,
-                   List = x.ToList()
+                   lineUID = x.Key.UID,
+                   workerName = x.Key.Name,
+                   list = x.ToList()
                }).ToList();
             return Ok(data);
         }
     }
+    public class WorkingQueryModel
+    {
+        public DateTime? start { set; get; }
+        public DateTime? end { set; get; }
+        public List<string> UIDs { set; get; }
+        public List<string> PIDs { set; get; }
+        public string groupby { set; get; }
+    }
     public static class DateTimeExtensions
     {
-        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        public static DateTime FirstDayOfWeek(this DateTime date)
         {
-            int diff = dt.DayOfWeek - startOfWeek;
-            if (diff < 0)
-            {
-                diff += 7;
-            }
-            return dt.AddDays(-1 * diff).Date;
+            DayOfWeek fdow = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            int offset = fdow - date.DayOfWeek;
+            DateTime fdowDate = date.AddDays(offset);
+            return fdowDate;
+        }
+
+        public static DateTime LastDayOfWeek(this DateTime date)
+        {
+            DateTime ldowDate = FirstDayOfWeek(date).AddDays(6);
+            return ldowDate;
         }
     }
 }

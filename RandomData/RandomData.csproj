@@ -38,6 +38,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LinqKit.EntityFramework, Version=1.1.9.0, Culture=neutral, PublicKeyToken=b6c8cfc71f7a6a80, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.EntityFramework.1.1.9.0\lib\net45\LinqKit.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -72,6 +78,8 @@
     <Compile Include="Models\TodoEBMProjectWorking.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EBMPWorkingViewModel.cs" />
+    <Compile Include="WorkingLib.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

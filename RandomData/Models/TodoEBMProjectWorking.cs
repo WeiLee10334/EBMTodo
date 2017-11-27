@@ -1,5 +1,6 @@
 namespace RandomData.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -35,9 +36,9 @@ namespace RandomData.Models
 
         [StringLength(128)]
         public string LineUID { get; set; }
-
+        [JsonIgnore]
         public virtual AspNetUsers AspNetUsers { get; set; }
-
+        [JsonIgnore]
         public virtual TodoEBMProject TodoEBMProject { get; set; }
     }
 }
