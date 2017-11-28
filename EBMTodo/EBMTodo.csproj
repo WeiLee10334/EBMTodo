@@ -194,7 +194,7 @@
     <Compile Include="Areas\Line\Controllers\ConversationCollectionController.cs" />
     <Compile Include="Areas\Line\Controllers\RDCICController.cs" />
     <Compile Include="Areas\Line\LineAreaRegistration.cs" />
-    <Compile Include="Areas\Wei\Controllers\RDCICController.cs" />
+    <Compile Include="Areas\Wei\Controllers\MyCICBotController.cs" />
     <Compile Include="Areas\Wei\WeiAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\BaseController.cs" />
@@ -218,6 +218,8 @@
     </Compile>
     <Compile Include="Handlers\ActiveDirectoryContainerStateStoreEnum.cs" />
     <Compile Include="Handlers\ActiveDirectorySection.cs" />
+    <Compile Include="Lib\CIC\Memo.cs" />
+    <Compile Include="Lib\CIC\Schedule.cs" />
     <Compile Include="Lib\CIC\LeaveRequest.cs" />
     <Compile Include="Lib\Extension\FormattedDbEntityValidationException.cs" />
     <Compile Include="Lib\Extension\MVCHtmlExtension.cs" />
@@ -254,10 +256,28 @@
     <Compile Include="Migrations\201711201531140_target7.Designer.cs">
       <DependentUpon>201711201531140_target7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711211237120_target8.cs" />
+    <Compile Include="Migrations\201711211237120_target8.Designer.cs">
+      <DependentUpon>201711211237120_target8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711270412347_target9.cs" />
+    <Compile Include="Migrations\201711270412347_target9.Designer.cs">
+      <DependentUpon>201711270412347_target9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711271418465_target10.cs" />
+    <Compile Include="Migrations\201711271418465_target10.Designer.cs">
+      <DependentUpon>201711271418465_target10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711271425170_target11.cs" />
+    <Compile Include="Migrations\201711271425170_target11.Designer.cs">
+      <DependentUpon>201711271425170_target11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Base\Enum\MemoType.cs" />
     <Compile Include="Models\Base\Enum\CommandType.cs" />
     <Compile Include="Models\Base\Enum\CommandStatus.cs" />
     <Compile Include="Models\Base\Enum\ParticipantLevel.cs" />
+    <Compile Include="Models\Base\Enum\ScheduleType.cs" />
     <Compile Include="Models\Base\Enum\WorkingType.cs" />
     <Compile Include="Models\Base\Enum\UserManage.cs" />
     <Compile Include="Models\Line\LineRoom.cs" />
@@ -265,6 +285,8 @@
     <Compile Include="Models\Line\LineGroup.cs" />
     <Compile Include="Models\Line\LineCommand.cs" />
     <Compile Include="Controllers\Api\Models\EBMPWorkingViewModel.cs" />
+    <Compile Include="Models\TODO\EBMProjectSchedule.cs" />
+    <Compile Include="Models\TODO\Memo.cs" />
     <Compile Include="Models\ViewModel\LineWebhookModels.cs" />
     <Compile Include="Models\ViewModel\ReplyBody.cs" />
     <Compile Include="Models\TODO\EBMProjectTodoList.cs" />
@@ -1020,6 +1042,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711201531140_target7.resx">
       <DependentUpon>201711201531140_target7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711211237120_target8.resx">
+      <DependentUpon>201711211237120_target8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711270412347_target9.resx">
+      <DependentUpon>201711270412347_target9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711271418465_target10.resx">
+      <DependentUpon>201711271418465_target10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711271425170_target11.resx">
+      <DependentUpon>201711271425170_target11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

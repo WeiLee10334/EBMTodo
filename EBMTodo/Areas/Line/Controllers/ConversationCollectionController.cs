@@ -1,6 +1,6 @@
 ﻿using EBMTodo.Models;
 using EBMTodo.Models.Todo;
-using System;
+using System;   
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,8 +21,8 @@ namespace EBMTodo.Areas.Line.Controllers
         [HttpPost]
         public IHttpActionResult POST()
         {
-            //設定你的Channel Access Token
-            string ChannelAccessToken = "nsyAEGzsLKymKP8VzOLDO3xur70E5GIp8vQqTZm9o4kDtdck7Z7ebgiIS3Ov1DTSyQVa/9NzhHo0Jr+wXTkfP5EQyXqAKa7dsy+0ZscZCvGF/9ajRoDD/4tzNWRm4DexsT8dC2WV9e+gFVyl8drYTwdB04t89/1O/w1cDnyilFU=";
+            //設定你的Channel Access Token  
+            string ChannelAccessToken = "tt8Jz59N5MItjIYiXGcp9ge/RGSZCEVZGASwQ2zxR9rhMkWO7gRZFMo7YyJHrB6myQVa/9NzhHo0Jr+wXTkfP5EQyXqAKa7dsy+0ZscZCvEiwI3ROvUU90nLaKTemf0zK8Fa4aQLVt2cuKCREAM1pwdB04t89/1O/w1cDnyilFU=";
             isRock.LineBot.Bot bot;
             //如果有Web.Config app setting，以此優先4
             //if (System.Configuration.ConfigurationManager.AppSettings.AllKeys.Contains("LineChannelAccessToken"))

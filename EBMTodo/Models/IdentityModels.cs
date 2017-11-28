@@ -119,6 +119,8 @@ namespace EBMTodo.Models
         public virtual DbSet<LineGroup> LineGroup { get; set; }
         public virtual DbSet<LineUser> LineUser { get; set; }
         public virtual DbSet<LineRoom> LineRoom { get; set; }
+        public virtual DbSet<Memo> Memo { get; set; }
+        public virtual DbSet<EBMProjectSchedule> EBMProjectSchedule { get; set; }
 
         //=====================================
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
