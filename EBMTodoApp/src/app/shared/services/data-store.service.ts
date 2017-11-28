@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Http, Headers, Response, URLSearchParams, RequestOptions, ResponseContentType } from '@angular/http';
 import { Router } from '@angular/router';
+import { strictEqual } from 'assert';
 
 @Injectable()
 export class DataStoreService {
 
   constructor(public http: Http, private router: Router) { }
+  public Store = new Map<string, Observable<any>>();
   extractData(res: Response) {
     try {
       return res.json();
@@ -42,5 +44,17 @@ export class DataStoreService {
       .do((data) => {
       })
       .catch(this.handleError);
+  }
+  workingInit(){
+    return this.HttpPost(null,'/api/ebmpworking/initData');
+  }
+  workingData(model){
+    return this.HttpPost(model,'/api/ebmpworking/getData');
+  }
+  workingDataByTime(model){
+    return this.HttpPost(model,'/api/ebmpworking/getDataByTime');
+  }
+  workingDataByUID(model){
+    return this.HttpPost(model,'/api/ebmpworking/getDataByUID');
   }
 }

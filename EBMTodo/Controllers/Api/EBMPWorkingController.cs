@@ -23,17 +23,15 @@ namespace EBMTodo.Controllers.Api
         [Route("initData")]
         public IHttpActionResult initData()
         {
-            var members = db.LineUser.Select(x => new EBMMemberViewModel()
+            var members = db.LineUser.Select(x => new
             {
-                UID = x.UID,
-                Name = x.Name
+                id = x.UID,
+                name = x.Name
             }).ToList();
-            var projects = db.EBMProject.Select(x => new EBMProjectViewModel()
+            var projects = db.EBMProject.Select(x => new
             {
-                PID = x.PID,
-                ProjectName = x.ProjectName,
-                ProjectNo = x.ProjectNo,
-                CreateDateTime = x.CreateDateTime
+                id = x.PID,
+                name = x.ProjectName
             }).ToList();
             return Ok(new { members = members, projects = projects });
         }
@@ -58,8 +56,8 @@ namespace EBMTodo.Controllers.Api
             });
             var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
             predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
-          
-            if (para.UIDs != null)
+
+            if (para.UIDs != null && para.UIDs.Count > 0)
             {
                 var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
                 foreach (var id in para.UIDs)
@@ -69,7 +67,7 @@ namespace EBMTodo.Controllers.Api
                 predicate = predicate.And(orPredicate);
             }
 
-            if (para.PIDs != null)
+            if (para.PIDs != null && para.PIDs.Count > 0)
             {
                 var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
                 foreach (var id in para.PIDs)
@@ -104,7 +102,7 @@ namespace EBMTodo.Controllers.Api
             var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
             predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
 
-            if (para.UIDs != null)
+            if (para.UIDs != null && para.UIDs.Count > 0)
             {
                 var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
                 foreach (var id in para.UIDs)
@@ -114,7 +112,7 @@ namespace EBMTodo.Controllers.Api
                 predicate = predicate.And(orPredicate);
             }
 
-            if (para.PIDs != null)
+            if (para.PIDs != null && para.PIDs.Count > 0)
             {
                 var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
                 foreach (var id in para.PIDs)
@@ -172,7 +170,7 @@ namespace EBMTodo.Controllers.Api
             var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
             predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
 
-            if (para.UIDs != null)
+            if (para.UIDs != null && para.UIDs.Count > 0)
             {
                 var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
                 foreach (var id in para.UIDs)
@@ -182,7 +180,7 @@ namespace EBMTodo.Controllers.Api
                 predicate = predicate.And(orPredicate);
             }
 
-            if (para.PIDs != null)
+            if (para.PIDs != null && para.PIDs.Count > 0)
             {
                 var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
                 foreach (var id in para.PIDs)
