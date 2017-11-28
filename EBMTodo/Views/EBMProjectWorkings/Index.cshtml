@@ -19,7 +19,7 @@
             @foreach (var item in ViewBag.memberList)
             {
                 <option value="@item.UID">@item.Name</option>
-            }        
+            }
         </select>
     </div>
     <div class="form-group">
@@ -34,8 +34,30 @@
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
 <hr />
+<div class="contatiner" id="content">
+
+</div>
 <table class="table table-responsive" id="TB_workList"></table>
 <script>
+    var getView = () => {
+         $.ajax({
+            url: '@Url.Action("getDataByTime")',
+            contentType: "application/json",
+            type: 'POST',
+            dataSrc: "",
+            data: (d) => {
+                console.log(JSON.stringify($('#query-form').serializeObject()));
+                return JSON.stringify($('#query-form').serializeObject());
+            },
+            success: (response) => {
+                console.log(response)
+                $('#content').append(response);
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
+    }
     $.fn.serializeObject = function () {
         var o = {};
         var a = this.serializeArray();
@@ -52,14 +74,15 @@
         return o;
     };
     $(document).ready(function () {
-        var table = $('#TB_workList').DataTable({
+        getView();
+        @*var table = $('#TB_workList').DataTable({
             ajax: {
-                url: '/api/ebmpworking/getData',
+                url: '@Url.Action("getDataByTime")',
                 contentType: "application/json",
                 type: 'POST',
                 dataSrc: "",
                 data: function (d) {
-                   
+
                     console.log(JSON.stringify($('#query-form').serializeObject()));
                     return JSON.stringify($('#query-form').serializeObject());
                 }
@@ -71,8 +94,8 @@
                 { data: "Description", title: "工作內容" },
                 { data: "WokingHour", title: "工作時數" }
             ]
-        });
-  
+        });*@
+
         $("#query-form").submit(function (e) {
             e.preventDefault();
             table.ajax.reload();

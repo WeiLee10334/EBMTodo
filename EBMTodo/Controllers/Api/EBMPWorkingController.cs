@@ -204,6 +204,64 @@ namespace EBMTodo.Controllers.Api
                }).ToList();
             return Ok(data);
         }
+        [HttpPost]
+        [Route("getDataByProj")]
+        public IHttpActionResult getDataByProj(WorkingQueryModel para)
+        {
+            //預設一個禮拜
+            para.start = para.start == null ? DateTime.Now.Date.AddDays(-7) : para.start.Value.Date;
+            para.end = para.end == null ? DateTime.Now.Date.AddDays(1) : para.end.Value.Date.AddDays(1);
+            var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
+            {
+                PWID = x.PWID,
+                Description = x.Description,
+                LineUID = x.LineUID,
+                PID = x.PID.ToString(),
+                ProjectName = x.EBMProject.ProjectName,
+                RecordDateTime = x.RecordDateTime,
+                Target = x.Target,
+                WokingHour = x.WokingHour,
+                workingType = x.workingType.ToString(),
+                WorkerName = db.LineUser.FirstOrDefault(y => y.UID == x.LineUID).Name
+            });
+            var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
+            predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
+
+            if (para.UIDs != null && para.UIDs.Count > 0)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
+                foreach (var id in para.UIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.LineUID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            if (para.PIDs != null && para.PIDs.Count > 0)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
+                foreach (var id in para.PIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.PID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            var data = model.Where(predicate).ToList()
+                .GroupBy(x => new
+                {
+                    PID = x.PID,
+                    ProjectName = x.ProjectName
+                })
+               .Select(x => new
+               {
+                   pid = x.Key.PID,
+                   projectName = x.Key.ProjectName,
+                   list = x.ToList()
+               }).ToList();
+            return Ok(data);
+        }
+
     }
     public class WorkingQueryModel
     {

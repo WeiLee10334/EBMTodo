@@ -18,7 +18,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 var routes = [
-    { path: "working", component: __WEBPACK_IMPORTED_MODULE_2__ebmworking_component__["a" /* EbmworkingComponent */] }
+    { path: "working", component: __WEBPACK_IMPORTED_MODULE_2__ebmworking_component__["a" /* EbmworkingComponent */] },
+    { path: '**', redirectTo: 'working' }
 ];
 var EbmworkingRoutingModule = (function () {
     function EbmworkingRoutingModule() {

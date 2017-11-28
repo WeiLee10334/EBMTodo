@@ -1006,6 +1006,8 @@
     <Content Include="Views\EBMProjectTodoLists\Edit.cshtml" />
     <Content Include="Views\EBMProjectTodoLists\Index.cshtml" />
     <Content Include="Views\Home\_MyWork.cshtml" />
+    <Content Include="Views\EBMProjectWorkings\_groupbytime.cshtml" />
+    <Content Include="Views\EBMProjectWorkings\_groupbyname.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Line\Models\" />
@@ -1013,6 +1015,7 @@
     <Folder Include="Areas\Wei\Models\" />
     <Folder Include="Areas\Wei\Views\Shared\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Ngapp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

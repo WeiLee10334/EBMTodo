@@ -12,6 +12,8 @@ using EBMTodo.Models.Todo;
 using Microsoft.AspNet.Identity;
 using EBMTodo.Controllers.Api.Models;
 using Newtonsoft.Json;
+using LinqKit;
+using EBMTodo.Controllers.Api;
 
 namespace EBMTodo.Controllers
 {
@@ -65,7 +67,71 @@ namespace EBMTodo.Controllers
             var data = query.ToList();
             return Content(JsonConvert.SerializeObject(data));
         }
+        public ActionResult getDataByTime(WorkingQueryModel para)
+        {
+            para.start = para.start == null ? DateTime.Now.Date.AddDays(-7) : para.start.Value.Date;
+            para.end = para.end == null ? DateTime.Now.Date.AddDays(1) : para.end.Value.Date.AddDays(1);
+            var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
+            {
+                PWID = x.PWID,
+                Description = x.Description,
+                LineUID = x.LineUID,
+                PID = x.PID.ToString(),
+                ProjectName = x.EBMProject.ProjectName,
+                RecordDateTime = x.RecordDateTime,
+                Target = x.Target,
+                WokingHour = x.WokingHour,
+                workingType = x.workingType.ToString(),
+                WorkerName = db.LineUser.FirstOrDefault(y => y.UID == x.LineUID).Name
+            });
+            var predicate = PredicateBuilder.New<EBMPWorkingViewModel>(true);
+            predicate = predicate.And(x => x.RecordDateTime >= para.start && x.RecordDateTime <= para.end);
 
+            if (para.UIDs != null && para.UIDs.Count > 0)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>();
+                foreach (var id in para.UIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.LineUID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            if (para.PIDs != null && para.PIDs.Count > 0)
+            {
+                var orPredicate = PredicateBuilder.New<EBMPWorkingViewModel>(false);
+                foreach (var id in para.PIDs)
+                {
+                    orPredicate = orPredicate.Or(x => x.PID == id);
+                }
+                predicate = predicate.And(orPredicate);
+            }
+
+            var data = model.Where(predicate).ToList()
+                .GroupBy(x =>
+                {
+                    switch (para.groupby)
+                    {
+                        case "day":
+                            return x.RecordDateTime.ToString("yyyy-MM-dd");
+                        case "week":
+                            return x.RecordDateTime.FirstDayOfWeek().ToString("yyyy-MM-dd") + "~" + x.RecordDateTime.LastDayOfWeek().ToString("yyyy-MM-dd");
+                        case "month":
+                            DateTime date = x.RecordDateTime;
+                            var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+                            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                            return firstDayOfMonth.ToString("yyyy-MM-dd") + "~" + lastDayOfMonth.ToString("yyyy-MM-dd");
+                        default:
+                            return x.RecordDateTime.ToString("yyyy-MM-dd");
+                    }
+                })
+               .Select(x => new
+               {
+                   date = x.Key,
+                   list = x.ToList()
+               }).OrderBy(x => x.date).ToList();
+            return PartialView("_groupbytime", data);
+        }
         // GET: EBMProjectWorkings/Details/5
         public async Task<ActionResult> Details(Guid? id)
         {
