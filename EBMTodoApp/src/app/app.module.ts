@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components';
 import { DataStoreService } from './shared/services';
+import { PaginationDirective } from './shared/directives';
+import { EbmscheduleComponent } from './ebmschedule/ebmschedule.component';
 
 @NgModule({
   declarations: [

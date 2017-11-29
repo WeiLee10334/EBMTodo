@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 import { Http, Headers, Response, URLSearchParams, RequestOptions, ResponseContentType } from '@angular/http';
 import { Router } from '@angular/router';
 import { strictEqual } from 'assert';
@@ -8,7 +10,6 @@ import { strictEqual } from 'assert';
 export class DataStoreService {
 
   constructor(public http: Http, private router: Router) { }
-  public Store = new Map<string, Observable<any>>();
   extractData(res: Response) {
     try {
       return res.json();
@@ -17,6 +18,7 @@ export class DataStoreService {
       return res.text();
     }
   }
+
 
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
@@ -45,16 +47,36 @@ export class DataStoreService {
       })
       .catch(this.handleError);
   }
-  workingInit(){
-    return this.HttpPost(null,'/api/ebmpworking/initData');
+  workingInit() {
+    return this.HttpPost(null, '/api/ebmpworking/initData');
   }
-  workingData(model){
-    return this.HttpPost(model,'/api/ebmpworking/getData');
+  workingData(model) {
+    return this.HttpPost(model, '/api/ebmpworking/getData');
   }
-  workingDataByTime(model){
-    return this.HttpPost(model,'/api/ebmpworking/getDataByTime');
+  workingDataByTime(model) {
+    return this.HttpPost(model, '/api/ebmpworking/getDataByTime');
   }
-  workingDataByUID(model){
-    return this.HttpPost(model,'/api/ebmpworking/getDataByUID');
+  workingDataByUID(model) {
+    return this.HttpPost(model, '/api/ebmpworking/getDataByUID');
+  }
+
+  memoData(model) {
+    return this.HttpPost(model, '/api/memo/getData');
+  }
+  memoDataByTime(model) {
+    return this.HttpPost(model, '/api/memo/getDataByTime');
+  }
+  memoDataByUID(model) {
+    return this.HttpPost(model, '/api/memo/getDataByUID');
+  }
+
+  scheduleData(model) {
+    return this.HttpPost(model, '/api/schedule/getData');
+  }
+  scheduleDataByTime(model) {
+    return this.HttpPost(model, '/api/schedule/getDataByTime');
+  }
+  scheduleDataByUID(model) {
+    return this.HttpPost(model, '/api/schedule/getDataByUID');
   }
 }

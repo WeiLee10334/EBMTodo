@@ -1,0 +1,44 @@
+<div appPagination [data]="Data" #mf="p-data" [numberPerPage]="10" class="table-responsive">
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th *ngFor="let column of Columns">
+          <span>{{column.name||column.prop}}&nbsp;
+            <span [ngClass]="{'asc':!mf.sort[column.prop]||mf.sort[column.prop]==='undefined','desc':mf.sort[column.prop]}" (click)="mf.changeSort(column.prop)"></span>
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of mf.pageList;let i = index">
+        <td *ngFor="let column of Columns" [ngSwitch]="column.prop" [attr.data-th]="column.name">
+          {{row[column.prop]}}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td [attr.colspan]="Columns.length">
+          <ul class="pagination policy-pagination mx-auto">
+            <li class="page-item">
+              <a class="page-link" (click)="mf.previousPage()" aria-label="Previous">
+                <span aria-hidden="true">&laquo;&nbsp;上一頁</span>
+                <span class="sr-only"></span>
+              </a>
+            </li>
+            <li class="page-item" *ngFor="let page of mf.getPageArr(10);">
+              <a class="page-link" [ngClass]="{'active':page===mf.currentPage}" (click)="mf.changePage(page)">{{page}}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" (click)="mf.nextPage()" aria-label="Next">
+                <span aria-hidden="true">下一頁&nbsp;&raquo;</span>
+                <span class="sr-only"></span>
+              </a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+</div>

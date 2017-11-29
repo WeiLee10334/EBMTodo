@@ -133,7 +133,7 @@ namespace EBMTodo.Areas.Line.Controllers
                             var getLineUser = db.LineUser.Where(x => x.UID == lineUID).FirstOrDefault();
                             if (getLineUser == null)
                             {
-                                db.LineUser.Add(new Models.Todo.LineUser() {UID = lineUID,Name = userName });
+                                db.LineUser.Add(new Models.Todo.LineUser() { UID = lineUID, Name = userName });
                                 db.SaveChanges();
                             }
 
@@ -182,7 +182,7 @@ namespace EBMTodo.Areas.Line.Controllers
                         }
 
                         responseMsg += Newtonsoft.Json.JsonConvert.SerializeObject(result.ConversationState.ConversationEntity);
-                        responseMsg += $"\n辛苦你了 ， "+ userName + "!!";
+                        responseMsg += $"\n辛苦你了 ， " + userName + "!!";
 
                         break;
                     case ProcessResultStatus.Pass:

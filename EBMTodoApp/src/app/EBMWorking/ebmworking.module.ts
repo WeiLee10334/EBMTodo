@@ -7,8 +7,8 @@ import { EbmworkingRoutingModule } from './ebmworking-routing.module';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { GroupbytimeComponent } from './groupbytime/groupbytime.component';
 import { GroupbynameComponent } from './groupbyname/groupbyname.component';
-import { PaginationDirective } from '../shared/directives';
 import { TableViewComponent } from './table-view/table-view.component';
+import { SharedModule } from '../shared/modules';
 
 @NgModule({
   imports: [
@@ -17,13 +17,13 @@ import { TableViewComponent } from './table-view/table-view.component';
     MultiselectDropdownModule,
     FormsModule,
     ReactiveFormsModule,
-    AccordionModule.forRoot()
+    AccordionModule.forRoot(),
+    SharedModule
   ],
   declarations: [
     EbmworkingComponent,
     GroupbytimeComponent,
     GroupbynameComponent,
-    PaginationDirective,
     TableViewComponent
   ]
 })

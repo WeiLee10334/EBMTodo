@@ -32,7 +32,7 @@ namespace EBMTodo.Controllers
             end = end == null ? DateTime.Now.Date.AddDays(1) : end.Value.Date.AddDays(1);
             var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
             {
-                PWID = x.PWID,
+                PWID = x.PWID.ToString(),
                 Description = x.Description,
                 LineUID = x.LineUID,
                 PID = x.PID.ToString(),
@@ -73,7 +73,7 @@ namespace EBMTodo.Controllers
             para.end = para.end == null ? DateTime.Now.Date.AddDays(1) : para.end.Value.Date.AddDays(1);
             var model = db.EBMProjectWorking.Select(x => new EBMPWorkingViewModel
             {
-                PWID = x.PWID,
+                PWID = x.PWID.ToString(),
                 Description = x.Description,
                 LineUID = x.LineUID,
                 PID = x.PID.ToString(),

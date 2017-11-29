@@ -24,7 +24,6 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "PSID")]
         public Guid PSID { set; get; }
 
-
         [DataMember(Order = 2)]
         [Display(Name = "產生時間")]
         public DateTime CreateDateTime { set; get; }
@@ -65,8 +64,7 @@ namespace EBMTodo.Models.Todo
         [StringLength(100)]
         [Display(Name = "行程Title")]
         public string Title { set; get; }
-
-        
+    
         public bool ProgressingFlag { set; get; }
 
         public string Id { set; get; }

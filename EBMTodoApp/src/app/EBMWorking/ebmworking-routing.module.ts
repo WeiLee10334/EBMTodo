@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { EbmworkingComponent } from './ebmworking.component';
 
 const routes: Routes = [
-  { path: "working", component: EbmworkingComponent },
-  { path: '**', redirectTo: 'working' }
+  { path: "", component: EbmworkingComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

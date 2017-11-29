@@ -8,7 +8,7 @@ namespace EBMTodo.Controllers.Api.Models
 {
     public class EBMPWorkingViewModel
     {
-        public Guid PWID { set; get; }
+        public string PWID { set; get; }
 
         public string PID { set; get; }
 
@@ -28,16 +28,5 @@ namespace EBMTodo.Controllers.Api.Models
 
         public string WorkerName { set; get; }
 
-    }
-    public class EBMPWorkingGroupByTime
-    {
-        public string TimeRange { set; get; }
-        public List<EBMMemberViewModel> List { set; get; }
-    }
-    public class EBMPWorkingGroupByUID
-    {
-        public string LineUID { set; get; }
-        public string WorkerName { set; get; }
-        public List<EBMMemberViewModel> List { set; get; }
     }
 }

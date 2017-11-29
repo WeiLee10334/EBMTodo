@@ -1,12 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+
 const routes: Routes = [
   {
-    path: "", loadChildren: './EBMWorking/ebmworking.module#EbmworkingModule'
+    path: "working", loadChildren: './ebmworking/ebmworking.module#EbmworkingModule'
     //canLoad: [AuthGuard],
   },
-  { path: '**', redirectTo: '' }
+  {
+    path: "memo", loadChildren: './memo/memo.module#MemoModule'
+    //canLoad: [AuthGuard],
+  },
+  {
+    path: "schedule", loadChildren: './ebmschedule/ebmschedule.module#EbmscheduleModule'
+    //canLoad: [AuthGuard],
+  },
+  { path: '**', redirectTo: 'working' }
 ];
 
 @NgModule({

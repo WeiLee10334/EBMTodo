@@ -1,5 +1,5 @@
 import { Directive, Input, SimpleChanges, OnInit, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 @Directive({
   selector: '[appPagination]',
