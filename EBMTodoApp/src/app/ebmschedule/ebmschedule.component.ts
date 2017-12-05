@@ -27,6 +27,16 @@ export class EbmscheduleComponent implements OnInit {
   };
   Data;
   Groupby = 'day';
+  Columns = [
+    { name: "行程", prop: "Title" },
+    { name: "行程地點", prop: "Target" },
+    { name: "專案", prop: "ProjectName" },
+    { name: "人員", prop: "WorkerName" },
+    { name: "時間", prop: "ScheduleDateTime" },
+    { name: "內容", prop: "Description" },
+    { name: "時數", prop: "WokingHour" },
+    { name: "類型", prop: "scheduleType" }
+  ]
   ngOnInit() {
     this.api.workingInit().subscribe(
       (data) => {

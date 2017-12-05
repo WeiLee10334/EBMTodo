@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableViewComponent } from './table-view.component';
+import { PagingTableComponent } from './paging-table.component';
 
-describe('TableViewComponent', () => {
-  let component: TableViewComponent;
-  let fixture: ComponentFixture<TableViewComponent>;
+describe('PagingTableComponent', () => {
+  let component: PagingTableComponent;
+  let fixture: ComponentFixture<PagingTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableViewComponent ]
+      declarations: [ PagingTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableViewComponent);
+    fixture = TestBed.createComponent(PagingTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -33,8 +33,16 @@
 
   <div class="row">
     <div class="col-12">
-      <app-groupbytime [Data]="Data" *ngIf="Groupby!='member'"></app-groupbytime>
-      <app-groupbyname [Data]="Data" *ngIf="Groupby=='member'"></app-groupbyname>
+      <accordion *ngIf="Groupby!='member'">
+        <accordion-group [heading]="item.date" *ngFor="let item of Data">
+          <app-paging-table [_Data]="item.list" [_Columns]="Columns"></app-paging-table>
+        </accordion-group>
+      </accordion>
+      <accordion *ngIf="Groupby=='member'">
+        <accordion-group [heading]="item.workerName" *ngFor="let item of Data">
+          <app-paging-table [_Data]="item.list" [_Columns]="Columns"></app-paging-table>
+        </accordion-group>
+      </accordion>
     </div>
   </div>
 </div>

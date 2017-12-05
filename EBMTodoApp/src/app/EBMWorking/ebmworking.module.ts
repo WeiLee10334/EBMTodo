@@ -5,9 +5,6 @@ import { AccordionModule } from 'ngx-bootstrap';
 import { EbmworkingComponent } from './ebmworking.component';
 import { EbmworkingRoutingModule } from './ebmworking-routing.module';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { GroupbytimeComponent } from './groupbytime/groupbytime.component';
-import { GroupbynameComponent } from './groupbyname/groupbyname.component';
-import { TableViewComponent } from './table-view/table-view.component';
 import { SharedModule } from '../shared/modules';
 
 @NgModule({
@@ -21,10 +18,7 @@ import { SharedModule } from '../shared/modules';
     SharedModule
   ],
   declarations: [
-    EbmworkingComponent,
-    GroupbytimeComponent,
-    GroupbynameComponent,
-    TableViewComponent
+    EbmworkingComponent
   ]
 })
 export class EbmworkingModule { }

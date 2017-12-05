@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableViewComponent } from './table-view.component';
+import { EbmtodolistComponent } from './ebmtodolist.component';
 
-describe('TableViewComponent', () => {
-  let component: TableViewComponent;
-  let fixture: ComponentFixture<TableViewComponent>;
+describe('EbmtodolistComponent', () => {
+  let component: EbmtodolistComponent;
+  let fixture: ComponentFixture<EbmtodolistComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableViewComponent ]
+      declarations: [ EbmtodolistComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableViewComponent);
+    fixture = TestBed.createComponent(EbmtodolistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

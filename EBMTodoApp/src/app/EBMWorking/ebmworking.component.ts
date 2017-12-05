@@ -27,6 +27,14 @@ export class EbmworkingComponent implements OnInit {
   };
   Data;
   Groupby = 'day';
+  Columns = [
+    { name: "專案", prop: "ProjectName" },
+    { name: "人員", prop: "WorkerName" },
+    { name: "時間", prop: "RecordDateTime" },
+    { name: "內容", prop: "Description" },
+    { name: "時數", prop: "WokingHour" },
+    { name: "類型", prop: "workingType" }
+  ]
   ngOnInit() {
     this.api.workingInit().subscribe(
       (data) => {

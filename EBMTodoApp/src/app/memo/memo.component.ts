@@ -26,6 +26,14 @@ export class MemoComponent implements OnInit {
   };
   Data;
   Groupby = 'day';
+  Columns = [
+    { name: "註記", prop: "memo" },
+    { name: "人員", prop: "WorkerName" },
+    { name: "時間", prop: "CreateDateTime" },
+    { name: "內容", prop: "Content" },
+    { name: "標籤", prop: "Tag" },
+    { name: "類型", prop: "memoType" }
+  ]
   ngOnInit() {
     this.api.workingInit().subscribe(
       (data) => {

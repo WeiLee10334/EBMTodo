@@ -15,6 +15,10 @@ const routes: Routes = [
     path: "schedule", loadChildren: './ebmschedule/ebmschedule.module#EbmscheduleModule'
     //canLoad: [AuthGuard],
   },
+  {
+    path: "todolist", loadChildren: './ebmtodolist/ebmtodolist.module#EbmtodolistModule'
+    //canLoad: [AuthGuard],
+  },
   { path: '**', redirectTo: 'working' }
 ];
 
