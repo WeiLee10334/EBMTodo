@@ -16,23 +16,27 @@ namespace RandomData
             var schema = GraphQL<EBMTodo>.CreateDefaultSchema(() => new EBMTodo());
             var query = @"{
                         TodoEBMWorkings{
-                                PWID
-                            }
-                            
+                               TodoEBMProject{
+                                    PID
+                               }
+                            }                           
                         }";
 
 
-            //schema.AddType<TodoEBMProject>().AddAllFields();
-            //schema.AddType<TodoEBMProjectMember>().AddAllFields();
-            var working=schema.AddType<TodoEBMProjectWorking>();
+            schema.AddType<TodoEBMProject>().AddAllFields();
+            schema.AddType<TodoEBMProjectMember>().AddAllFields();
+            //schema.AddType<TodoEBMProjectWorking>().AddAllFields();
+            var working = schema.AddType<TodoEBMProjectWorking>();
             //working.AddField("_Id", u => u.PWID);
-            working.AddAllFields();
+            working.AddField("TodoEBMProject", db => db.TodoEBMProject);
             schema.AddListField("TodoEBMProjects", db => db.TodoEBMProject);
             schema.AddListField("TodoEBMWorkings", db => db.TodoEBMProjectWorking);
+
+
             schema.Complete();
             var gql = new GraphQL<EBMTodo>(schema);
             var dict = gql.ExecuteQuery(query);
-            
+
             Console.WriteLine(JsonConvert.SerializeObject(dict, Formatting.Indented));
             Console.ReadLine();
         }

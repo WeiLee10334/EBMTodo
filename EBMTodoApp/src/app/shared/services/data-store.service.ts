@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map'
 import { Http, Headers, Response, URLSearchParams, RequestOptions, ResponseContentType } from '@angular/http';
 import { Router } from '@angular/router';
 import { strictEqual } from 'assert';
@@ -78,5 +79,15 @@ export class DataStoreService {
   }
   scheduleDataByUID(model) {
     return this.HttpPost(model, '/api/schedule/getDataByUID');
+  }
+
+  todolistInit() {
+    return this.HttpPost(null, '/api/ebmtodoList/initData');
+  }
+  todolistData() {
+    return this.HttpPost(null, '/api/ebmtodoList/getData');
+  }
+  createTodolist(model) {
+    return this.HttpPost(model, '/api/ebmtodoList/create');
   }
 }

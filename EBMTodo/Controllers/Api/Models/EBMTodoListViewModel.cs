@@ -18,8 +18,8 @@ namespace EBMTodo.Controllers.Api.Models
 
         public int CompleteRate { set; get; }
 
-        public string LineUID { set; get; }
+        public string PMID { set; get; }
 
-        public string WorkerName { set; get; }
+        public string MemberTitle { set; get; }
     }
 }

@@ -23,7 +23,6 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "PID")]
         public Guid PID { set; get; }
 
-
         [Required]
         [DataMember(Order = 2)]
         [StringLength(100)]

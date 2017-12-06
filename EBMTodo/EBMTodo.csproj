@@ -203,6 +203,7 @@
     <Compile Include="Controllers\Api\EBMTodoListController.cs" />
     <Compile Include="Controllers\Api\MemoController.cs" />
     <Compile Include="Controllers\Api\Models\EBMScheduleViewModel.cs" />
+    <Compile Include="Controllers\Api\Models\EBMTodoListViewModel.cs" />
     <Compile Include="Controllers\Api\Models\MemoViewModel.cs" />
     <Compile Include="Controllers\EBMProjectMembersController.cs" />
     <Compile Include="Controllers\EBMProjects1Controller.cs" />

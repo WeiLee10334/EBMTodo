@@ -14,9 +14,12 @@
       <ss-multiselect-dropdown [options]="Options?.members" [settings]="Settings" formControlName="UIDs"></ss-multiselect-dropdown>
     </div>
     <div class="form-group">
+      <label>Projects</label>
+      <ss-multiselect-dropdown [options]="Options?.projects" [settings]="Settings" formControlName="PIDs"></ss-multiselect-dropdown>
+    </div>
+    <div class="form-group">
       <button type="submit" class="btn btn-outline-primary">Search</button>
     </div>
-
   </form>
   <hr>
   <div class="row">
@@ -26,7 +29,6 @@
       <button type="button" class="btn btn-outline-secondary" [ngClass]="{'active':Groupby=='month'}" (click)="changeGroup('month')">by month</button>
       <button type="button" class="btn btn-outline-secondary" [ngClass]="{'active':Groupby=='member'}" (click)="changeGroup('member')">by member</button>
     </div>
-    <button class="btn btn-success float-right">新增</button>
   </div>
 
   <div class="row">

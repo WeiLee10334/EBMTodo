@@ -23,7 +23,6 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "PTLID")]
         public Guid PTLID { set; get; }
 
-
         [DataMember(Order = 2)]
         [Display(Name = "加入時間")]
         public DateTime CreateDateTime { set; get; }
@@ -39,12 +38,10 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "工作內容")]
         public string Description { set; get; }
 
-
         [DataMember(Order = 4)]
         [Range(0,100)]
         [Display(Name = "完成百分比")]
         public int CompleteRate { set; get; }
-
 
         public Guid PMID { set; get; }
         public virtual EBMProjectMember EBMProjectMember { set; get; }

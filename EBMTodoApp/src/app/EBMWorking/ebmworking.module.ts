@@ -6,6 +6,7 @@ import { EbmworkingComponent } from './ebmworking.component';
 import { EbmworkingRoutingModule } from './ebmworking-routing.module';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SharedModule } from '../shared/modules';
+import { EbmworkingListComponent } from './components/ebmworking-list/ebmworking-list.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared/modules';
     SharedModule
   ],
   declarations: [
-    EbmworkingComponent
+    EbmworkingComponent,
+    EbmworkingListComponent
   ]
 })
 export class EbmworkingModule { }

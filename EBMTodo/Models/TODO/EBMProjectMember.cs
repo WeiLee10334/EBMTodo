@@ -24,7 +24,6 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "PMID")]
         public Guid PMID { set; get; }
 
-
         [DataMember(Order = 2)]
         [Display(Name = "加入時間")]
         public DateTime CreateDateTime { set; get; }

@@ -1,5 +1,6 @@
 ﻿using EBMTodo.Controllers.Api.Models;
 using EBMTodo.Models;
+using EBMTodo.Models.Todo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,21 @@ using System.Web.Http;
 
 namespace EBMTodo.Controllers.Api
 {
-    [RoutePrefix("api/EBMTodoList")]
+    [RoutePrefix("api/ebmtodoList")]
     public class EBMTodoListController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        [HttpPost]
+        [Route("initData")]
+        public IHttpActionResult initData()
+        {
+            var members = db.EBMProjectMember.Select(x => new
+            {
+                id = x.PMID,
+                name = x.title
+            }).ToList();
+            return Ok(members);
+        }
         [HttpPost]
         [Route("getData")]
         public IHttpActionResult getData()
@@ -24,16 +36,26 @@ namespace EBMTodo.Controllers.Api
                 title = x.title,
                 Description = x.Description,
                 CompleteRate = x.CompleteRate,
-                LineUID = x.EBMProjectMember.ApplicationUser.LineID,
-                WorkerName = x.EBMProjectMember.ApplicationUser.FirstName
+                PMID = x.PMID.ToString(),
+                MemberTitle = x.EBMProjectMember.title
             }).ToList();
             return Ok(data);
         }
         [HttpPost]
-        [Route("")]
-        public IHttpActionResult create()
+        [Route("create")]
+        public IHttpActionResult create(EBMTodoListViewModel model)
         {
-            return BadRequest();
+            var data = new EBMProjectTodoList()
+            {
+                title = model.title,
+                CreateDateTime = DateTime.Now,
+                Description = model.Description,
+                PMID = Guid.Parse(model.PMID),
+                CompleteRate = 0
+            };
+            db.EBMProjectTodoList.Add(data);
+            db.SaveChanges();
+            return Ok();
         }
 
     }
