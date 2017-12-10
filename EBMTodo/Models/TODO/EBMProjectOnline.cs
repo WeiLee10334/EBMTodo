@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EBMTodo.Models.Base.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,20 +9,19 @@ using System.Runtime.Serialization;
 namespace EBMTodo.Models.Todo
 {
     [DataContract(Namespace = "")]
-    [Table("TodoEBMProjectTodoList")]
-    public partial class EBMProjectTodoList
+    [Table("TodoEBMProjectOnline")]
+    public partial class EBMProjectOnline
     {
-        public EBMProjectTodoList()
+        public EBMProjectOnline()
         {
-            CompleteRate = 0;
-            CreateDateTime = DateTime.Now;
+
         }
 
         [Key, Column(Order = 0)]
         [DataMember(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Display(Name = "PTLID")]
-        public Guid PTLID { set; get; }
+        [Display(Name = "POID")]
+        public Guid POID { set; get; }
 
 
         [DataMember(Order = 2)]
@@ -46,7 +46,7 @@ namespace EBMTodo.Models.Todo
         [DataMember(Order = 3)]
         [StringLength(100)]
         [DataType(DataType.MultilineText)]
-        [Display(Name = "工作內容")]
+        [Display(Name = "內容")]
         public string Description { set; get; }
 
 
@@ -56,17 +56,14 @@ namespace EBMTodo.Models.Todo
         public int CompleteRate { set; get; }
 
         [DataMember(Order = 3)]
-        [StringLength(200)]
-        [Display(Name = "標籤")]
-        public string Tag { set; get; }
+        [Display(Name = "分類")]
+        public OnlineCategories OnlineCategories { set; get; }
 
         [DataMember(Order = 3)]
         [StringLength(500)]
         [DataType(DataType.MultilineText)]
         [Display(Name = "駐記")]
         public string Memo { set; get; }
-
-
 
         public Guid PMID { set; get; }
         public virtual EBMProjectMember EBMProjectMember { set; get; }

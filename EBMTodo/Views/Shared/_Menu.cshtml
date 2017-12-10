@@ -5,7 +5,9 @@
 <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
         <li>@Html.ActionLink("首頁", "Index", "Home")</li>
+        <li>@Html.ActionLink("線上回報", "Index", "EBMProjectOnlines")</li>
         <li>@Html.ActionLink("歷史紀錄", "Index", "EBMProjectWorkings")</li>
+        <li>@Html.ActionLink("排程", "Index", "EBMProjectSchedules")</li>
         @{
             if (User.IsInRole("AccountManage"))
             {

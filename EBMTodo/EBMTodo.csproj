@@ -189,7 +189,9 @@
     <Compile Include="Areas\Wei\WeiAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EBMProjectMembersController.cs" />
+    <Compile Include="Controllers\EBMProjectOnlinesController.cs" />
     <Compile Include="Controllers\EBMProjects1Controller.cs" />
+    <Compile Include="Controllers\EBMProjectSchedulesController.cs" />
     <Compile Include="Controllers\EBMProjectsController.cs" />
     <Compile Include="Controllers\EBMProjectTodoListsController.cs" />
     <Compile Include="Controllers\EBMProjectWorkingsController.cs" />
@@ -259,12 +261,17 @@
     <Compile Include="Migrations\201711271425170_target11.Designer.cs">
       <DependentUpon>201711271425170_target11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712060322454_target12_AddOnlineTblUpdateTodoCol.cs" />
+    <Compile Include="Migrations\201712060322454_target12_AddOnlineTblUpdateTodoCol.Designer.cs">
+      <DependentUpon>201712060322454_target12_AddOnlineTblUpdateTodoCol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Base\Enum\MemoType.cs" />
     <Compile Include="Models\Base\Enum\CommandType.cs" />
     <Compile Include="Models\Base\Enum\CommandStatus.cs" />
     <Compile Include="Models\Base\Enum\ParticipantLevel.cs" />
     <Compile Include="Models\Base\Enum\ScheduleType.cs" />
+    <Compile Include="Models\Base\Enum\OnlineCategories.cs" />
     <Compile Include="Models\Base\Enum\WorkingType.cs" />
     <Compile Include="Models\Base\Enum\UserManage.cs" />
     <Compile Include="Models\Line\LineRoom.cs" />
@@ -272,6 +279,7 @@
     <Compile Include="Models\Line\LineGroup.cs" />
     <Compile Include="Models\Line\LineCommand.cs" />
     <Compile Include="Models\TODO\EBMProjectSchedule.cs" />
+    <Compile Include="Models\TODO\EBMProjectOnline.cs" />
     <Compile Include="Models\TODO\Memo.cs" />
     <Compile Include="Models\ViewModel\LineWebhookModels.cs" />
     <Compile Include="Models\ViewModel\ReplyBody.cs" />
@@ -755,6 +763,16 @@
     <Content Include="Views\EBMProjectTodoLists\Edit.cshtml" />
     <Content Include="Views\EBMProjectTodoLists\Index.cshtml" />
     <Content Include="Views\Home\_MyWork.cshtml" />
+    <Content Include="Views\EBMProjectOnlines\Create.cshtml" />
+    <Content Include="Views\EBMProjectOnlines\Delete.cshtml" />
+    <Content Include="Views\EBMProjectOnlines\Details.cshtml" />
+    <Content Include="Views\EBMProjectOnlines\Edit.cshtml" />
+    <Content Include="Views\EBMProjectOnlines\Index.cshtml" />
+    <Content Include="Views\EBMProjectSchedules\Create.cshtml" />
+    <Content Include="Views\EBMProjectSchedules\Delete.cshtml" />
+    <Content Include="Views\EBMProjectSchedules\Details.cshtml" />
+    <Content Include="Views\EBMProjectSchedules\Edit.cshtml" />
+    <Content Include="Views\EBMProjectSchedules\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Line\Models\" />
@@ -802,6 +820,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711271425170_target11.resx">
       <DependentUpon>201711271425170_target11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712060322454_target12_AddOnlineTblUpdateTodoCol.resx">
+      <DependentUpon>201712060322454_target12_AddOnlineTblUpdateTodoCol.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

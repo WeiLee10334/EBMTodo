@@ -1,0 +1,100 @@
+﻿@model IEnumerable<EBMTodo.Models.Todo.EBMProjectSchedule>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUser.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EBMProject.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScheduleDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Target)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WokingHour)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.scheduleType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinishDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LineUID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProgressingFlag)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EBMProject.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScheduleDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Target)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WokingHour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.scheduleType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinishDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LineUID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProgressingFlag)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PSID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PSID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PSID })
+        </td>
+    </tr>
+}
+
+</table>
