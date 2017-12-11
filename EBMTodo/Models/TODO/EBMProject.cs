@@ -15,6 +15,7 @@ namespace EBMTodo.Models.Todo
         {
             CreateDateTime = DateTime.Now;
             EBMProjectMember = new HashSet<EBMProjectMember>();
+            EBMProjectSchedule = new HashSet<EBMProjectSchedule>();
         }
 
         [Key, Column(Order = 0)]
@@ -43,6 +44,7 @@ namespace EBMTodo.Models.Todo
         public bool IsHode { set; get; }
 
         public virtual ICollection<EBMProjectMember> EBMProjectMember { get; set; }
+        public virtual ICollection<EBMProjectSchedule> EBMProjectSchedule { get; set; }
 
     }
 }

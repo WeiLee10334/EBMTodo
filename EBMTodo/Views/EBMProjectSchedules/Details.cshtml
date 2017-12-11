@@ -1,0 +1,115 @@
+﻿@model EBMTodo.Models.Todo.EBMProjectSchedule
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EBMProjectSchedule</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EBMProject.ProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EBMProject.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduleDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduleDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Target)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Target)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WokingHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WokingHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.scheduleType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.scheduleType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FinishDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FinishDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LineUID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LineUID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgressingFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProgressingFlag)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PSID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

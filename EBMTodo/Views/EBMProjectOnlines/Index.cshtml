@@ -1,0 +1,82 @@
+﻿@model IEnumerable<EBMTodo.Models.Todo.EBMProjectOnline>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EBMProjectMember.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplyDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompleteRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OnlineCategories)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Memo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EBMProjectMember.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplyDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompleteRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OnlineCategories)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Memo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.POID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.POID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.POID })
+        </td>
+    </tr>
+}
+
+</table>

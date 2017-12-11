@@ -57,21 +57,23 @@ namespace EBMTodo.Models.Todo
 
         [DataMember(Order = 9)]
         [StringLength(128)]
-        [Display(Name = "LINE UID")]
+        [Display(Name = "LINEUID")]
         public string LineUID { set; get; }
 
         [DataMember(Order = 10)]
         [StringLength(100)]
         [Display(Name = "行程Title")]
         public string Title { set; get; }
-    
+
+        
+        [DataMember(Order = 11)]
         public bool ProgressingFlag { set; get; }
 
         public string Id { set; get; }
         public virtual ApplicationUser ApplicationUser { set; get; }
 
         public Guid PID { set; get; }
-        public virtual EBMProject EBMProject { set;get;}
+        public virtual EBMProject EBMProject { set; get; }
 
     }
 }

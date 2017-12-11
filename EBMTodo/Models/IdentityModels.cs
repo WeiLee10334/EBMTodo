@@ -30,6 +30,7 @@ namespace EBMTodo.Models
             IsADUser = false;
             EBMProjectMember = new HashSet<EBMProjectMember>();
             EBMProjectWorking = new HashSet<EBMProjectWorking>();
+            EBMProjectSchedule = new HashSet<EBMProjectSchedule>();
         }
         [StringLength(50)]
         public string LastName { get; set; }
@@ -53,6 +54,7 @@ namespace EBMTodo.Models
         public bool IsADUser { get; set; }
         public virtual ICollection<EBMProjectMember> EBMProjectMember { get; set; }
         public virtual ICollection<EBMProjectWorking> EBMProjectWorking { get; set; }
+        public virtual ICollection<EBMProjectSchedule> EBMProjectSchedule { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
@@ -121,6 +123,7 @@ namespace EBMTodo.Models
         public virtual DbSet<LineRoom> LineRoom { get; set; }
         public virtual DbSet<Memo> Memo { get; set; }
         public virtual DbSet<EBMProjectSchedule> EBMProjectSchedule { get; set; }
+        public virtual DbSet<EBMProjectOnline> EBMProjectOnline { get; set; }
 
         //=====================================
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
