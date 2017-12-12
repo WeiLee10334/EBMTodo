@@ -23,7 +23,6 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "POID")]
         public Guid POID { set; get; }
 
-
         [DataMember(Order = 2)]
         [Display(Name = "加入時間")]
         public DateTime CreateDateTime { set; get; }
@@ -32,11 +31,24 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "提出時間")]
         public DateTime ApplyDateTime { set; get; }
 
+        [Display(Name = "處理時間")]
+        public DateTime? HandleDateTime { set; get; }
+
+        [Display(Name = "處理完成時間")]
+        public DateTime? ResolveDateTime { set; get; }
+
         [DataMember(Order = 3)]
         [StringLength(100)]
         [Display(Name = "申請者")]
         public string ApplyName { set; get; }
 
+        [StringLength(100)]
+        [Display(Name = "回報者")]
+        public string ResponseName { set; get; }
+
+        [StringLength(100)]
+        [Display(Name = "處理者")]
+        public string HandleName { set; get; }
 
         [DataMember(Order = 3)]
         [StringLength(100)]
@@ -48,7 +60,6 @@ namespace EBMTodo.Models.Todo
         [DataType(DataType.MultilineText)]
         [Display(Name = "內容")]
         public string Description { set; get; }
-
 
         [DataMember(Order = 4)]
         [Range(0,100)]

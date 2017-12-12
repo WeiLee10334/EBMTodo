@@ -9,6 +9,5 @@ export class EbmworkingComponent implements OnInit {
 
   constructor() { }
   ngOnInit() {
-
   }
 }

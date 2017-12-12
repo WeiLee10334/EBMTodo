@@ -6,6 +6,7 @@ import { EbmscheduleRoutingModule } from './ebmschedule-routing.module';
 import { EbmscheduleComponent } from './ebmschedule.component';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SharedModule } from '../shared/modules';
+import { EbmscheduleListComponent } from './components/ebmschedule-list/ebmschedule-list.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared/modules';
     SharedModule
   ],
   declarations: [
-    EbmscheduleComponent
+    EbmscheduleComponent,
+    EbmscheduleListComponent
   ]
 })
 export class EbmscheduleModule { }

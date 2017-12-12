@@ -6,6 +6,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { MemoRoutingModule } from './memo-routing.module';
 import { MemoComponent } from './memo.component';
 import { SharedModule } from '../shared/modules';
+import { MemoListComponent } from './components/memo-list/memo-list.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared/modules';
     SharedModule
   ],
   declarations: [
-    MemoComponent
+    MemoComponent,
+    MemoListComponent
   ]
 })
 export class MemoModule { }

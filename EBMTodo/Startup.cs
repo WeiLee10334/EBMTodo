@@ -14,7 +14,7 @@ namespace EBMTodo
             app.Use(async (context, next) =>
             {
                 await next();
-                LogInfo(context.Response.StatusCode.ToString() + ":" + context.Request.Path.Value);
+                //LogInfo(context.Response.StatusCode.ToString() + ":" + context.Request.Path.Value);
                 //if (context.Response.StatusCode == 404)
                 //{
                 //    context.Request.Path = PathString.FromUriComponent("/ngapp");

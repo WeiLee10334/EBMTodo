@@ -2,15 +2,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 import { Http, Headers, Response, URLSearchParams, RequestOptions, ResponseContentType } from '@angular/http';
 import { Router } from '@angular/router';
 import { strictEqual } from 'assert';
+import { StoreType } from '../models/store-type.enum';
 
 @Injectable()
 export class DataStoreService {
 
-  constructor(public http: Http, private router: Router) { }
+  constructor(public http: Http, private router: Router) {
+  }
+  dataStore = new Map<StoreType, any>();
   extractData(res: Response) {
     try {
       return res.json();
@@ -19,8 +23,6 @@ export class DataStoreService {
       return res.text();
     }
   }
-
-
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : "Server error";
@@ -49,7 +51,17 @@ export class DataStoreService {
       .catch(this.handleError);
   }
   workingInit() {
-    return this.HttpPost(null, '/api/ebmpworking/initData');
+    if (this.dataStore.has(StoreType.LineUser) && this.dataStore.has(StoreType.Project)) {
+      return Observable.of({ lineusers: this.dataStore.get(StoreType.LineUser), projects: this.dataStore.get(StoreType.Project) });
+    }
+    else {
+      return this.HttpPost(null, '/api/ebmpworking/initData').do(
+        (data) => {
+          this.dataStore.set(StoreType.LineUser, data.lineusers);
+          this.dataStore.set(StoreType.Project, data.projects);
+        }
+      );
+    }
   }
   workingData(model) {
     return this.HttpPost(model, '/api/ebmpworking/getData');
@@ -82,12 +94,22 @@ export class DataStoreService {
   }
 
   todolistInit() {
-    return this.HttpPost(null, '/api/ebmtodoList/initData');
+    if (this.dataStore.has(StoreType.Member)) {
+      return Observable.of(this.dataStore.get(StoreType.Member));
+    }
+    else {
+      return this.HttpPost(null, '/api/ebmtodoList/initData').do(
+        (data) => {
+          console.log(data)
+          this.dataStore.set(StoreType.Member, data);
+        }
+      );
+    }
   }
   todolistData() {
     return this.HttpPost(null, '/api/ebmtodoList/getData');
   }
-  createTodolist(model) {
-    return this.HttpPost(model, '/api/ebmtodoList/create');
+  createOrUpdateTodolist(model) {
+    return this.HttpPost(model, '/api/ebmtodoList/CreateOrUpdate');
   }
 }

@@ -19,6 +19,10 @@ const routes: Routes = [
     path: "todolist", loadChildren: './ebmtodolist/ebmtodolist.module#EbmtodolistModule'
     //canLoad: [AuthGuard],
   },
+  {
+    path: "online", loadChildren: './ebmonline/ebmonline.module#EbmonlineModule'
+    //canLoad: [AuthGuard],
+  },
   { path: '**', redirectTo: 'working' }
 ];
 

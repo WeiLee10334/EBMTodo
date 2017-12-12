@@ -29,16 +29,38 @@ export class EbmtodolistListComponent implements OnInit {
   // public string PMID { set; get; }
 
   // public string MemberTitle { set; get; }
+  Cards = new Map<string, boolean>();
   ngOnInit() {
     this.api.todolistData().subscribe(
       (data) => {
-        console.log(data);
         this.Data = data;
+        this.Data.forEach((item) => {
+          this.Cards.set(item.PTLID, false);
+        })
       },
       (err) => {
         console.log(err);
       }
     )
   }
-
+  newCard() {
+    this.Data.unshift({});
+  }
+  todoChanged(event, index) {
+    console.log(event, index);
+    if (event === null) {
+      this.Data.splice(index, 1);
+    }
+    else {
+      this.api.createOrUpdateTodolist(event).subscribe(
+        (data) => {
+          this.Data[index] = Object.assign({}, data);
+        },
+        (err) => {
+          alert('操作錯誤');
+          console.log(err);
+        }
+      )
+    }
+  }
 }

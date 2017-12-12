@@ -4,8 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EbmtodolistComponent } from './ebmtodolist.component';
 import { EbmtodolistRoutingModule } from './ebmtodolist-routing.module';
 import { EbmtodolistListComponent } from './ebmtodolist-list/ebmtodolist-list.component';
-import { CreateTodolistComponent } from './create-todolist/create-todolist.component';
 import { SharedModule } from '../shared/modules';
+import { TodoCardComponent } from './components/todo-card/todo-card.component';
+import { ProgressbarModule, BsDatepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -13,12 +14,14 @@ import { SharedModule } from '../shared/modules';
     EbmtodolistRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    ProgressbarModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   declarations: [
     EbmtodolistComponent,
     EbmtodolistListComponent,
-    CreateTodolistComponent
+    TodoCardComponent
   ]
 })
 export class EbmtodolistModule { }

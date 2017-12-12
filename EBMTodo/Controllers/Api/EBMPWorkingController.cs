@@ -23,7 +23,7 @@ namespace EBMTodo.Controllers.Api
         [Route("initData")]
         public IHttpActionResult initData()
         {
-            var members = db.LineUser.Select(x => new
+            var lineusers = db.LineUser.Select(x => new
             {
                 id = x.UID,
                 name = x.Name
@@ -33,7 +33,7 @@ namespace EBMTodo.Controllers.Api
                 id = x.PID,
                 name = x.ProjectName
             }).ToList();
-            return Ok(new { members = members, projects = projects });
+            return Ok(new { lineusers = lineusers, projects = projects });
         }
         [HttpPost]
         [Route("getData")]

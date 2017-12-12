@@ -38,7 +38,6 @@ export class EbmworkingListComponent implements OnInit {
   ngOnInit() {
     this.api.workingInit().subscribe(
       (data) => {
-        console.log(data);
         this.Options = data;
       },
       (err) => {

@@ -1,12 +1,11 @@
 <div class="container">
     <hr>
     <div class="row">
-        <a class="btn btn-success" [routerLink]="['create']" [routerLinkActive]="'active'">新增</a>
+        <button class="btn btn-success" (click)="newCard()">新增</button>
     </div>
     <div class="row">
-        <div class="col-12">
-            <app-paging-table [_Data]="Data" [_Columns]="Columns"></app-paging-table>
+        <div class="w-50 p-2 d-block mx-auto" *ngFor="let item of Data;let i = index">
+            <app-todo-card [_Todo]="item" (changed)="todoChanged($event,i)"></app-todo-card>
         </div>
-
     </div>
 </div>
