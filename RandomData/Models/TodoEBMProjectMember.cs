@@ -12,6 +12,7 @@ namespace RandomData.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TodoEBMProjectMember()
         {
+            TodoEBMProjectOnline = new HashSet<TodoEBMProjectOnline>();
             TodoEBMProjectTodoList = new HashSet<TodoEBMProjectTodoList>();
         }
 
@@ -31,6 +32,9 @@ namespace RandomData.Models
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual TodoEBMProject TodoEBMProject { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TodoEBMProjectOnline> TodoEBMProjectOnline { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TodoEBMProjectTodoList> TodoEBMProjectTodoList { get; set; }

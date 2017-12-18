@@ -65,6 +65,7 @@
     <Reference Include="LinqKit.EntityFramework, Version=1.1.9.0, Culture=neutral, PublicKeyToken=b6c8cfc71f7a6a80, processorArchitecture=MSIL">
       <HintPath>..\packages\LinqKit.EntityFramework.1.1.9.0\lib\net45\LinqKit.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -94,10 +95,13 @@
     <Compile Include="Models\Line_Group.cs" />
     <Compile Include="Models\Line_Room.cs" />
     <Compile Include="Models\Line_User.cs" />
+    <Compile Include="Models\Memo.cs" />
     <Compile Include="Models\RBUnit.cs" />
     <Compile Include="Models\RBUnitUserManage.cs" />
     <Compile Include="Models\TodoEBMProject.cs" />
     <Compile Include="Models\TodoEBMProjectMember.cs" />
+    <Compile Include="Models\TodoEBMProjectOnline.cs" />
+    <Compile Include="Models\TodoEBMProjectSchedule.cs" />
     <Compile Include="Models\TodoEBMProjectTodoList.cs" />
     <Compile Include="Models\TodoEBMProjectWorking.cs" />
     <Compile Include="Program.cs" />

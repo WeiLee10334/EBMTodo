@@ -31,35 +31,43 @@ namespace EBMTodo.Models.Todo
         [Display(Name = "提出時間")]
         public DateTime ApplyDateTime { set; get; }
 
-        [Display(Name = "處理時間")]
-        public DateTime? HandleDateTime { set; get; }
-
-        [Display(Name = "處理完成時間")]
-        public DateTime? ResolveDateTime { set; get; }
+        public string ApplyDepartment { set; get; }
 
         [DataMember(Order = 3)]
         [StringLength(100)]
         [Display(Name = "申請者")]
         public string ApplyName { set; get; }
 
-        [StringLength(100)]
-        [Display(Name = "回報者")]
-        public string ResponseName { set; get; }
-
-        [StringLength(100)]
-        [Display(Name = "處理者")]
-        public string HandleName { set; get; }
-
-        [DataMember(Order = 3)]
-        [StringLength(100)]
-        [Display(Name = "標題")]
-        public string title { set; get; }
-
         [DataMember(Order = 3)]
         [StringLength(100)]
         [DataType(DataType.MultilineText)]
         [Display(Name = "內容")]
         public string Description { set; get; }
+
+        [Display(Name = "處理時間")]
+        public DateTime? HandleDateTime { set; get; }
+
+        [StringLength(100)]
+        [Display(Name = "處理者")]
+        public string HandleName { set; get; }
+
+        [Display(Name = "處理完成時間")]
+        public DateTime? ResolveDateTime { set; get; }
+
+        [StringLength(100)]
+        [Display(Name = "回報者")]
+        public string ResponseName { set; get; }
+
+        [DataMember(Order = 3)]
+        [StringLength(500)]
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "駐記")]
+        public string Memo { set; get; }
+
+        [DataMember(Order = 3)]
+        [StringLength(100)]
+        [Display(Name = "標題")]
+        public string title { set; get; }
 
         [DataMember(Order = 4)]
         [Range(0,100)]
@@ -69,12 +77,6 @@ namespace EBMTodo.Models.Todo
         [DataMember(Order = 3)]
         [Display(Name = "分類")]
         public OnlineCategories OnlineCategories { set; get; }
-
-        [DataMember(Order = 3)]
-        [StringLength(500)]
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "駐記")]
-        public string Memo { set; get; }
 
         public Guid PMID { set; get; }
         public virtual EBMProjectMember EBMProjectMember { set; get; }

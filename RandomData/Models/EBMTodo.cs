@@ -24,10 +24,13 @@ namespace RandomData.Models
         public virtual DbSet<Line_Group> Line_Group { get; set; }
         public virtual DbSet<Line_Room> Line_Room { get; set; }
         public virtual DbSet<Line_User> Line_User { get; set; }
+        public virtual DbSet<Memo> Memo { get; set; }
         public virtual DbSet<RBUnit> RBUnit { get; set; }
         public virtual DbSet<RBUnitUserManage> RBUnitUserManage { get; set; }
         public virtual DbSet<TodoEBMProject> TodoEBMProject { get; set; }
         public virtual DbSet<TodoEBMProjectMember> TodoEBMProjectMember { get; set; }
+        public virtual DbSet<TodoEBMProjectOnline> TodoEBMProjectOnline { get; set; }
+        public virtual DbSet<TodoEBMProjectSchedule> TodoEBMProjectSchedule { get; set; }
         public virtual DbSet<TodoEBMProjectTodoList> TodoEBMProjectTodoList { get; set; }
         public virtual DbSet<TodoEBMProjectWorking> TodoEBMProjectWorking { get; set; }
 

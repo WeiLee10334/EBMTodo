@@ -203,6 +203,7 @@
     <Compile Include="Controllers\Api\EBMScheduleController.cs" />
     <Compile Include="Controllers\Api\EBMTodoListController.cs" />
     <Compile Include="Controllers\Api\MemoController.cs" />
+    <Compile Include="Controllers\Api\Models\EBMOnlineViewModel.cs" />
     <Compile Include="Controllers\Api\Models\EBMScheduleViewModel.cs" />
     <Compile Include="Controllers\Api\Models\EBMTodoListViewModel.cs" />
     <Compile Include="Controllers\Api\Models\MemoViewModel.cs" />
@@ -282,6 +283,14 @@
     <Compile Include="Migrations\201712060322454_target12_AddOnlineTblUpdateTodoCol.cs" />
     <Compile Include="Migrations\201712060322454_target12_AddOnlineTblUpdateTodoCol.Designer.cs">
       <DependentUpon>201712060322454_target12_AddOnlineTblUpdateTodoCol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712180054482_online_columns.cs" />
+    <Compile Include="Migrations\201712180054482_online_columns.Designer.cs">
+      <DependentUpon>201712180054482_online_columns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712180843590_online_department.cs" />
+    <Compile Include="Migrations\201712180843590_online_department.Designer.cs">
+      <DependentUpon>201712180843590_online_department.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Base\Enum\MemoType.cs" />
@@ -1081,6 +1090,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712060322454_target12_AddOnlineTblUpdateTodoCol.resx">
       <DependentUpon>201712060322454_target12_AddOnlineTblUpdateTodoCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712180054482_online_columns.resx">
+      <DependentUpon>201712180054482_online_columns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712180843590_online_department.resx">
+      <DependentUpon>201712180843590_online_department.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

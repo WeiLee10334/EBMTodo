@@ -6,34 +6,38 @@ namespace RandomData.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("TodoEBMProjectWorking")]
-    public partial class TodoEBMProjectWorking
+    [Table("TodoEBMProjectSchedule")]
+    public partial class TodoEBMProjectSchedule
     {
         [Key]
-        public Guid PWID { get; set; }
+        public Guid PSID { get; set; }
 
         public DateTime CreateDateTime { get; set; }
+
+        public DateTime ScheduleDateTime { get; set; }
+
+        [StringLength(100)]
+        public string Target { get; set; }
 
         [StringLength(500)]
         public string Description { get; set; }
 
         public decimal WokingHour { get; set; }
 
-        [Required]
+        public int scheduleType { get; set; }
+
+        public DateTime FinishDateTime { get; set; }
+
+        [StringLength(128)]
+        public string LineUID { get; set; }
+
         [StringLength(128)]
         public string Id { get; set; }
 
         public Guid PID { get; set; }
 
-        public int workingType { get; set; }
-
         [StringLength(100)]
-        public string Target { get; set; }
-
-        public DateTime RecordDateTime { get; set; }
-
-        [StringLength(128)]
-        public string LineUID { get; set; }
+        public string Title { get; set; }
 
         public bool ProgressingFlag { get; set; }
 

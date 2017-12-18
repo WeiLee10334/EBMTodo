@@ -2,7 +2,7 @@
     <table class="table table-hover table-bordered">
         <thead>
             <tr>
-                <th *ngFor="let column of Columns">
+                <th *ngFor="let column of Columns" class="text-center">
                     <span>{{column.name||column.prop}}&nbsp;
                         <span [ngClass]="{'asc':!mf.sort[column.prop]||mf.sort[column.prop]==='undefined','desc':mf.sort[column.prop]}" (click)="mf.changeSort(column.prop)"></span>
                     </span>

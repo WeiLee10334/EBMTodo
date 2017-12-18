@@ -112,4 +112,8 @@ export class DataStoreService {
   createOrUpdateTodolist(model) {
     return this.HttpPost(model, '/api/ebmtodoList/CreateOrUpdate');
   }
+
+  onlineData() {
+    return this.HttpPost(null, '/api/ebmonline/getData');
+  }
 }

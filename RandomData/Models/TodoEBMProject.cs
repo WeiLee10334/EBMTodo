@@ -13,6 +13,7 @@ namespace RandomData.Models
         public TodoEBMProject()
         {
             TodoEBMProjectMember = new HashSet<TodoEBMProjectMember>();
+            TodoEBMProjectSchedule = new HashSet<TodoEBMProjectSchedule>();
             TodoEBMProjectWorking = new HashSet<TodoEBMProjectWorking>();
         }
 
@@ -32,6 +33,9 @@ namespace RandomData.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TodoEBMProjectMember> TodoEBMProjectMember { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TodoEBMProjectSchedule> TodoEBMProjectSchedule { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TodoEBMProjectWorking> TodoEBMProjectWorking { get; set; }
