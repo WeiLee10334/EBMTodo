@@ -292,6 +292,10 @@
     <Compile Include="Migrations\201712180843590_online_department.Designer.cs">
       <DependentUpon>201712180843590_online_department.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712190117432_onlinemember_PMID.cs" />
+    <Compile Include="Migrations\201712190117432_onlinemember_PMID.Designer.cs">
+      <DependentUpon>201712190117432_onlinemember_PMID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Base\Enum\MemoType.cs" />
     <Compile Include="Models\Base\Enum\CommandType.cs" />
@@ -1096,6 +1100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712180843590_online_department.resx">
       <DependentUpon>201712180843590_online_department.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712190117432_onlinemember_PMID.resx">
+      <DependentUpon>201712190117432_onlinemember_PMID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,11 @@
+<div class="container">
+  <hr>
+  <div class="row">
+    <button class="btn btn-success" (click)="newCard()">新增</button>
+  </div>
+  <div class="row">
+    <div class="w-50 p-2 d-block mx-auto" *ngFor="let item of Data;let i = index">
+      <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)"></app-todolist-card>
+    </div>
+  </div>
+</div>

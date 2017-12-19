@@ -10,6 +10,7 @@ namespace RandomData.Models
     public partial class TodoEBMProjectOnline
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid POID { get; set; }
 
         public DateTime CreateDateTime { get; set; }
@@ -32,7 +33,7 @@ namespace RandomData.Models
         [StringLength(500)]
         public string Memo { get; set; }
 
-        public Guid PMID { get; set; }
+        public Guid? PMID { get; set; }
 
         public DateTime? HandleDateTime { get; set; }
 

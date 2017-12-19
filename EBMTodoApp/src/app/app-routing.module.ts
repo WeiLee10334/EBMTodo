@@ -4,26 +4,10 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
-    path: "working", loadChildren: './ebmworking/ebmworking.module#EbmworkingModule'
+    path: "", loadChildren: './ebm-zone/ebm-zone.module#EbmZoneModule'
     //canLoad: [AuthGuard],
   },
-  {
-    path: "memo", loadChildren: './memo/memo.module#MemoModule'
-    //canLoad: [AuthGuard],
-  },
-  {
-    path: "schedule", loadChildren: './ebmschedule/ebmschedule.module#EbmscheduleModule'
-    //canLoad: [AuthGuard],
-  },
-  {
-    path: "todolist", loadChildren: './ebmtodolist/ebmtodolist.module#EbmtodolistModule'
-    //canLoad: [AuthGuard],
-  },
-  {
-    path: "online", loadChildren: './ebmonline/ebmonline.module#EbmonlineModule'
-    //canLoad: [AuthGuard],
-  },
-  { path: '**', redirectTo: 'working' }
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
