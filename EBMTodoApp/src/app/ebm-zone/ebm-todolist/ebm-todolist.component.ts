@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DataStoreService } from '../../shared/services/data-store.service';
+import { NgControlStatus } from '@angular/forms/src/directives/ng_control_status';
+import { validateConfig } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-ebm-todolist',
@@ -7,8 +9,9 @@ import { DataStoreService } from '../../shared/services/data-store.service';
   styleUrls: ['./ebm-todolist.component.scss']
 })
 export class EbmTodolistComponent implements OnInit {
-
+  @ViewChild('keyword') keyword: ElementRef;
   constructor(private api: DataStoreService) { }
+  Source = [];
   Data = [];
   Columns = [
     { name: "標題", prop: "title" },
@@ -33,10 +36,11 @@ export class EbmTodolistComponent implements OnInit {
   ngOnInit() {
     this.api.todolistData().subscribe(
       (data) => {
-        this.Data = data;
+        this.Source = data;
         this.Data.forEach((item) => {
           this.Cards.set(item.PTLID, false);
         })
+        this.filter();
       },
       (err) => {
         console.log(err);
@@ -47,7 +51,6 @@ export class EbmTodolistComponent implements OnInit {
     this.Data.unshift({});
   }
   todoChanged(event, index) {
-    console.log(event, index);
     if (event === null) {
       this.Data.splice(index, 1);
     }
@@ -62,5 +65,24 @@ export class EbmTodolistComponent implements OnInit {
         }
       )
     }
+  }
+  filter() {
+    if (this.keyword.nativeElement.value) {
+      this.Data = Object.assign([], this.Source.filter((value) => {
+        var keys = Object.keys(value);
+        var match = false;
+        keys.forEach((k) => {
+          if (value[k] && value[k].toString().toLowerCase().indexOf(this.keyword.nativeElement.value.toLowerCase()) !== -1) {
+            match = true;
+            return;
+          }
+        });
+        return match;
+      }))
+    }
+    else {
+      this.Data = this.Source;
+    }
+
   }
 }

@@ -13,6 +13,9 @@ import { EbmMemoComponent } from './ebm-memo/ebm-memo.component';
 import { EbmTodolistComponent } from './ebm-todolist/ebm-todolist.component';
 import { TodolistCardComponent } from './components/todolist-card/todolist-card.component';
 import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
+import { OnlineTableComponent } from './components/online-table/online-table.component';
+import { OnlineTableRowComponent } from './components/online-table-row/online-table-row.component';
+import { OnlineTableHeaderComponent } from './components/online-table-header/online-table-header.component';
 
 @NgModule({
   imports: [
@@ -27,8 +30,16 @@ import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
     SharedModule
   ],
   declarations: [
-    EbmZoneComponent, 
-    EbmWorkingComponent, EbmScheduleComponent, EbmMemoComponent, EbmTodolistComponent, TodolistCardComponent, EbmOnlineComponent
+    EbmZoneComponent,
+    EbmWorkingComponent,
+    EbmScheduleComponent,
+    EbmMemoComponent,
+    EbmTodolistComponent,
+    TodolistCardComponent,
+    EbmOnlineComponent,
+    OnlineTableComponent,
+    OnlineTableRowComponent,
+    OnlineTableHeaderComponent,
   ]
 })
 export class EbmZoneModule { }

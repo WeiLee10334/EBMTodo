@@ -93,7 +93,6 @@ namespace EBMTodo.Controllers.Api
                 db.SaveChanges();
                 return Ok(model);
             }
-
         }
 
     }

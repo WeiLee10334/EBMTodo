@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json --host 192.168.1.103 --public-host http://ng.youaresuck.com:80",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod --build-optimizer",
     "deploy":"ng build --prod --build-optimizer --bh /ngapp/ --output-path ../EBMTodo/ngApp",
     "test": "ng test",

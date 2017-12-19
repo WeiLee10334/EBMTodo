@@ -116,4 +116,13 @@ export class DataStoreService {
   onlineData() {
     return this.HttpPost(null, '/api/ebmonline/getData');
   }
+  onlineInsert(model) {
+    return this.HttpPost(model, '/api/ebmonline/insert');
+  }
+  onlineUpdate(model) {
+    return this.HttpPost(model, '/api/ebmonline/update');
+  }
+  onlineDelete(model) {
+    return this.HttpPost(model, '/api/ebmonline/delete');
+  }
 }
