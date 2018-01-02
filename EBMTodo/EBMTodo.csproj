@@ -190,6 +190,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Back\BackAreaRegistration.cs" />
+    <Compile Include="Areas\Back\Controllers\EBMProjectController.cs" />
+    <Compile Include="Areas\Back\Controllers\EBMProjectMemberController.cs" />
+    <Compile Include="Areas\Back\Models\PagingQueryModel.cs" />
+    <Compile Include="Areas\Back\Models\PagingViewModel.cs" />
     <Compile Include="Areas\Line\Controllers\ChartController.cs" />
     <Compile Include="Areas\Line\Controllers\ConversationCollectionController.cs" />
     <Compile Include="Areas\Line\Controllers\RDCICController.cs" />
@@ -198,14 +203,18 @@
     <Compile Include="Areas\Wei\WeiAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\BaseController.cs" />
+    <Compile Include="Controllers\Api\EBMemberController.cs" />
     <Compile Include="Controllers\Api\EBMOnlineController.cs" />
+    <Compile Include="Controllers\Api\EBMProjectController.cs" />
     <Compile Include="Controllers\Api\EBMPWorkingController.cs" />
     <Compile Include="Controllers\Api\EBMScheduleController.cs" />
     <Compile Include="Controllers\Api\EBMTodoListController.cs" />
     <Compile Include="Controllers\Api\MemoController.cs" />
+    <Compile Include="Controllers\Api\Models\AspUserViewModel.cs" />
     <Compile Include="Controllers\Api\Models\EBMOnlineViewModel.cs" />
     <Compile Include="Controllers\Api\Models\EBMScheduleViewModel.cs" />
     <Compile Include="Controllers\Api\Models\EBMTodoListViewModel.cs" />
+    <Compile Include="Controllers\Api\Models\LineUserViewModel.cs" />
     <Compile Include="Controllers\Api\Models\MemoViewModel.cs" />
     <Compile Include="Controllers\EBMProjectMembersController.cs" />
     <Compile Include="Controllers\EBMProjectOnlinesController.cs" />
@@ -736,6 +745,7 @@
     <Content Include="ngApp\fontawesome-webfont.af7ae505a9eed503f8b8.woff2" />
     <Content Include="ngApp\fontawesome-webfont.b06871f281fee6b241d6.ttf" />
     <Content Include="ngApp\fontawesome-webfont.fee66e712a8a08eef580.woff" />
+    <Content Include="Areas\Back\Views\web.config" />
     <None Include="Properties\PublishProfiles\EBMEMRLineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ebmLineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ebmLineBot - Web Deploy.pubxml" />
@@ -1058,11 +1068,13 @@
     <Content Include="Views\EBMProjectSchedules\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Back\Views\Shared\" />
     <Folder Include="Areas\Line\Models\" />
     <Folder Include="Areas\Line\Views\Shared\" />
     <Folder Include="Areas\Wei\Models\" />
     <Folder Include="Areas\Wei\Views\Shared\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\EBMember\" />
     <Folder Include="Views\Ngapp\" />
   </ItemGroup>
   <ItemGroup>

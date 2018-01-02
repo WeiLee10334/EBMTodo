@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container-fluid">
   <hr>
-  <div class="row">
+  <div class="row-fluid">
     <div class="col-2">
         <button class="btn btn-success" (click)="newCard()">新增</button>
     </div>
     <input type="text" placeholder="搜尋" class="form-control col-10" #keyword (keyup)="filter()">
   </div>
   <div class="row">
-    <div class="w-50 p-2 d-block mx-auto" *ngFor="let item of Data;let i = index">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 d-block mx-auto" *ngFor="let item of Data;let i = index">
       <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)"></app-todolist-card>
     </div>
   </div>

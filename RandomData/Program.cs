@@ -11,13 +11,36 @@ using System.Threading.Tasks;
 
 namespace RandomData
 {
+
     class Program
     {
         static void Main(string[] args)
         {
+            //var schema = GraphQL<EBMTodo>.CreateDefaultSchema(() => new EBMTodo());
+            //var online = schema.AddType<TodoEBMProjectOnline>();
+            //online.AddAllFields();
+
+            //schema.AddListField("online", db => db.TodoEBMProjectOnline);
+            //schema.Complete();
+            //var Gql = new GraphQL<EBMTodo>(schema);
+            //var result = Gql.ExecuteQuery(@"{
+            //    online{
+            //        POID
+            //    }
+            //}");
+            //Console.WriteLine(JsonConvert.SerializeObject(result));
+            Dictionary<string, string> Filters = new Dictionary<string, string>();
+            Filters.Add("key", "value");
+            Filters.Add("key", "value1");
+            Filters.Add("key2", "value2");
+            Console.WriteLine(JsonConvert.SerializeObject(Filters));
+            Console.ReadLine();
+        }
+        static void addOnline()
+        {
             EBMTodo db = new EBMTodo();
             var parser = new TextFieldParser(@"D:\IIS\EBM\國軍電子病歷系統整合案-線上報修紀錄表 - 線上報修紀錄表.csv");
-            parser.TextFieldType = FieldType.Delimited;
+            parser.TextFieldType = Microsoft.VisualBasic.FileIO.FieldType.Delimited;
             parser.SetDelimiters(",");
             List<TodoEBMProjectOnline> list = new List<TodoEBMProjectOnline>();
             while (!parser.EndOfData)
@@ -76,9 +99,7 @@ namespace RandomData
 
 
             //}
-            Console.ReadLine();
         }
-
         static void addWorkings()
         {
             EBMTodo db = new EBMTodo();

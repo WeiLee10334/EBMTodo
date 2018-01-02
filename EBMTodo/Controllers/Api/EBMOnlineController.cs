@@ -41,25 +41,33 @@ namespace EBMTodo.Controllers.Api
         [Route("Insert")]
         public IHttpActionResult Insert(EBMOnlineViewModel model)
         {
-            var data = new EBMProjectOnline()
+            try
             {
-                ApplyDateTime = model.ApplyDateTime,
-                ApplyDepartment = model.ApplyDepartment,
-                ApplyName = model.ApplyName,
-                CompleteRate = model.CompleteRate,
-                CreateDateTime = DateTime.Now,
-                Description = model.Description,
-                HandleDateTime = model.HandleDateTime,
-                HandleName = model.HandleName,
-                OnlineCategories = model.OnlineCategories,
-                ResolveDateTime = model.ResolveDateTime,
-                ResponseName = model.ResponseName,
-                title = model.title
-            };
-            db.EBMProjectOnline.Add(data);
-            db.SaveChanges();
-            model.POID = data.POID.ToString();
-            return Ok(model);
+                var data = new EBMProjectOnline()
+                {
+                    ApplyDateTime = model.ApplyDateTime,
+                    ApplyDepartment = model.ApplyDepartment,
+                    ApplyName = model.ApplyName,
+                    CompleteRate = model.CompleteRate,
+                    CreateDateTime = DateTime.Now,
+                    Description = model.Description,
+                    HandleDateTime = model.HandleDateTime,
+                    HandleName = model.HandleName,
+                    OnlineCategories = model.OnlineCategories,
+                    ResolveDateTime = model.ResolveDateTime,
+                    ResponseName = model.ResponseName,
+                    title = model.title
+                };
+                db.EBMProjectOnline.Add(data);
+                db.SaveChanges();
+                model.POID = data.POID.ToString();
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.BadRequest, e.Message);
+            }
+
         }
         [HttpPost]
         [Route("Update")]

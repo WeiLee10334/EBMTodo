@@ -35,7 +35,7 @@ export class OnlineTableComponent implements OnInit {
     });
   }
   add() {
-    this.PendingData.unshift({});
+    this.PendingData.unshift({ApplyDateTime:new Date()});
   }
   filter(event, column) {
     this.Data = Object.assign([], this.Source.filter((value) => {

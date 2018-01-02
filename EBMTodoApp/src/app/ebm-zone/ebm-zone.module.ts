@@ -16,6 +16,7 @@ import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
 import { OnlineTableComponent } from './components/online-table/online-table.component';
 import { OnlineTableRowComponent } from './components/online-table-row/online-table-row.component';
 import { OnlineTableHeaderComponent } from './components/online-table-header/online-table-header.component';
+import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { OnlineTableHeaderComponent } from './components/online-table-header/onl
     OnlineTableComponent,
     OnlineTableRowComponent,
     OnlineTableHeaderComponent,
+    EbmProjectComponent,
   ]
 })
 export class EbmZoneModule { }

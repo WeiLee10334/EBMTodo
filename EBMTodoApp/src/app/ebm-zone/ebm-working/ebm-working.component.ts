@@ -9,8 +9,6 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./ebm-working.component.scss']
 })
 export class EbmWorkingComponent implements OnInit {
-
-  
   constructor(public api: DataStoreService) { }
   Form = new FormGroup({
     start: new FormControl(),
