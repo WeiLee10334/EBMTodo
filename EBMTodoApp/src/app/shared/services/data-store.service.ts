@@ -142,4 +142,17 @@ export class DataStoreService {
   projectMemberData(model){
     return this.HttpPost(model, '/api/back/EBMProjectMember/GetList');
   }
+  projectMemberCreate(model){
+    return this.HttpPost(model, '/api/back/EBMProjectMember/Create');
+  }
+  projectMemberUpdate(model){
+    return this.HttpPost(model, '/api/back/EBMProjectMember/Update');
+  }
+  projectMemberDelete(model){
+    return this.HttpPost(model, '/api/back/EBMProjectMember/Delete');
+  }
+
+  userData(model){
+    return this.HttpPost(model, '/api/back/EBMUser/GetList');
+  }
 }

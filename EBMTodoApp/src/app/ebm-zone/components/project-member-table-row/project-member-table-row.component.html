@@ -1,7 +1,7 @@
 <td [attr.data-th]="'UserName'">
   <span *ngIf="!Editable">{{ProjectMember['UserName']}}</span>
   <span *ngIf="Editable">
-    <input type="text" class="form-control" [(ngModel)]="ProjectMember['UserName']">
+    <app-user-select [(ngModel)]="User" (change)="changeUser($event)"></app-user-select>
   </span>
 </td>
 <td [attr.data-th]="'title'">
@@ -11,16 +11,19 @@
   </span>
 </td>
 <td [attr.data-th]="'ProjectName'">
-  <span *ngIf="!Editable">{{ProjectMember['ProjectName']}}</span>
-  <span *ngIf="Editable">
-    <input type="text" class="form-control" [(ngModel)]="ProjectMember['ProjectName']">
-  </span>
+  {{ProjectMember['ProjectName']}}
 </td>
 <td [attr.data-th]="'CreateDateTime'">
-  <span *ngIf="!Editable">{{ProjectMember['CreateDateTime']|date:'yyyy-MM-dd'}}</span>
+  {{ProjectMember['CreateDateTime']|date:'yyyy-MM-dd'}}
+  <!-- <span *ngIf="!Editable">{{ProjectMember['CreateDateTime']|date:'yyyy-MM-dd'}}</span>
   <span *ngIf="Editable">
     <input type="text" class="form-control" bsDatepicker [(ngModel)]="ProjectMember['CreateDateTime']" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}"
     />
+  </span> -->
+</td>
+<td [attr.data-th]="'TodoList'">
+  <span>
+    <a class="btn btn-link" [routerLink]="['/todolists']" [queryParams]="{ PMID:ProjectMember['PMID'] }" [routerLinkActive]="'active'">待辦工作</a>
   </span>
 </td>
 

@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataStoreService } from '../../shared/services';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 declare var $: any;
 @Component({
   selector: 'app-ebm-project-member',
@@ -7,53 +9,86 @@ declare var $: any;
   styleUrls: ['./ebm-project-member.component.scss']
 })
 export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
-
-  // public string PMID { set; get; }
-
-  // public DateTime? CreateDateTime { set; get; }
-  // [StringLength(100)]
-  // public string title { set; get; }
-  // [Required]
-  // public string Id { set; get; }
-
-  // public string UserName { set; get; }
-  // [Required]
-  // public string PID { set; get; }
-
-  // public string ProjectName { set; get; }
   Columns = [
     { name: "負責人", prop: "UserName" },
     { name: "職稱", prop: "title" },
     { name: "專案名稱", prop: "ProjectName" },
     { name: "建立時間", prop: "CreateDateTime" },
+    { name: "待辦", prop: "Todolist" },
   ]
+  Source = [];
   Data = [];
+  Filters = {};
+  OrderBy = "CreateDateTime";
   PendingData = [];
-  constructor(private api: DataStoreService) { }
-  add() {
-    this.PendingData.unshift({ CreateDateTime: new Date() });
+  ProjectMember = {
+    PID: "",
+    ProjectName: ""
   }
+  constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
   ngOnInit() {
-    let model = {
-      "Length": 9999,
-      "OrderBy": "CreateDateTime",
-      "Reverse": false
-    }
-    this.api.projectMemberData(model).subscribe(
-      (data) => {
-        this.Data = data.Data;
-        console.log(this.Data);
-      },
-      (err) => {
-        console.log(err);
+    this.route.queryParams.subscribe((value) => {
+      this.ProjectMember['ProjectName'] = value["ProjectName"];
+      this.ProjectMember['PID'] = value["PID"];
+      let model = {
+        "Length": 9999,
+        "OrderBy": "CreateDateTime",
+        "Reverse": false,
+        "PID": value['PID']
       }
-    )
+      this.api.projectMemberData(model).subscribe(
+        (data) => {
+          this.Source = data.Data;
+          this.filter();
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    });
   }
-  delete(el: any, index) {
-    var d = this.Data.splice(index, 1);
+  updateFilters(event, column) {
+    this.Filters[column.prop] = event.target.value;
+    console.log(this.Filters);
+    this.filter();
+  }
+  filter() {
+    let temp = Object.assign([], this.Source);
 
-    this.Data = Object.assign([], this.Data);
+    Object.keys(this.Filters).forEach((key) => {
+      temp = temp.filter((value) => {
+        if (value[key]) {
+          return value[key].toString().toLowerCase().indexOf(this.Filters[key].toString().toLowerCase()) !== -1;
+        }
+        else {
+          return false;
+        }
+      })
+    });
+    this.Data = Object.assign([], temp);
   }
+  add() {
+    this.ProjectMember['CreateDateTime'] = new Date();
+    this.PendingData.unshift(this.ProjectMember);
+  }
+  delete(project) {
+    let index = this.Source.findIndex(item => item.PID == project.PID);
+    this.Source.splice(index, 1);
+    this.Source = Object.assign([], this.Source);
+    this.filter();
+  }
+  deletePending(index) {
+    console.log(index)
+    this.PendingData.splice(index, 1);
+    this.PendingData = Object.assign([], this.PendingData);
+  }
+  changeState(project, index) {
+    this.deletePending(index);
+    this.Source.unshift(project);
+    this.filter();
+  }
+
+
   ngAfterViewInit() {
     $("table th").resizable({
       handles: "e",
@@ -63,4 +98,5 @@ export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
 }

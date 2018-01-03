@@ -11,15 +11,17 @@
   </span>
 </td>
 <td [attr.data-th]="'CreateDateTime'">
-  <span *ngIf="!Editable">{{Project['CreateDateTime']|date:'yyyy-MM-dd'}}</span>
+  {{Project['CreateDateTime']|date:'yyyy-MM-dd'}}
+  <!-- <span *ngIf="!Editable">{{Project['CreateDateTime']|date:'yyyy-MM-dd'}}</span>
   <span *ngIf="Editable">
     <input type="text" class="form-control" bsDatepicker [(ngModel)]="Project['CreateDateTime']" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}"
     />
-  </span>
+  </span> -->
 </td>
 <td [attr.data-th]="'ProjectMembers'">
   <span>
-    <a class="btn btn-link" [routerLink]="['/projectmembers']" [queryParams]="{ PID:Project['PID'] }" [routerLinkActive]="'active'">專案人員</a>
+    <a class="btn btn-link" [routerLink]="['/projectmember']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
+      [routerLinkActive]="'active'">專案人員</a>
   </span>
 </td>
 

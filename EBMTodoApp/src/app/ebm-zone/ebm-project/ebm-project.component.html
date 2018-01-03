@@ -18,7 +18,7 @@
         <tbody>
           <tr>
             <th *ngFor="let column of Columns" class="text-center">
-              <input class="form-control" (keyup)="filter($event,column)">
+              <input class="form-control" (keyup)="updateFilters($event,column)">
             </th>
             <th>
               <button class="btn btn-success" (click)="add()">新增</button>
@@ -27,12 +27,13 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PendingData;let i = index">
-            <tr app-project-table-row [_Project]="row" (added)="changeState($event,i)" (delete)="deletePending($event,i)"></tr>
+            <tr app-project-table-row [_Project]="row" (added)="changeState($event,i)" (deleted)="deletePending(i)">
+            </tr>
           </ng-container>
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of mf.pageList;let i = index">
-            <tr app-project-table-row [_Project]="row" (deleted)="delete($event,i)"></tr>
+            <tr app-project-table-row [_Project]="row" (deleted)="delete($event)"></tr>
           </ng-container>
         </tbody>
         <tfoot>

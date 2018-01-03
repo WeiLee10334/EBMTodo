@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod --build-optimizer",
-    "deploy":"ng build --prod --build-optimizer --bh /ngapp/ --output-path ../EBMTodo/ngApp",
+    "deploy": "ng build --prod --build-optimizer --bh /ngapp/ --output-path ../EBMTodo/ngApp",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -29,6 +29,7 @@
     "jquery": "^3.2.1",
     "jquery-ui-dist": "^1.12.1",
     "ngx-bootstrap": "^2.0.0-beta.10",
+    "ngx-infinite-scroll": "^0.8.0",
     "popper.js": "^1.12.9",
     "rxjs": "^5.5.2",
     "tether": "^1.4.2",

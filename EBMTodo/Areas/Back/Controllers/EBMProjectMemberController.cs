@@ -35,6 +35,10 @@ namespace EBMTodo.Areas.Back.Controllers
                 (model.Reverse ? "CreateDateTime descending" : "CreateDateTime") :
                 (model.Reverse ? model.OrderBy + " descending" : model.OrderBy);
                 var query = dataset.Where(x => x.CreateDateTime >= model.Start && x.CreateDateTime <= model.End);
+                if (!string.IsNullOrEmpty(model.PID))
+                {
+                    query = query.Where(x => x.PID == model.PID);
+                }
                 foreach (var filter in model.Filters)
                 {
                     var prop = typeof(EBMProjectMemberViewModel).GetProperty(filter.Key);
@@ -43,10 +47,7 @@ namespace EBMTodo.Areas.Back.Controllers
                         query = query.Where("@0.Contains(@1)", filter.Key, filter.Value);
                     }
                 }
-                if (!string.IsNullOrEmpty(model.PID))
-                {
-                    query = query.Where(x => x.PID == model.PID);
-                }
+
                 var data = query;
                 var result = new PagingViewModel<EBMProjectMemberViewModel>()
                 {
@@ -74,20 +75,17 @@ namespace EBMTodo.Areas.Back.Controllers
                     {
                         title = model.title,
                         CreateDateTime = DateTime.Now,
-                        Id = model.Id,
                         PID = Guid.Parse(model.PID)
                     };
                     db.EBMProjectMember.Add(data);
                     db.SaveChanges();
                     model.PMID = data.PMID.ToString();
-                    model.ProjectName = data.EBMProject.ProjectName;
-                    model.UserName = data.ApplicationUser.UserName;
                     model.CreateDateTime = data.CreateDateTime;
                     return Ok(model);
                 }
                 catch (Exception e)
                 {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
+                    return Content(HttpStatusCode.NotAcceptable, e.InnerException.InnerException.Message);
                 }
             }
             else
@@ -110,7 +108,8 @@ namespace EBMTodo.Areas.Back.Controllers
                     data.PID = Guid.Parse(model.PID);
                     db.Entry(data).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    return Ok();
+                    
+                    return Ok(model);
                 }
                 catch (Exception e)
                 {
@@ -121,9 +120,9 @@ namespace EBMTodo.Areas.Back.Controllers
         }
         [Route("Delete")]
         [HttpPost]
-        public IHttpActionResult Delete(Guid PMID)
+        public IHttpActionResult Delete(EBMProjectMemberViewModel model)
         {
-            var data = db.EBMProjectMember.Find(PMID);
+            var data = db.EBMProjectMember.Find(Guid.Parse(model.PMID));
             if (data != null)
             {
                 try
@@ -164,7 +163,7 @@ namespace EBMTodo.Areas.Back.Controllers
         public DateTime? CreateDateTime { set; get; }
         [StringLength(100)]
         public string title { set; get; }
-        [Required]
+
         public string Id { set; get; }
 
         public string UserName { set; get; }

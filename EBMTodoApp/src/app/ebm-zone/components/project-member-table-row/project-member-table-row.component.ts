@@ -9,7 +9,11 @@ import { DataStoreService } from '../../../shared/services';
 export class ProjectMemberTableRowComponent implements OnInit {
   @Input() set _ProjectMember(value) {
     this.ProjectMember = value;
-    if (!value.PID) {
+    this.User = {
+      Id: value.Id,
+      UserName: value.UserName
+    }
+    if (!value.PMID) {
       this.Editable = true;
     }
   }
@@ -17,17 +21,22 @@ export class ProjectMemberTableRowComponent implements OnInit {
   @Output() added = new EventEmitter<any>();
   Editable = false;
   ProjectMember: any;
-
+  User: any;
   constructor(private api: DataStoreService) { }
 
   ngOnInit() {
+  }
+  changeUser(event) {
+    this.ProjectMember['Id'] = event['Id'];
+    this.ProjectMember['UserName'] = event['UserName'];
   }
   Edit() {
     this.Editable = true;
   }
   Save() {
-    if (!this.ProjectMember.POID) {
-      this.api.projectCreate(this.ProjectMember).subscribe(
+    console.log(this.ProjectMember);
+    if (!this.ProjectMember.PMID) {
+      this.api.projectMemberCreate(this.ProjectMember).subscribe(
         (data) => {
           this._ProjectMember = data;
           this.Editable = false;
@@ -39,7 +48,7 @@ export class ProjectMemberTableRowComponent implements OnInit {
       )
     }
     else {
-      this.api.projectUpdate(this.ProjectMember).subscribe(
+      this.api.projectMemberUpdate(this.ProjectMember).subscribe(
         (data) => {
           this._ProjectMember = data;
           this.Editable = false;
@@ -52,14 +61,19 @@ export class ProjectMemberTableRowComponent implements OnInit {
 
   }
   Delete() {
-    this.api.projectDelete(this.ProjectMember).subscribe(
-      (data) => {
-        this.deleted.emit(this);
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
+    if (!this.ProjectMember.PMID) {
+      this.deleted.emit(this.ProjectMember);
+    }
+    else {
+      this.api.projectMemberDelete(this.ProjectMember).subscribe(
+        (data) => {
+          this.deleted.emit(this.ProjectMember);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
 
+    }
   }
 }

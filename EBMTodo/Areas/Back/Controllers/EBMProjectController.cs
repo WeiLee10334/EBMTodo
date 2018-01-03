@@ -98,7 +98,7 @@ namespace EBMTodo.Areas.Back.Controllers
                     data.ProjectNo = model.ProjectNo;
                     db.Entry(data).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    return Ok();
+                    return Ok(model);
                 }
                 catch (Exception e)
                 {

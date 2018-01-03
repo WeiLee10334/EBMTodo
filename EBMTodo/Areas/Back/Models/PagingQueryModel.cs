@@ -12,6 +12,7 @@ namespace EBMTodo.Areas.Back.Models
             this.Reverse = true;
             this.Skip = 0;
             this.Length = 0;
+            this.OrderBy = "";
             this.Filters = new Dictionary<string, string>();
         }
         public Dictionary<string, string> Filters { set; get; }

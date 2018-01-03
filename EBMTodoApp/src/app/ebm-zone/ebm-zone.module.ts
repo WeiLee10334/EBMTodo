@@ -17,9 +17,12 @@ import { OnlineTableComponent } from './components/online-table/online-table.com
 import { OnlineTableRowComponent } from './components/online-table-row/online-table-row.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 import { ProjectTableRowComponent } from './components/project-table-row/project-table-row.component';
-import { EbmProjectMemberListComponent } from './ebm-project-member-list/ebm-project-member-list.component';
 import { EbmProjectMemberComponent } from './ebm-project-member/ebm-project-member.component';
 import { ProjectMemberTableRowComponent } from './components/project-member-table-row/project-member-table-row.component';
+import { UserSelectComponent } from './components/user-select/user-select.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ProjectSelectComponent } from './components/project-select/project-select.component';
+import { EbmUserComponent } from './ebm-user/ebm-user.component';
 
 @NgModule({
   imports: [
@@ -31,7 +34,8 @@ import { ProjectMemberTableRowComponent } from './components/project-member-tabl
     AccordionModule.forRoot(),
     ProgressbarModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    SharedModule
+    SharedModule,
+    InfiniteScrollModule
   ],
   declarations: [
     EbmZoneComponent,
@@ -45,9 +49,11 @@ import { ProjectMemberTableRowComponent } from './components/project-member-tabl
     OnlineTableRowComponent,
     EbmProjectComponent,
     ProjectTableRowComponent,
-    EbmProjectMemberListComponent,
     EbmProjectMemberComponent,
     ProjectMemberTableRowComponent,
+    UserSelectComponent,
+    ProjectSelectComponent,
+    EbmUserComponent,
   ]
 })
 export class EbmZoneModule { }

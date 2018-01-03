@@ -26,7 +26,7 @@ export class ProjectTableRowComponent implements OnInit {
     this.Editable = true;
   }
   Save() {
-    if (!this.Project.POID) {
+    if (!this.Project.PID) {
       this.api.projectCreate(this.Project).subscribe(
         (data) => {
           this._Project = data;
@@ -52,14 +52,18 @@ export class ProjectTableRowComponent implements OnInit {
 
   }
   Delete() {
-    this.api.projectDelete(this.Project).subscribe(
-      (data) => {
-        this.deleted.emit(this);
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-
+    if (!this.Project.PID) {
+      this.deleted.emit(this.Project);
+    }
+    else {
+      this.api.projectDelete(this.Project).subscribe(
+        (data) => {
+          this.deleted.emit(this.Project);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
   }
 }
