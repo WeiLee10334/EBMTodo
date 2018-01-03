@@ -205,7 +205,6 @@
     <Compile Include="Controllers\Api\BaseController.cs" />
     <Compile Include="Controllers\Api\EBMemberController.cs" />
     <Compile Include="Controllers\Api\EBMOnlineController.cs" />
-    <Compile Include="Controllers\Api\EBMProjectController.cs" />
     <Compile Include="Controllers\Api\EBMPWorkingController.cs" />
     <Compile Include="Controllers\Api\EBMScheduleController.cs" />
     <Compile Include="Controllers\Api\EBMTodoListController.cs" />

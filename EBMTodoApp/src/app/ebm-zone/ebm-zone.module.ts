@@ -15,7 +15,6 @@ import { TodolistCardComponent } from './components/todolist-card/todolist-card.
 import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
 import { OnlineTableComponent } from './components/online-table/online-table.component';
 import { OnlineTableRowComponent } from './components/online-table-row/online-table-row.component';
-import { OnlineTableHeaderComponent } from './components/online-table-header/online-table-header.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 
 @NgModule({
@@ -40,7 +39,6 @@ import { EbmProjectComponent } from './ebm-project/ebm-project.component';
     EbmOnlineComponent,
     OnlineTableComponent,
     OnlineTableRowComponent,
-    OnlineTableHeaderComponent,
     EbmProjectComponent,
   ]
 })

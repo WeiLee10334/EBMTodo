@@ -125,4 +125,17 @@ export class DataStoreService {
   onlineDelete(model) {
     return this.HttpPost(model, '/api/ebmonline/delete');
   }
+
+  projectData(model?: any) {
+    return this.HttpPost(model, '/api/back/EBMProject/GetList');
+  }
+  projectCreate(model){
+    return this.HttpPost(model, '/api/back/EBMProject/Create');
+  }
+  projectUpdate(model){
+    return this.HttpPost(model, '/api/back/EBMProject/Update');
+  }
+  projectDelete(model){
+    return this.HttpPost(model, '/api/back/EBMProject/Delete');
+  }
 }

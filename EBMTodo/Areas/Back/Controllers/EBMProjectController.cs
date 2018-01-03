@@ -64,7 +64,8 @@ namespace EBMTodo.Areas.Back.Controllers
                     {
                         CreateDateTime = DateTime.Now,
                         IsHode = model.IsHode,
-                        ProjectName = model.ProjectName
+                        ProjectName = model.ProjectName,
+                        ProjectNo = model.ProjectNo
                     };
                     db.EBMProject.Add(data);
                     db.SaveChanges();
@@ -94,6 +95,7 @@ namespace EBMTodo.Areas.Back.Controllers
                 {
                     data.ProjectName = model.ProjectName;
                     data.IsHode = model.IsHode;
+                    data.ProjectNo = model.ProjectNo;
                     db.Entry(data).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return Ok();
