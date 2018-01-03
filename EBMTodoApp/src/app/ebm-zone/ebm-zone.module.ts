@@ -16,6 +16,10 @@ import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
 import { OnlineTableComponent } from './components/online-table/online-table.component';
 import { OnlineTableRowComponent } from './components/online-table-row/online-table-row.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
+import { ProjectTableRowComponent } from './components/project-table-row/project-table-row.component';
+import { EbmProjectMemberListComponent } from './ebm-project-member-list/ebm-project-member-list.component';
+import { EbmProjectMemberComponent } from './ebm-project-member/ebm-project-member.component';
+import { ProjectMemberTableRowComponent } from './components/project-member-table-row/project-member-table-row.component';
 
 @NgModule({
   imports: [
@@ -40,6 +44,10 @@ import { EbmProjectComponent } from './ebm-project/ebm-project.component';
     OnlineTableComponent,
     OnlineTableRowComponent,
     EbmProjectComponent,
+    ProjectTableRowComponent,
+    EbmProjectMemberListComponent,
+    EbmProjectMemberComponent,
+    ProjectMemberTableRowComponent,
   ]
 })
 export class EbmZoneModule { }

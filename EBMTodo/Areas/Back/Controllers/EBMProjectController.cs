@@ -109,9 +109,9 @@ namespace EBMTodo.Areas.Back.Controllers
         }
         [Route("Delete")]
         [HttpPost]
-        public IHttpActionResult Delete(Guid PID)
+        public IHttpActionResult Delete(EBMProjectViewModel model)
         {
-            var data = db.EBMProject.Find(PID);
+            var data = db.EBMProject.Find(Guid.Parse(model.PID));
             if (data != null)
             {
                 try
@@ -119,6 +119,25 @@ namespace EBMTodo.Areas.Back.Controllers
                     db.Entry(data).State = System.Data.Entity.EntityState.Deleted;
                     db.SaveChanges();
                     return Ok();
+                }
+                catch (Exception e)
+                {
+                    return Content(HttpStatusCode.NotAcceptable, e.Message);
+                }
+            }
+            return BadRequest("not exist");
+        }
+
+        [Route("GetMembers")]
+        [HttpPost]
+        public IHttpActionResult GetMembers(EBMProjectViewModel model)
+        {
+            var data = db.EBMProject.Find(Guid.Parse(model.PID));
+            if (data != null)
+            {
+                try
+                {                 
+                    return Ok(data.EBMProjectMember.ToList());
                 }
                 catch (Exception e)
                 {

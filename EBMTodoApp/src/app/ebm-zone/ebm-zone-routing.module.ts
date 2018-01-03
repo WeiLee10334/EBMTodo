@@ -7,6 +7,8 @@ import { EbmMemoComponent } from './ebm-memo/ebm-memo.component';
 import { EbmTodolistComponent } from './ebm-todolist/ebm-todolist.component';
 import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
+import { EbmProjectMemberListComponent } from './ebm-project-member-list/ebm-project-member-list.component';
+import { EbmProjectMemberComponent } from './ebm-project-member/ebm-project-member.component';
 
 const routes: Routes = [
   {
@@ -16,7 +18,9 @@ const routes: Routes = [
       { path: "memo", component: EbmMemoComponent },
       { path: "todolist", component: EbmTodolistComponent },
       { path: "online", component: EbmOnlineComponent },
-      { path: "project", component: EbmProjectComponent }
+      { path: "project", component: EbmProjectComponent },
+      { path: "projectmembers", component: EbmProjectMemberListComponent },
+      { path: "projectmember", component: EbmProjectMemberComponent }
     ]
   },
   { path: '**', redirectTo: 'working' }

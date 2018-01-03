@@ -126,7 +126,7 @@ export class DataStoreService {
     return this.HttpPost(model, '/api/ebmonline/delete');
   }
 
-  projectData(model?: any) {
+  projectData(model: any) {
     return this.HttpPost(model, '/api/back/EBMProject/GetList');
   }
   projectCreate(model){
@@ -137,5 +137,9 @@ export class DataStoreService {
   }
   projectDelete(model){
     return this.HttpPost(model, '/api/back/EBMProject/Delete');
+  }
+
+  projectMemberData(model){
+    return this.HttpPost(model, '/api/back/EBMProjectMember/GetList');
   }
 }

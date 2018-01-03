@@ -43,6 +43,10 @@ namespace EBMTodo.Areas.Back.Controllers
                         query = query.Where("@0.Contains(@1)", filter.Key, filter.Value);
                     }
                 }
+                if (!string.IsNullOrEmpty(model.PID))
+                {
+                    query = query.Where(x => x.PID == model.PID);
+                }
                 var data = query;
                 var result = new PagingViewModel<EBMProjectMemberViewModel>()
                 {
@@ -171,6 +175,8 @@ namespace EBMTodo.Areas.Back.Controllers
     }
     public class EBMProjectMemberQueryModel : PagingQueryModel
     {
+        public string PID { set; get; }
+
         public DateTime? Start { set; get; }
 
         public DateTime? End { set; get; }

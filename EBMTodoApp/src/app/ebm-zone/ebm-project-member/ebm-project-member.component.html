@@ -27,12 +27,12 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PendingData;let i = index">
-            <tr app-project-table-row [_Project]="row" (added)="changeState($event,i)" (delete)="deletePending($event,i)"></tr>
+            <tr app-project-member-table-row [_ProjectMember]="row" (added)="changeState($event,i)" (delete)="deletePending($event,i)"></tr>
           </ng-container>
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of mf.pageList;let i = index">
-            <tr app-project-table-row [_Project]="row" (deleted)="delete($event,i)"></tr>
+            <tr app-project-member-table-row [_ProjectMember]="row" (deleted)="delete($event,i)"></tr>
           </ng-container>
         </tbody>
         <tfoot>

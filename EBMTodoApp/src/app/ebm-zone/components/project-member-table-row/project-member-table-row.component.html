@@ -1,0 +1,31 @@
+<td [attr.data-th]="'UserName'">
+  <span *ngIf="!Editable">{{ProjectMember['UserName']}}</span>
+  <span *ngIf="Editable">
+    <input type="text" class="form-control" [(ngModel)]="ProjectMember['UserName']">
+  </span>
+</td>
+<td [attr.data-th]="'title'">
+  <span *ngIf="!Editable">{{ProjectMember['title']}}</span>
+  <span *ngIf="Editable">
+    <input type="text" class="form-control" [(ngModel)]="ProjectMember['title']">
+  </span>
+</td>
+<td [attr.data-th]="'ProjectName'">
+  <span *ngIf="!Editable">{{ProjectMember['ProjectName']}}</span>
+  <span *ngIf="Editable">
+    <input type="text" class="form-control" [(ngModel)]="ProjectMember['ProjectName']">
+  </span>
+</td>
+<td [attr.data-th]="'CreateDateTime'">
+  <span *ngIf="!Editable">{{ProjectMember['CreateDateTime']|date:'yyyy-MM-dd'}}</span>
+  <span *ngIf="Editable">
+    <input type="text" class="form-control" bsDatepicker [(ngModel)]="ProjectMember['CreateDateTime']" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}"
+    />
+  </span>
+</td>
+
+<td>
+  <button class="btn btn-primary" *ngIf="!Editable" (click)="Edit()">修改</button>
+  <button class="btn btn-primary" *ngIf="Editable" (click)="Save()">儲存</button>
+  <button class="btn btn-danger" (click)="Delete()">刪除</button>
+</td>&nbsp;

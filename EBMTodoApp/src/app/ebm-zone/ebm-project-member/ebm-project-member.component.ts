@@ -2,25 +2,30 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataStoreService } from '../../shared/services';
 declare var $: any;
 @Component({
-  selector: 'app-ebm-project',
-  templateUrl: './ebm-project.component.html',
-  styleUrls: ['./ebm-project.component.scss']
+  selector: 'app-ebm-project-member',
+  templateUrl: './ebm-project-member.component.html',
+  styleUrls: ['./ebm-project-member.component.scss']
 })
-export class EbmProjectComponent implements OnInit, AfterViewInit {
-  // public string PID { set; get; }
-  // [StringLength(100)]
-  // public string ProjectName { set; get; }
+export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
+
+  // public string PMID { set; get; }
 
   // public DateTime? CreateDateTime { set; get; }
   // [StringLength(100)]
-  // public string ProjectNo { set; get; }
+  // public string title { set; get; }
+  // [Required]
+  // public string Id { set; get; }
 
-  // public bool IsHode { set; get; }
+  // public string UserName { set; get; }
+  // [Required]
+  // public string PID { set; get; }
+
+  // public string ProjectName { set; get; }
   Columns = [
+    { name: "負責人", prop: "UserName" },
+    { name: "職稱", prop: "title" },
     { name: "專案名稱", prop: "ProjectName" },
-    { name: "專案號", prop: "ProjectNo" },
     { name: "建立時間", prop: "CreateDateTime" },
-    { name: "專案人員", prop: "ProjectMembers" },
   ]
   Data = [];
   PendingData = [];
@@ -34,7 +39,7 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
       "OrderBy": "CreateDateTime",
       "Reverse": false
     }
-    this.api.projectData(model).subscribe(
+    this.api.projectMemberData(model).subscribe(
       (data) => {
         this.Data = data.Data;
         console.log(this.Data);
@@ -58,5 +63,4 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
 }
