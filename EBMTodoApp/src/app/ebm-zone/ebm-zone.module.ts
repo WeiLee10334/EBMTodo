@@ -23,6 +23,8 @@ import { UserSelectComponent } from './components/user-select/user-select.compon
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ProjectSelectComponent } from './components/project-select/project-select.component';
 import { EbmUserComponent } from './ebm-user/ebm-user.component';
+import { EbmProjectWorkingComponent } from './ebm-project-working/ebm-project-working.component';
+import { ProjectWorkingRowComponent } from './components/project-working-row/project-working-row.component';
 
 @NgModule({
   imports: [
@@ -54,6 +56,8 @@ import { EbmUserComponent } from './ebm-user/ebm-user.component';
     UserSelectComponent,
     ProjectSelectComponent,
     EbmUserComponent,
+    EbmProjectWorkingComponent,
+    ProjectWorkingRowComponent,
   ]
 })
 export class EbmZoneModule { }

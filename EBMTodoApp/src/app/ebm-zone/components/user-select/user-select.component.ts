@@ -74,5 +74,10 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
     }
     console.log('scrolled down!!')
   }
+  search(event) {
 
+  }
+  onChange(event) {
+
+  }
 }

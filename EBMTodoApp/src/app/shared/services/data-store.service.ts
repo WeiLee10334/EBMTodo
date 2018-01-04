@@ -152,6 +152,10 @@ export class DataStoreService {
     return this.HttpPost(model, '/api/back/EBMProjectMember/Delete');
   }
 
+  projectWorkingData(model){
+    return this.HttpPost(model, '/api/back/EBMProjectWorking/GetList');
+  }
+
   userData(model){
     return this.HttpPost(model, '/api/back/EBMUser/GetList');
   }

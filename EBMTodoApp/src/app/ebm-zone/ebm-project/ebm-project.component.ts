@@ -1,7 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataStoreService } from '../../shared/services';
-import { tr } from 'ngx-bootstrap/bs-moment/i18n/tr';
-import { filter } from 'rxjs/operator/filter';
 declare var $: any;
 @Component({
   selector: 'app-ebm-project',
@@ -14,6 +12,7 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
     { name: "專案號", prop: "ProjectNo" },
     { name: "建立時間", prop: "CreateDateTime" },
     { name: "專案人員", prop: "ProjectMembers" },
+    { name: "回報", prop: "ProjectWorkings" }
   ]
   Source = [];
   Data = [];
