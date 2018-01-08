@@ -39,6 +39,7 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   Length = 20;
   Total = 0;
   IsEnd = false;
+  Filters = {};
   PagingUsers = {};
   ngOnInit() {
     this.getUsers();
@@ -46,7 +47,8 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   getUsers() {
     let model = {
       Skip: this.Skip,
-      Length: this.Length
+      Length: this.Length,
+      Filters: this.Filters
     }
     this.api.userData(model).subscribe(
       (data) => {
@@ -75,7 +77,13 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
     console.log('scrolled down!!')
   }
   search(event) {
-
+    this.Filters = {
+      UserName: event.target.value
+    }
+    this.Users = [];
+    this.Skip = 0;
+    this.getUsers();
+    console.log("search", event);
   }
   onChange(event) {
 

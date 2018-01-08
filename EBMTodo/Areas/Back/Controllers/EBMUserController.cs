@@ -35,12 +35,6 @@ namespace EBMTodo.Areas.Back.Controllers
                 _userManager = value;
             }
         }
-        [Route("test")]
-        [HttpPost]
-        public IHttpActionResult test()
-        {
-            return Ok("Received");
-        }
         [Route("GetList")]
         [HttpPost]
         public IHttpActionResult GetList(EBMUserQueryModel model)
@@ -77,6 +71,77 @@ namespace EBMTodo.Areas.Back.Controllers
                 return Content(HttpStatusCode.NotAcceptable, e.Message);
             }
         }
+        [Route("Create")]
+        [HttpPost]
+        public IHttpActionResult Create(EBMUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                    string password = "a123456";
+                    var result = UserManager.CreateAsync(user, password).Result;
+                    if (result.Succeeded)
+                    {
+                        model.Id = user.Id;
+                        return Ok(model);
+                    }
+                    return Content(HttpStatusCode.NotAcceptable, result.Errors);
+
+                }
+                catch (Exception e)
+                {
+                    return Content(HttpStatusCode.NotAcceptable, e.Message);
+                }
+            }
+            else
+            {
+                return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+            }
+        }
+        [Route("Update")]
+        [HttpPost]
+        public IHttpActionResult Update(EBMUserViewModel model)
+        {
+            var data = db.Users.Find(model.Id);
+            if (data != null)
+            {
+                try
+                {
+                    data.UserName = model.UserName;
+                    data.LineID = model.UID;
+                    db.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return Ok(model);
+                }
+                catch (Exception e)
+                {
+                    return Content(HttpStatusCode.NotAcceptable, e.Message);
+                }
+            }
+            return BadRequest("not exist");
+        }
+        [Route("Delete")]
+        [HttpPost]
+        public IHttpActionResult Delete(EBMUserViewModel model)
+        {
+            var data = db.Users.Find(model.Id);
+            if (data != null)
+            {
+                try
+                {
+                    db.Entry(data).State = System.Data.Entity.EntityState.Deleted;
+                    db.SaveChanges();
+                    return Ok();
+                }
+                catch (Exception e)
+                {
+                    return Content(HttpStatusCode.NotAcceptable, e.Message);
+                }
+            }
+            return BadRequest("not exist");
+        }
         [Route("Register")]
         [HttpPost]
         public IHttpActionResult Register(EBMUserRegisterViewModel model)
@@ -105,7 +170,7 @@ namespace EBMTodo.Areas.Back.Controllers
             {
                 var dataset = EBMLineUserViewModel.GetQueryable(db);
                 model.OrderBy = typeof(EBMLineUserViewModel).GetProperty(model.OrderBy) == null ?
-                (model.Reverse ? "Name descending" : "Name") :
+                (model.Reverse ? "UserName descending" : "UserName") :
                 (model.Reverse ? model.OrderBy + " descending" : model.OrderBy);
                 var query = dataset;
 
@@ -170,10 +235,13 @@ namespace EBMTodo.Areas.Back.Controllers
             {
                 Id = x.Id,
                 UserName = x.UserName,
+                Email = x.Email,
                 UID = x.LineID
             });
         }
         public string Id { set; get; }
+
+        public string Email { set; get; }
 
         public string UserName { set; get; }
 

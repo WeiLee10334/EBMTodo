@@ -3,16 +3,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DataStoreService } from '../../../shared/services';
 
 @Component({
-  selector: 'app-project-select',
-  templateUrl: './project-select.component.html',
-  styleUrls: ['./project-select.component.scss'],
+  selector: 'app-line-select',
+  templateUrl: './line-select.component.html',
+  styleUrls: ['./line-select.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => ProjectSelectComponent),
+    useExisting: forwardRef(() => LineSelectComponent),
     multi: true
   }]
 })
-export class ProjectSelectComponent implements OnInit, ControlValueAccessor {
+export class LineSelectComponent implements OnInit, ControlValueAccessor {
   data;
   @Output() change = new EventEmitter<any>();
   constructor(private api: DataStoreService) { }
@@ -22,6 +22,7 @@ export class ProjectSelectComponent implements OnInit, ControlValueAccessor {
   private setModel = (_: any) => { };
   // this is the initial value set to the component
   public writeValue(obj: any) {
+    console.log("write", obj);
     this.data = obj;
   }
   // registers 'fn' that will be fired when changes are made
@@ -33,36 +34,37 @@ export class ProjectSelectComponent implements OnInit, ControlValueAccessor {
   public registerOnTouched() { }
 
   //Api section
-  Projects = [];
+  Users = [];
   Skip = 0;
   Length = 20;
   Total = 0;
   IsEnd = false;
+  Filters = {};
   PagingUsers = {};
   ngOnInit() {
-    this.getProjects();
+    this.getUsers();
   }
-  getProjects() {
+  getUsers() {
     let model = {
       Skip: this.Skip,
-      Length: this.Length
+      Length: this.Length,
+      Filters: this.Filters
     }
-    this.api.projectData(model).subscribe(
+    this.api.lineuserData(model).subscribe(
       (data) => {
         this.Total = data.Total;
         data.Data.forEach((item) => {
-          this.Projects.push(item);
+          this.Users.push(item);
         });
 
         this.Skip += this.Length;
-        console.log(this.Projects);
+        console.log(this.Users);
       },
       (err) => {
         console.log(err);
       }
     )
   }
-
   select(event) {
     this.data = event;
     this.setModel(this.data);
@@ -70,33 +72,17 @@ export class ProjectSelectComponent implements OnInit, ControlValueAccessor {
   }
   onScrollDown() {
     if (this.Skip < this.Total) {
-      this.getProjects();
+      this.getUsers();
     }
     console.log('scrolled down!!')
   }
   search(event) {
-    // let f = {
-    //   UserName: event
-    // }
-    // let model = {
-    //   Skip: this.Skip,
-    //   Length: this.Length,
-    //   Filters: f
-    // }
-    // this.api.projectData(model).subscribe(
-    //   (data) => {
-    //     this.Total = data.Total;
-    //     data.Data.forEach((item) => {
-    //       this.Projects.push(item);
-    //     });
-
-    //     this.Skip += this.Length;
-    //     console.log(this.Projects);
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // )
+    this.Filters = {
+      UserName: event.target.value
+    }
+    this.Users = [];
+    this.Skip = 0;
+    this.getUsers();
     console.log("search", event);
   }
   onChange(event) {

@@ -349,7 +349,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Elmah.Errors\ElmahErrors.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\admin-forms.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -742,24 +741,27 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
-    <Content Include="ngApp\fontawesome-webfont.674f50d287a8c48dc19b.eot" />
-    <Content Include="ngApp\fontawesome-webfont.af7ae505a9eed503f8b8.woff2" />
-    <Content Include="ngApp\fontawesome-webfont.b06871f281fee6b241d6.ttf" />
-    <Content Include="ngApp\fontawesome-webfont.fee66e712a8a08eef580.woff" />
     <Content Include="Areas\Back\Views\web.config" />
     <None Include="Properties\PublishProfiles\EBMEMRLineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ebmLineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ebmLineBot - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ebmtodo.pubxml" />
     <None Include="Properties\PublishProfiles\EDUZIP.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="ngApp\0.cd5e3047027804939c04.chunk.js" />
+    <Content Include="ngApp\0.0ec4074ac98c9a30c83f.chunk.js" />
     <Content Include="ngApp\3rdpartylicenses.txt" />
+    <Content Include="ngApp\assets\images\sort_asc.png" />
+    <Content Include="ngApp\assets\images\sort_desc.png" />
     <Content Include="ngApp\favicon.ico" />
+    <Content Include="ngApp\fontawesome-webfont.674f50d287a8c48dc19b.eot" />
     <Content Include="ngApp\fontawesome-webfont.912ec66d7572ff821749.svg" />
+    <Content Include="ngApp\fontawesome-webfont.af7ae505a9eed503f8b8.woff2" />
+    <Content Include="ngApp\fontawesome-webfont.b06871f281fee6b241d6.ttf" />
+    <Content Include="ngApp\fontawesome-webfont.fee66e712a8a08eef580.woff" />
     <Content Include="ngApp\index.html" />
-    <Content Include="ngApp\inline.14869255cff8d2137e64.bundle.js" />
-    <Content Include="ngApp\main.278a59ca75d850c09692.bundle.js" />
+    <Content Include="ngApp\inline.2b2d45214dc834814838.bundle.js" />
+    <Content Include="ngApp\main.3ff1e1c48e346dbfd7d6.bundle.js" />
     <Content Include="ngApp\polyfills.e6475d2787bb3154d59c.bundle.js" />
     <Content Include="ngApp\scripts.9c4883adc1633503e9a1.bundle.js" />
     <Content Include="ngApp\styles.9f9cd27685c704291ce1.bundle.css" />
@@ -1069,6 +1071,7 @@
     <Content Include="Views\EBMProjectSchedules\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\Elmah.Errors\" />
     <Folder Include="Areas\Back\Views\Shared\" />
     <Folder Include="Areas\Line\Models\" />
     <Folder Include="Areas\Line\Views\Shared\" />

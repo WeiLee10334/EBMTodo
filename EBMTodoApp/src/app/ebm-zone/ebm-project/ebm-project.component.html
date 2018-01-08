@@ -4,36 +4,35 @@
       <table class="table table-hover table-bordered">
         <thead>
           <tr>
+            <th>
+            </th>
             <th *ngFor="let column of Columns" class="text-center">
               <span>{{column.name||column.prop}}&nbsp;
                 <span [ngClass]="{'asc':!mf.sort[column.prop]||mf.sort[column.prop]==='undefined','desc':mf.sort[column.prop]}" (click)="mf.changeSort(column.prop)"></span>
               </span>
             </th>
-            <th>
-              <span>
-              </span>
-            </th>
+
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th *ngFor="let column of Columns" class="text-center">
-              <input class="form-control" (keyup)="updateFilters($event,column)">
-            </th>
             <th>
               <button class="btn btn-success" (click)="add()">新增</button>
             </th>
+            <th *ngFor="let column of Columns" class="text-center">
+              <input class="form-control" (keyup)="updateFilters($event,column)">
+            </th>
+
           </tr>
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PendingData;let i = index">
-            <tr app-project-table-row [_Project]="row" (added)="changeState($event,i)" (deleted)="deletePending(i)">
-            </tr>
+            <tr app-project-table-row [_Project]="row" (change)="dispatchAction($event,i)"></tr>
           </ng-container>
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of mf.pageList;let i = index">
-            <tr app-project-table-row [_Project]="row" (deleted)="delete($event)"></tr>
+            <tr app-project-table-row [_Project]="row" (change)="dispatchAction($event,i)"></tr>
           </ng-container>
         </tbody>
         <tfoot>

@@ -16,12 +16,6 @@ namespace EBMTodo.Areas.Back.Controllers
     public class EBMProjectMemberController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        [Route("test")]
-        [HttpPost]
-        public IHttpActionResult test()
-        {
-            return Ok("Received");
-        }
         [Route("GetList")]
         [HttpPost]
         public IHttpActionResult GetList(EBMProjectMemberQueryModel model)

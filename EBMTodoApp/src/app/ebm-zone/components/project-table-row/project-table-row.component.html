@@ -1,3 +1,27 @@
+<td>
+  <div class="btn-group" dropdown placement="bottom right">
+    <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
+      <i class="fa fa-cog" aria-hidden="true"></i>
+    </button>
+    <ul *dropdownMenu class="dropdown-menu" role="menu">
+      <li role="menuitem">
+        <a class="btn btn-link dropdown-item" [routerLink]="['/projectmember']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
+          [routerLinkActive]="'active'">專案人員</a>
+      </li>
+      <li role="menuitem">
+        <a class="btn btn-link dropdown-item" [routerLink]="['/projectworking']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
+          [routerLinkActive]="'active'">工作回報</a>
+      </li>
+      <li role="menuitem">
+        <button class="btn btn-link dropdown-item" (click)="Edit()">修改</button>
+      </li>
+      <li role="menuitem">
+        <button class="btn btn-link dropdown-item" (click)="Delete()">刪除</button>
+      </li>
+    </ul>
+  </div>
+  <button class="btn btn-success" *ngIf="Editable" (click)="Save()">儲存</button>
+</td>
 <td [attr.data-th]="'ProjectName'">
   <span *ngIf="!Editable">{{Project['ProjectName']}}</span>
   <span *ngIf="Editable">
@@ -18,20 +42,4 @@
     />
   </span> -->
 </td>
-<td [attr.data-th]="'ProjectMembers'">
-  <span>
-    <a class="btn btn-link" [routerLink]="['/projectmember']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
-      [routerLinkActive]="'active'">專案人員</a>
-  </span>
-</td>
-<td [attr.data-th]="'ProjectWorkings'">
-  <span>
-    <a class="btn btn-link" [routerLink]="['/projectworking']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
-      [routerLinkActive]="'active'">工作回報</a>
-  </span>
-</td>
-<td>
-  <button class="btn btn-primary" *ngIf="!Editable" (click)="Edit()">修改</button>
-  <button class="btn btn-primary" *ngIf="Editable" (click)="Save()">儲存</button>
-  <button class="btn btn-danger" (click)="Delete()">刪除</button>
-</td>&nbsp;
+&nbsp;

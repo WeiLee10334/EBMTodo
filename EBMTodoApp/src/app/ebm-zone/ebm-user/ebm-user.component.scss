@@ -1,0 +1,22 @@
+.page-link.active{
+    background: #007bff;
+}
+.page-item{
+    cursor: pointer;
+}
+span.asc{
+    content: url("~assets/images/sort_asc.png");
+    vertical-align: middle;
+    cursor: pointer;
+    background: black;
+}
+span.desc{
+    content: url("~assets/images/sort_desc.png");
+    vertical-align: middle;
+    cursor: pointer;
+    background: black;
+}
+th ,td{
+    padding: 0;
+    vertical-align: middle;
+}

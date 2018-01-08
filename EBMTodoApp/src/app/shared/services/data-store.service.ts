@@ -159,4 +159,16 @@ export class DataStoreService {
   userData(model){
     return this.HttpPost(model, '/api/back/EBMUser/GetList');
   }
+  userCreate(model){
+    return this.HttpPost(model, '/api/back/EBMUser/Create');
+  }
+  userUpdate(model){
+    return this.HttpPost(model, '/api/back/EBMUser/Update');
+  }
+  userDelete(model){
+    return this.HttpPost(model, '/api/back/EBMUser/Delete');
+  }
+  lineuserData(model){
+    return this.HttpPost(model, '/api/back/EBMUser/GetLineList');
+  }
 }

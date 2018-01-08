@@ -5,7 +5,7 @@ import { EbmZoneRoutingModule } from './ebm-zone-routing.module';
 import { EbmZoneComponent } from './ebm-zone.component';
 import { EbmWorkingComponent } from './ebm-working/ebm-working.component';
 import { SharedModule } from '../shared/modules/index';
-import { AccordionModule, BsDatepickerModule, ProgressbarModule } from 'ngx-bootstrap';
+import { AccordionModule, BsDatepickerModule, ProgressbarModule,BsDropdownModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { EbmScheduleComponent } from './ebm-schedule/ebm-schedule.component';
@@ -25,7 +25,8 @@ import { ProjectSelectComponent } from './components/project-select/project-sele
 import { EbmUserComponent } from './ebm-user/ebm-user.component';
 import { EbmProjectWorkingComponent } from './ebm-project-working/ebm-project-working.component';
 import { ProjectWorkingRowComponent } from './components/project-working-row/project-working-row.component';
-
+import { UserTableRowComponent } from './components/user-table-row/user-table-row.component';
+import { LineSelectComponent } from './components/line-select/line-select.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +38,8 @@ import { ProjectWorkingRowComponent } from './components/project-working-row/pro
     ProgressbarModule.forRoot(),
     BsDatepickerModule.forRoot(),
     SharedModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    BsDropdownModule.forRoot()
   ],
   declarations: [
     EbmZoneComponent,
@@ -58,6 +60,8 @@ import { ProjectWorkingRowComponent } from './components/project-working-row/pro
     EbmUserComponent,
     EbmProjectWorkingComponent,
     ProjectWorkingRowComponent,
+    UserTableRowComponent,
+    LineSelectComponent,
   ]
 })
 export class EbmZoneModule { }
