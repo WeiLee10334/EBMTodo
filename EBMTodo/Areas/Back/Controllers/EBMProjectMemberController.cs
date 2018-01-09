@@ -38,7 +38,7 @@ namespace EBMTodo.Areas.Back.Controllers
                     var prop = typeof(EBMProjectMemberViewModel).GetProperty(filter.Key);
                     if (prop != null && prop.PropertyType == typeof(string))
                     {
-                        query = query.Where("@0.Contains(@1)", filter.Key, filter.Value);
+                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
                     }
                 }
 
@@ -102,7 +102,7 @@ namespace EBMTodo.Areas.Back.Controllers
                     data.PID = Guid.Parse(model.PID);
                     db.Entry(data).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    
+
                     return Ok(model);
                 }
                 catch (Exception e)

@@ -4,6 +4,7 @@ using EBMTodo.Models.Todo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Net;
@@ -16,6 +17,35 @@ namespace EBMTodo.Areas.Back.Controllers
     public class EBMProjectController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private void LogInfo(string pMessage)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/Logfiles/");
+            string tFilePath = path + "Log" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
+            FileStream fs;
+            if (!Directory.Exists(path))
+            {
+                //新增資料夾
+                Directory.CreateDirectory(path);
+            }
+            if (!System.IO.File.Exists(tFilePath))
+            {
+                fs = new FileStream(tFilePath, FileMode.Create);
+            }
+            else
+            {
+                fs = new FileStream(tFilePath, FileMode.Append);
+            }
+            pMessage = DateTime.Now.ToString("HH:mm:ss    ") + pMessage;
+            StreamWriter sw = new StreamWriter(fs);
+            //開始寫入
+            sw.WriteLine(pMessage);
+            //清空緩衝區
+            sw.Flush();
+            //關閉流
+            sw.Close();
+            fs.Close();
+
+        }
         [Route("GetList")]
         [HttpPost]
         public IHttpActionResult GetList(EBMProjectQueryModel model)
@@ -34,7 +64,8 @@ namespace EBMTodo.Areas.Back.Controllers
                     var prop = typeof(EBMProjectViewModel).GetProperty(filter.Key);
                     if (prop != null && prop.PropertyType == typeof(string))
                     {
-                        query = query.Where("@0.Contains(@1)", filter.Key, filter.Value);
+                        LogInfo(filter.Key + ":" + filter.Value);
+                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
                     }
                 }
                 var data = query;
@@ -136,7 +167,7 @@ namespace EBMTodo.Areas.Back.Controllers
             if (data != null)
             {
                 try
-                {                 
+                {
                     return Ok(data.EBMProjectMember.ToList());
                 }
                 catch (Exception e)

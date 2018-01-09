@@ -43,7 +43,7 @@ namespace EBMTodo.Areas.Back.Controllers
                     var prop = typeof(EBMProjectWorkingViewModel).GetProperty(filter.Key);
                     if (prop != null && prop.PropertyType == typeof(string))
                     {
-                        query = query.Where("@0.Contains(@1)", filter.Key, filter.Value);
+                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
                     }
                 }
 

@@ -749,8 +749,9 @@
     <None Include="Properties\PublishProfiles\EDUZIP.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="ngApp\0.0ec4074ac98c9a30c83f.chunk.js" />
+    <Content Include="ngApp\0.d7e1c90af78a0fee8178.chunk.js" />
     <Content Include="ngApp\3rdpartylicenses.txt" />
+    <Content Include="ngApp\assets\images\setting_icon.png" />
     <Content Include="ngApp\assets\images\sort_asc.png" />
     <Content Include="ngApp\assets\images\sort_desc.png" />
     <Content Include="ngApp\favicon.ico" />
@@ -760,8 +761,8 @@
     <Content Include="ngApp\fontawesome-webfont.b06871f281fee6b241d6.ttf" />
     <Content Include="ngApp\fontawesome-webfont.fee66e712a8a08eef580.woff" />
     <Content Include="ngApp\index.html" />
-    <Content Include="ngApp\inline.2b2d45214dc834814838.bundle.js" />
-    <Content Include="ngApp\main.3ff1e1c48e346dbfd7d6.bundle.js" />
+    <Content Include="ngApp\inline.a64e8a55953a4c6785c6.bundle.js" />
+    <Content Include="ngApp\main.241b8f516a63a2f744da.bundle.js" />
     <Content Include="ngApp\polyfills.e6475d2787bb3154d59c.bundle.js" />
     <Content Include="ngApp\scripts.9c4883adc1633503e9a1.bundle.js" />
     <Content Include="ngApp\styles.9f9cd27685c704291ce1.bundle.css" />

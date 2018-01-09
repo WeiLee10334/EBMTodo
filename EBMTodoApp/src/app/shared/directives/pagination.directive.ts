@@ -5,8 +5,9 @@ import { Observable } from 'rxjs/Observable';
   selector: '[appPagination]',
   exportAs: 'p-data'
 })
-export class PaginationDirective implements OnInit {
+export class PaginationDirective {
   list = new Array();
+  numberOfPages = 0;
   @Input() set data(d) {
     this.list = d;
     this.numberOfPages = this.getNumberOfPages();
@@ -16,16 +17,11 @@ export class PaginationDirective implements OnInit {
   @Input() pageList = new Array();
   @Input() currentPage = 1;
   @Input() numberPerPage = 10;
-  @Input() numberOfPages = 0;
+
   @Input() sort = {};//true:desc,false:asc
   @Output() sorting = new EventEmitter<string>();
   @Output() paging = new EventEmitter<number>();
   constructor() { }
-
-  ngOnInit() {
-
-  }
-
   public changeSort(prop: string) {
     this.sorting.emit(prop);
     if (this.sort[prop] === "undefined") {

@@ -1,7 +1,13 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataStoreService } from '../../shared/services';
 import { Project_Operation } from '../components/project-table-row/project-table-row.component';
+import { Observable } from 'rxjs/Observable';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 declare var $: any;
+
 @Component({
   selector: 'app-ebm-project',
   templateUrl: './ebm-project.component.html',
@@ -9,71 +15,93 @@ declare var $: any;
 })
 export class EbmProjectComponent implements OnInit, AfterViewInit {
   Columns = [
-    { name: "專案名稱", prop: "ProjectName" },
-    { name: "專案號", prop: "ProjectNo" },
-    { name: "建立時間", prop: "CreateDateTime" }
+    { name: "專案名稱", prop: "ProjectName", orderby: undefined },
+    { name: "專案號", prop: "ProjectNo", orderby: undefined },
+    { name: "建立時間", prop: "CreateDateTime", orderby: undefined }
   ]
-  Source = [];
-  Data = [];
-  Filters = {};
-  OrderBy = "CreateDateTime";
-  PendingData = [];
-  constructor(private api: DataStoreService) { }
+  QueryModel = {
+    Skip: 0,
+    Length: 10
+  }
+  CurrentPage;
+  TotalItems;
+  Projects: any;
+  ajax: Subscription;
 
+  Filters = {};
+  PendingData = [];
+
+  constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute) { }
+  trackByFn(index, item) {
+    return index; // or item.name
+  }
   ngOnInit() {
-    let model = {
-      Length: 9999,
-      OrderBy: "CreateDateTime",
-      Reverse: true
+    this.route.queryParams.subscribe((Params) => {
+      let Skip = Params['Skip'];
+      let Length = Params['Length'];
+      let OrderBy = Params['OrderBy'];
+      if (Skip && Length) {
+        this.QueryModel['Skip'] = Skip;
+        this.QueryModel['Length'] = Length;
+        this.QueryModel['OrderBy'] = OrderBy;
+
+        this.getData(this.QueryModel);
+      }
+      else {
+        let Model = {
+          Skip: 0,
+          Length: 10
+        }
+        this.router.navigate(["/project"], { queryParams: Model })
+      }
+    });
+  }
+  getData(model) {
+    if (this.ajax) {
+      this.ajax.unsubscribe();
     }
-    this.api.projectData(model).subscribe(
+    this.ajax = this.api.projectData(model).subscribe(
       (data) => {
-        this.Source = data.Data;
-        this.filter();
-        console.log(this.Data);
+        this.TotalItems = data.Total;
+        this.Projects = data.Data;
       },
       (err) => {
         console.log(err);
-      }
-    )
+      });
+  }
+  changePage(event) {
+    console.log(event)
+    this.QueryModel.Skip = this.QueryModel.Length * (event.page - 1);
+    this.getData(this.QueryModel);
+  }
+  changeOrderBy(prop, reverse) {
+    this.QueryModel['OrderBy'] = prop;
+    this.QueryModel['Reverse'] = reverse;
+    this.Columns.find(x => x.prop === prop).orderby = reverse;
+    this.getData(this.QueryModel);
   }
   updateFilters(event, column) {
     this.Filters[column.prop] = event.target.value;
     console.log(this.Filters);
-    this.filter();
-  }
-  filter() {
-    let temp = Object.assign([], this.Source);
-
-    Object.keys(this.Filters).forEach((key) => {
-      temp = temp.filter((value) => {
-        if (value[key]) {
-          return value[key].toString().toLowerCase().indexOf(this.Filters[key].toString().toLowerCase()) !== -1;
-        }
-        else {
-          return false;
-        }
-      })
-    });
-    this.Data = Object.assign([], temp);
+    this.QueryModel['Filters'] = this.Filters;
+    this.getData(this.QueryModel);
   }
   dispatchAction(event, index) {
     let type = <Project_Operation>event.type;
     let project = event.data;
-    console.log(type);
     switch (type) {
       case Project_Operation.Insert:
-        this.Source.unshift(project);
+        this.Projects.unshift(project);
         this.deletePending(index);
-        this.filter();
+
         break;
       case Project_Operation.Update:
         break;
       case Project_Operation.Delete:
-        let i = this.Source.findIndex(item => item.Id == project.Id);
-        this.Source.splice(i, 1);
-        this.Source = Object.assign([], this.Source);
-        this.filter();
+        let i = this.Projects.findIndex(item => item.Id == project.Id);
+        this.Projects.splice(i, 1);
+        this.Projects = Object.assign([], this.Projects);
+
         break;
       case Project_Operation.DeletePending:
         this.deletePending(index);
@@ -87,7 +115,6 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
     this.PendingData.splice(index, 1);
     this.PendingData = Object.assign([], this.PendingData);
   }
-
   ngAfterViewInit() {
     $("table th").resizable({
       handles: "e",
