@@ -2,61 +2,55 @@
   <h2>{{ProjectMember['ProjectName']}}</h2>
   <div class="row-fluid">
     <button class="btn btn-link" (click)="location.back()">回上一頁</button>
-    <div appPagination [data]="Data" #mf="p-data" [numberPerPage]="10" class="table-responsive">
-      <table class="table table-hover table-bordered">
+    <div class="table-responsive">
+      <table class="table table-hover">
         <thead>
           <tr>
+            <th>
+            </th>
             <th *ngFor="let column of Columns" class="text-center">
               <span>{{column.name||column.prop}}&nbsp;
-                <span [ngClass]="{'asc':!mf.sort[column.prop]||mf.sort[column.prop]==='undefined','desc':mf.sort[column.prop]}" (click)="mf.changeSort(column.prop)"></span>
-              </span>
-            </th>
-            <th>
-              <span>
+                <span *ngIf="column.orderby===undefined">
+                  <i class="fa fa-sort" aria-hidden="true" (click)="changeOrderBy(column.prop,true)"></i>
+                </span>
+                <span *ngIf="column.orderby!==undefined" (click)="changeOrderBy(column.prop,!column.orderby)">
+                  <i class="fa fa-sort-desc" *ngIf="!column.orderby" aria-hidden="true"></i>
+                  <i class="fa fa-sort-asc" *ngIf="column.orderby" aria-hidden="true"></i>
+                </span>
               </span>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <th>
+              <button class="btn btn-success" (click)="add()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+            </th>
             <th *ngFor="let column of Columns" class="text-center">
               <input class="form-control" (keyup)="updateFilters($event,column)">
-            </th>
-            <th>
-              <button class="btn btn-success" (click)="add()">新增</button>
             </th>
           </tr>
         </tbody>
         <tbody>
-          <ng-container *ngFor="let row of PendingData;let i = index">
-            <tr app-project-member-table-row [_ProjectMember]="row" (added)="changeState($event,i)" (deleted)="deletePending(i)"></tr>
+          <ng-container *ngFor="let row of PendingData;let i = index;trackBy:trackByFn">
+            <tr app-project-member-table-row [_ProjectMember]="row" (change)="dispatchAction($event,i)"></tr>
           </ng-container>
         </tbody>
         <tbody>
-          <ng-container *ngFor="let row of mf.pageList;let i = index">
-            <tr app-project-member-table-row [_ProjectMember]="row" (deleted)="delete($event)"></tr>
+          <ng-container *ngFor="let row of Members;let i = index;trackBy:trackByFn">
+            <tr app-project-member-table-row [_ProjectMember]="row" (change)="dispatchAction($event,i)"></tr>
           </ng-container>
         </tbody>
         <tfoot>
           <tr>
             <td [attr.colspan]="Columns.length+1">
-              <ul class="pagination policy-pagination mx-auto">
-                <li class="page-item">
-                  <a class="page-link" (click)="mf.previousPage()" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;&nbsp;上一頁</span>
-                    <span class="sr-only"></span>
-                  </a>
-                </li>
-                <li class="page-item" *ngFor="let page of mf.getPageArr(10);">
-                  <a class="page-link" [ngClass]="{'active':page===mf.currentPage}" (click)="mf.changePage(page)">{{page}}</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" (click)="mf.nextPage()" aria-label="Next">
-                    <span aria-hidden="true">下一頁&nbsp;&raquo;</span>
-                    <span class="sr-only"></span>
-                  </a>
-                </li>
-              </ul>
+              <div class="d-block mx-auto">
+                <pagination [boundaryLinks]="true" [totalItems]="TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="CurrentPage"
+                  [maxSize]="10" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                  (pageChanged)="changePage($event)"></pagination>
+              </div>
             </td>
           </tr>
         </tfoot>

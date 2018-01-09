@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import { Location } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -31,7 +32,7 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
   Filters = {};
   PendingData = [];
 
-  constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
   trackByFn(index, item) {
     return index; // or item.name
   }
@@ -44,7 +45,6 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
         this.QueryModel['Skip'] = Skip;
         this.QueryModel['Length'] = Length;
         this.QueryModel['OrderBy'] = OrderBy;
-
         this.getData(this.QueryModel);
       }
       else {
@@ -52,7 +52,11 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
           Skip: 0,
           Length: 10
         }
-        this.router.navigate(["/project"], { queryParams: Model })
+        this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["/project"], { queryParams: Model })));
+        this.QueryModel['Skip'] = 0;
+        this.QueryModel['Length'] = 10;
+        this.QueryModel['OrderBy'] = OrderBy;
+        this.getData(this.QueryModel);
       }
     });
   }
@@ -82,7 +86,6 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
   }
   updateFilters(event, column) {
     this.Filters[column.prop] = event.target.value;
-    console.log(this.Filters);
     this.QueryModel['Filters'] = this.Filters;
     this.getData(this.QueryModel);
   }
@@ -93,15 +96,13 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
       case Project_Operation.Insert:
         this.Projects.unshift(project);
         this.deletePending(index);
-
         break;
       case Project_Operation.Update:
         break;
       case Project_Operation.Delete:
-        let i = this.Projects.findIndex(item => item.Id == project.Id);
-        this.Projects.splice(i, 1);
+        let i = this.Projects.findIndex(item => item.PID == project.PID);
+        this.Projects.splice(i, 1)
         this.Projects = Object.assign([], this.Projects);
-
         break;
       case Project_Operation.DeletePending:
         this.deletePending(index);

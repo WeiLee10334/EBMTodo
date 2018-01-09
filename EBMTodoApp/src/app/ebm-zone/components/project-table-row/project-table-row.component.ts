@@ -46,7 +46,8 @@ export class ProjectTableRowComponent implements OnInit {
           this._Project = data;
           this.Editable = false;
           this.change.emit({
-            type: Project_Operation.Update
+            type: Project_Operation.Update,
+            data: data
           })
         },
         (err) => {
@@ -57,7 +58,6 @@ export class ProjectTableRowComponent implements OnInit {
 
   }
   Delete() {
-
     if (!this.Project.PID) {
       this.change.emit({
         type: Project_Operation.DeletePending,

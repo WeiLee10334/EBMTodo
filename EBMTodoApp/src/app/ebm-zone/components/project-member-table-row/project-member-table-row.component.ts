@@ -17,8 +17,7 @@ export class ProjectMemberTableRowComponent implements OnInit {
       this.Editable = true;
     }
   }
-  @Output() deleted = new EventEmitter<any>();
-  @Output() added = new EventEmitter<any>();
+  @Output() change = new EventEmitter<any>();
   Editable = false;
   ProjectMember: any;
   User: any;
@@ -39,8 +38,11 @@ export class ProjectMemberTableRowComponent implements OnInit {
       this.api.projectMemberCreate(this.ProjectMember).subscribe(
         (data) => {
           this._ProjectMember = data;
+          this.change.emit({
+            type: ProjectMember_Operation.Insert,
+            data: data
+          })
           this.Editable = false;
-          this.added.emit(this.ProjectMember);
         },
         (err) => {
           console.log(err);
@@ -52,6 +54,10 @@ export class ProjectMemberTableRowComponent implements OnInit {
         (data) => {
           this._ProjectMember = data;
           this.Editable = false;
+          this.change.emit({
+            type: ProjectMember_Operation.Update,
+            data: data
+          })
         },
         (err) => {
           console.log(err);
@@ -62,18 +68,33 @@ export class ProjectMemberTableRowComponent implements OnInit {
   }
   Delete() {
     if (!this.ProjectMember.PMID) {
-      this.deleted.emit(this.ProjectMember);
+      this.change.emit({
+        type: ProjectMember_Operation.DeletePending,
+        data: this.ProjectMember
+      })
     }
     else {
-      this.api.projectMemberDelete(this.ProjectMember).subscribe(
-        (data) => {
-          this.deleted.emit(this.ProjectMember);
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
+      if (confirm("確定刪除?")) {
+        this.api.projectMemberDelete(this.ProjectMember).subscribe(
+          (data) => {
+            this.change.emit({
+              type: ProjectMember_Operation.Delete,
+              data: this.ProjectMember
+            })
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+
+      }
 
     }
   }
+}
+export enum ProjectMember_Operation {
+  Insert,
+  Update,
+  Delete,
+  DeletePending
 }

@@ -1,3 +1,19 @@
+<td>
+  <div class="btn-group" dropdown placement="bottom right">
+    <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
+      <i class="fa fa-cog" aria-hidden="true"></i>
+    </button>
+    <ul *dropdownMenu class="dropdown-menu" role="menu">
+      <li role="menuitem">
+        <button class="btn btn-link dropdown-item" (click)="Edit()">修改</button>
+      </li>
+      <li role="menuitem">
+        <button class="btn btn-link dropdown-item" (click)="Delete()">刪除</button>
+      </li>
+    </ul>
+  </div>
+  <button class="btn btn-success" *ngIf="Editable" (click)="Save()">儲存</button>
+</td>
 <td [attr.data-th]="'UserName'">
   <span *ngIf="!Editable">{{ProjectMember['UserName']}}</span>
   <span *ngIf="Editable">
@@ -20,15 +36,4 @@
     <input type="text" class="form-control" bsDatepicker [(ngModel)]="ProjectMember['CreateDateTime']" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}"
     />
   </span> -->
-</td>
-<td [attr.data-th]="'TodoList'">
-  <span>
-    <a class="btn btn-link" [routerLink]="['/todolists']" [queryParams]="{ PMID:ProjectMember['PMID'] }" [routerLinkActive]="'active'">待辦工作</a>
-  </span>
-</td>
-
-<td>
-  <button class="btn btn-primary" *ngIf="!Editable" (click)="Edit()">修改</button>
-  <button class="btn btn-primary" *ngIf="Editable" (click)="Save()">儲存</button>
-  <button class="btn btn-danger" (click)="Delete()">刪除</button>
 </td>&nbsp;

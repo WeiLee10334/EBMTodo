@@ -31,7 +31,7 @@ export class EbmProjectWorkingComponent implements OnInit, AfterViewInit {
         "Length": 9999,
         "OrderBy": "RecordDateTime",
         "Reverse": true,
-        "PMID": value['PMID']
+        "PID": value['PID']
       }
       this.api.projectWorkingData(model).subscribe(
         (data) => {
