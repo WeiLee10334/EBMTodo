@@ -9,6 +9,10 @@
           [routerLinkActive]="'active'">專案人員</a>
       </li>
       <li role="menuitem">
+        <a class="btn btn-link dropdown-item" [routerLink]="['/projecttodolist']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
+          [routerLinkActive]="'active'">待辦事項</a>
+      </li>
+      <li role="menuitem">
         <a class="btn btn-link dropdown-item" [routerLink]="['/projectworking']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
           [routerLinkActive]="'active'">工作回報</a>
       </li>

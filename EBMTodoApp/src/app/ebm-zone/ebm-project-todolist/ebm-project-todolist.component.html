@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <hr>
+  <h2>{{ProjectName}}</h2>
+  <div class="row-fluid">
+    <button class="btn btn-success" (click)="add()">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-link" (click)="location.back()">回上一頁</button>
+    <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of PendingData;let i = index"></app-todolist-card>
+    <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of TodoLists;let i = index"></app-todolist-card>
+
+  </div>
+</div>

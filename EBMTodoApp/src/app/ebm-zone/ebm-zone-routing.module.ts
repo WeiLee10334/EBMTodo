@@ -10,6 +10,7 @@ import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 import { EbmProjectMemberComponent } from './ebm-project-member/ebm-project-member.component';
 import { EbmProjectWorkingComponent } from './ebm-project-working/ebm-project-working.component';
 import { EbmUserComponent } from './ebm-user/ebm-user.component';
+import { EbmProjectTodolistComponent } from './ebm-project-todolist/ebm-project-todolist.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
       { path: "project", component: EbmProjectComponent },
       { path: "projectmember", component: EbmProjectMemberComponent },
       { path: "projectworking", component: EbmProjectWorkingComponent },
-      { path: "user", component: EbmUserComponent }
+      { path: "user", component: EbmUserComponent },
+      { path: "projecttodolist", component: EbmProjectTodolistComponent }
     ]
   },
   { path: '**', redirectTo: 'working' }

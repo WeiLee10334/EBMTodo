@@ -171,4 +171,16 @@ export class DataStoreService {
   lineuserData(model){
     return this.HttpPost(model, '/api/back/EBMUser/GetLineList');
   }
+  projectTodoListData(model){
+    return this.HttpPost(model, '/api/back/EBMProjectTodoList/GetList');
+  }
+  projectTodoListCreate(model){
+    return this.HttpPost(model, '/api/back/EBMProjectTodoList/Create');
+  }
+  projectTodoListUpdate(model){
+    return this.HttpPost(model, '/api/back/EBMProjectTodoList/Update');
+  }
+  projectTodoListDelete(model){
+    return this.HttpPost(model, '/api/back/EBMProjectTodoList/Delete');
+  }
 }

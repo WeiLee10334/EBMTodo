@@ -22,7 +22,6 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   private setModel = (_: any) => { };
   // this is the initial value set to the component
   public writeValue(obj: any) {
-    console.log("write", obj);
     this.data = obj;
   }
   // registers 'fn' that will be fired when changes are made
