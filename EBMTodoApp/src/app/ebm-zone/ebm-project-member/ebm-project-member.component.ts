@@ -3,7 +3,6 @@ import { DataStoreService } from '../../shared/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
-import { ProjectMember_Operation } from '../components/project-member-table-row/project-member-table-row.component';
 declare var $: any;
 
 @Component({
@@ -16,8 +15,7 @@ export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
     { name: "負責人", prop: "UserName", orderby: undefined },
     { name: "職稱", prop: "title", orderby: undefined },
     { name: "專案名稱", prop: "ProjectName", orderby: undefined },
-    { name: "建立時間", prop: "CreateDateTime", orderby: undefined },
-    { name: "待辦", prop: "Todolist", orderby: undefined },
+    { name: "建立時間", prop: "CreateDateTime", orderby: undefined }
   ]
   QueryModel = {
     Skip: 0,
@@ -25,27 +23,24 @@ export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
   }
   CurrentPage;
   TotalItems;
-  Members: any;
+  Members = [];
   ajax: Subscription;
 
   Filters = {};
-  PendingData = [];
   ProjectMember = {
     PID: "",
     ProjectName: ""
   }
   constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
-  trackByFn(index, item) {
-    return index; // or item.name
-  }
   ngOnInit() {
     this.route.queryParams.subscribe((Params) => {
       this.ProjectMember['ProjectName'] = Params["ProjectName"];
       this.ProjectMember['PID'] = Params["PID"];
+
       let Skip = Params['Skip'];
       let Length = Params['Length'];
       let OrderBy = Params['OrderBy'];
-      if (this.ProjectMember['PID']) {
+      if (this.ProjectMember['PID'] && this.ProjectMember['ProjectName']) {
         if (Skip && Length) {
           this.QueryModel['Skip'] = Skip;
           this.QueryModel['Length'] = Length;
@@ -103,34 +98,16 @@ export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
     this.getData(this.QueryModel);
   }
   dispatchAction(event, index) {
-    let type = <ProjectMember_Operation>event.type;
-    let project = event.data;
-    switch (type) {
-      case ProjectMember_Operation.Insert:
-        this.Members.unshift(project);
-        this.deletePending(index);
-        break;
-      case ProjectMember_Operation.Update:
-        break;
-      case ProjectMember_Operation.Delete:
-        let i = this.Members.findIndex(item => item.PMId == project.PMId);
-        this.Members.splice(i, 1);
-        this.Members = Object.assign([], this.Members);
-        break;
-      case ProjectMember_Operation.DeletePending:
-        this.deletePending(index);
-        break;
+    if (!event) {
+      this.Members.splice(index, 1);
+    }
+    else {
+      this.Members[index] = event;
     }
   }
   add() {
-    this.ProjectMember['CreateDateTime'] = new Date();
-    this.PendingData.unshift(this.ProjectMember);
+    this.Members.unshift(this.ProjectMember);
   }
-  deletePending(index) {
-    this.PendingData.splice(index, 1);
-    this.PendingData = Object.assign([], this.PendingData);
-  }
-
   ngAfterViewInit() {
     $("table th").resizable({
       handles: "e",

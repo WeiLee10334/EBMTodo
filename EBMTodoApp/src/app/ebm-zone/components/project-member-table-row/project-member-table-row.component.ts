@@ -7,27 +7,17 @@ import { DataStoreService } from '../../../shared/services';
   styleUrls: ['./project-member-table-row.component.scss']
 })
 export class ProjectMemberTableRowComponent implements OnInit {
-  @Input() set _ProjectMember(value) {
-    this.ProjectMember = value;
-    this.User = {
-      Id: value.Id,
-      UserName: value.UserName
-    }
-    if (!value.PMID) {
-      this.Editable = true;
-    }
-  }
-  @Output() change = new EventEmitter<any>();
+  @Input() ProjectMember: any;
+  @Output() stateChanged = new EventEmitter<any>();
   Editable = false;
-  ProjectMember: any;
+
   User: any;
   constructor(private api: DataStoreService) { }
 
   ngOnInit() {
-  }
-  changeUser(event) {
-    this.ProjectMember['Id'] = event['Id'];
-    this.ProjectMember['UserName'] = event['UserName'];
+    if (!this.ProjectMember.PMID) {
+      this.Editable = true;
+    }
   }
   Edit() {
     this.Editable = true;
@@ -37,11 +27,7 @@ export class ProjectMemberTableRowComponent implements OnInit {
     if (!this.ProjectMember.PMID) {
       this.api.projectMemberCreate(this.ProjectMember).subscribe(
         (data) => {
-          this._ProjectMember = data;
-          this.change.emit({
-            type: ProjectMember_Operation.Insert,
-            data: data
-          })
+          this.stateChanged.emit(data)
           this.Editable = false;
         },
         (err) => {
@@ -52,12 +38,8 @@ export class ProjectMemberTableRowComponent implements OnInit {
     else {
       this.api.projectMemberUpdate(this.ProjectMember).subscribe(
         (data) => {
-          this._ProjectMember = data;
+          this.stateChanged.emit(data)
           this.Editable = false;
-          this.change.emit({
-            type: ProjectMember_Operation.Update,
-            data: data
-          })
         },
         (err) => {
           console.log(err);
@@ -68,19 +50,13 @@ export class ProjectMemberTableRowComponent implements OnInit {
   }
   Delete() {
     if (!this.ProjectMember.PMID) {
-      this.change.emit({
-        type: ProjectMember_Operation.DeletePending,
-        data: this.ProjectMember
-      })
+      this.stateChanged.emit(null)
     }
     else {
       if (confirm("確定刪除?")) {
         this.api.projectMemberDelete(this.ProjectMember).subscribe(
           (data) => {
-            this.change.emit({
-              type: ProjectMember_Operation.Delete,
-              data: this.ProjectMember
-            })
+            this.stateChanged.emit(null)
           },
           (err) => {
             console.log(err);
@@ -91,10 +67,4 @@ export class ProjectMemberTableRowComponent implements OnInit {
 
     }
   }
-}
-export enum ProjectMember_Operation {
-  Insert,
-  Update,
-  Delete,
-  DeletePending
 }

@@ -15,9 +15,8 @@
   <button class="btn btn-success" *ngIf="Editable" (click)="Save()">儲存</button>
 </td>
 <td [attr.data-th]="'UserName'">
-  <span *ngIf="!Editable">{{ProjectMember['UserName']}}</span>
-  <span *ngIf="Editable">
-    <app-user-select [(ngModel)]="User" (change)="changeUser($event)"></app-user-select>
+  <span>
+    <app-user-select [(ngModel)]="ProjectMember['Id']" [enableInput]="Editable" [UserName]="ProjectMember['UserName']"></app-user-select>
   </span>
 </td>
 <td [attr.data-th]="'title'">
@@ -31,9 +30,4 @@
 </td>
 <td [attr.data-th]="'CreateDateTime'">
   {{ProjectMember['CreateDateTime']|date:'yyyy-MM-dd'}}
-  <!-- <span *ngIf="!Editable">{{ProjectMember['CreateDateTime']|date:'yyyy-MM-dd'}}</span>
-  <span *ngIf="Editable">
-    <input type="text" class="form-control" bsDatepicker [(ngModel)]="ProjectMember['CreateDateTime']" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}"
-    />
-  </span> -->
 </td>&nbsp;

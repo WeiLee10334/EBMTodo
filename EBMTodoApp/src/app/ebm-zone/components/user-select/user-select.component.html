@@ -1,6 +1,10 @@
-<input type="text" class="form-control" [value]="data?.UserName||''" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-<div class="dropdown-menu" infiniteScroll [infiniteScrollDistance]="6" [infiniteScrollThrottle]="50" [scrollWindow]="false"
-  (scrolled)="onScrollDown()">
-  <a class="dropdown-item" *ngFor="let User of Users" (click)="select(User)">{{User['UserName']}}</a>
-</div>
+<ng-container *ngIf="enableInput">
+  <input type="text" class="form-control" [value]="Users[SelectIndex]?.UserName||UserName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="dropdown-menu" infiniteScroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="50" [scrollWindow]="false"
+    (scrolled)="onScrollDown()">
+    <a class="dropdown-item" [ngClass]="{'active':i==SelectIndex}" *ngFor="let user of Users;let i=index;trackBy:index" (click)="select(i)">{{user['UserName']}}</a>
+  </div>
+</ng-container>
+<ng-container *ngIf="!enableInput">
+  {{Users[SelectIndex]?.UserName||UserName}}
+</ng-container>

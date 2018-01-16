@@ -34,13 +34,8 @@
           </tr>
         </tbody>
         <tbody>
-          <ng-container *ngFor="let row of PendingData;let i = index;trackBy:trackByFn">
-            <tr app-project-member-table-row [_ProjectMember]="row" (change)="dispatchAction($event,i)"></tr>
-          </ng-container>
-        </tbody>
-        <tbody>
-          <ng-container *ngFor="let row of Members;let i = index;trackBy:trackByFn">
-            <tr app-project-member-table-row [_ProjectMember]="row" (change)="dispatchAction($event,i)"></tr>
+          <ng-container *ngFor="let row of Members;let i = index;trackBy:index">
+            <tr app-project-member-table-row [ProjectMember]="row" (stateChanged)="dispatchAction($event,i)"></tr>
           </ng-container>
         </tbody>
         <tfoot>

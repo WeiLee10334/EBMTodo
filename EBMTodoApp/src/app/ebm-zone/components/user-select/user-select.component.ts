@@ -1,6 +1,7 @@
-import { Component, OnInit, forwardRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, forwardRef, EventEmitter, Output, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DataStoreService } from '../../../shared/services';
+import { Console } from '@angular/core/src/console';
 
 @Component({
   selector: 'app-user-select',
@@ -13,7 +14,8 @@ import { DataStoreService } from '../../../shared/services';
   }]
 })
 export class UserSelectComponent implements OnInit, ControlValueAccessor {
-  data;
+  @Input() enableInput = true;
+  @Input() UserName;
   @Output() change = new EventEmitter<any>();
   constructor(private api: DataStoreService) { }
   // the method set in registerOnChange, it is just 
@@ -22,8 +24,10 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   private setModel = (_: any) => { };
   // this is the initial value set to the component
   public writeValue(obj: any) {
-    this.data = obj;
+    this.Id = obj;
+    console.log(obj)
   }
+  Id;
   // registers 'fn' that will be fired when changes are made
   // this is how we emit the changes back to the form
   public registerOnChange(fn: any) {
@@ -34,8 +38,9 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
 
   //Api section
   Users = [];
+  SelectIndex;
   Skip = 0;
-  Length = 20;
+  Length = 10;
   Total = 0;
   IsEnd = false;
   Filters = {};
@@ -55,8 +60,16 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
         data.Data.forEach((item) => {
           this.Users.push(item);
         });
-
         this.Skip += this.Length;
+        if (this.Id) {
+          this.SelectIndex = this.Users.findIndex((value, index, array) => {
+            if (value['Id'] == this.Id) {
+              return true;
+            }
+            return false;
+          })
+
+        }
         console.log(this.Users);
       },
       (err) => {
@@ -65,15 +78,14 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
     )
   }
   select(event) {
-    this.data = event;
-    this.setModel(this.data);
-    this.change.emit(this.data);
+    this.SelectIndex = event;
+    this.setModel(this.Users[event]['Id']);
   }
   onScrollDown() {
+    console.log('scrolldown')
     if (this.Skip < this.Total) {
       this.getUsers();
     }
-    console.log('scrolled down!!')
   }
   search(event) {
     this.Filters = {
@@ -82,9 +94,5 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
     this.Users = [];
     this.Skip = 0;
     this.getUsers();
-    console.log("search", event);
-  }
-  onChange(event) {
-
   }
 }
