@@ -6,6 +6,10 @@
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
     <button class="btn btn-link" (click)="location.back()">回上一頁</button>
+
+    <a class="btn btn-link float-right" [routerLink]="['/projectmember']" [queryParams]="{ PID:this.QueryModel['PID'],ProjectName:ProjectName }"
+      [routerLinkActive]="'active'">專案人員</a>
+
     <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of PendingData;let i = index"></app-todolist-card>
     <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of TodoLists;let i = index"></app-todolist-card>
 

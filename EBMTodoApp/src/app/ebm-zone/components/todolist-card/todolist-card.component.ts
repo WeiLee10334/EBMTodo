@@ -11,9 +11,14 @@ export class TodolistCardComponent implements OnInit {
   @Input() set _Todo(value) {
     this.Todo = value;
     if (!value.PTLID) {
-      this.api.todolistInit().subscribe(
+      let model = {
+        Skip: 0,
+        Length: 9999,
+        PID: value.PID
+      }
+      this.api.projectMemberData(model).subscribe(
         (data) => {
-          this.Members = data;
+          this.Members = data.Data;
         },
         (err) => {
           console.log(err);
@@ -35,7 +40,8 @@ export class TodolistCardComponent implements OnInit {
     MemberTitle: new FormControl(),
     PMID: new FormControl('', Validators.required),
     Tag: new FormControl(),
-    Memo: new FormControl()
+    Memo: new FormControl(),
+    PID: new FormControl()
   })
   Members = [];
   constructor(private api: DataStoreService) { }
@@ -49,14 +55,27 @@ export class TodolistCardComponent implements OnInit {
     }
   }
   enable() {
-    this.api.todolistInit().subscribe(
+    let model = {
+      Skip: 0,
+      Length: 9999,
+      PID: this.Todo.PID
+    }
+    this.api.projectMemberData(model).subscribe(
       (data) => {
-        this.Members = data;
+        this.Members = data.Data;
       },
       (err) => {
         console.log(err);
       }
     )
+    // this.api.todolistInit().subscribe(
+    //   (data) => {
+    //     this.Members = data;
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // )
     this.Form.setValue(this.Todo);
     this.IsForm = true;
   }

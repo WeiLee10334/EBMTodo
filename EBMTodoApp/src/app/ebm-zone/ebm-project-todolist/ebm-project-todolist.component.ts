@@ -48,7 +48,7 @@ export class EbmProjectTodolistComponent implements OnInit {
     )
   }
   add() {
-    this.PendingData.unshift({});
+    this.PendingData.unshift({ PID: this.QueryModel['PID'] });
   }
   todoChanged(event, index) {
     if (event === null) {
@@ -69,7 +69,8 @@ export class EbmProjectTodolistComponent implements OnInit {
       else {
         this.api.projectTodoListCreate(event).subscribe(
           (data) => {
-            this.TodoLists[index] = Object.assign({}, data);
+            this.PendingData.splice(index, 1);
+            this.TodoLists.unshift(data);
           },
           (err) => {
             alert('操作錯誤');
