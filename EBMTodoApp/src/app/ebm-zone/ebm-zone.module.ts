@@ -24,10 +24,10 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ProjectSelectComponent } from './components/project-select/project-select.component';
 import { EbmUserComponent } from './ebm-user/ebm-user.component';
 import { EbmProjectWorkingComponent } from './ebm-project-working/ebm-project-working.component';
-import { ProjectWorkingRowComponent } from './components/project-working-row/project-working-row.component';
 import { UserTableRowComponent } from './components/user-table-row/user-table-row.component';
 import { LineSelectComponent } from './components/line-select/line-select.component';
 import { EbmProjectTodolistComponent } from './ebm-project-todolist/ebm-project-todolist.component';
+import { ProjectWorkingTableRowComponent } from './components/project-working-table-row/project-working-table-row.component';
 
 @NgModule({
   imports: [
@@ -62,10 +62,10 @@ import { EbmProjectTodolistComponent } from './ebm-project-todolist/ebm-project-
     ProjectSelectComponent,
     EbmUserComponent,
     EbmProjectWorkingComponent,
-    ProjectWorkingRowComponent,
     UserTableRowComponent,
     LineSelectComponent,
-    EbmProjectTodolistComponent
+    EbmProjectTodolistComponent,
+    ProjectWorkingTableRowComponent
   ]
 })
 export class EbmZoneModule { }
