@@ -26,16 +26,12 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
   }
   CurrentPage;
   TotalItems;
-  Projects: any;
+  Projects = [];
   ajax: Subscription;
-
   Filters = {};
-  PendingData = [];
 
   constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
-  trackByFn(index, item) {
-    return index; // or item.name
-  }
+
   ngOnInit() {
     this.route.queryParams.subscribe((Params) => {
       let Skip = Params['Skip'];
@@ -90,31 +86,15 @@ export class EbmProjectComponent implements OnInit, AfterViewInit {
     this.getData(this.QueryModel);
   }
   dispatchAction(event, index) {
-    let type = <Project_Operation>event.type;
-    let project = event.data;
-    switch (type) {
-      case Project_Operation.Insert:
-        this.Projects.unshift(project);
-        this.deletePending(index);
-        break;
-      case Project_Operation.Update:
-        break;
-      case Project_Operation.Delete:
-        let i = this.Projects.findIndex(item => item.PID == project.PID);
-        this.Projects.splice(i, 1)
-        this.Projects = Object.assign([], this.Projects);
-        break;
-      case Project_Operation.DeletePending:
-        this.deletePending(index);
-        break;
+    if (!event) {
+      this.Projects.splice(index, 1);
+    }
+    else {
+      this.Projects[index] = event;
     }
   }
   add() {
-    this.PendingData.unshift({ CreateDateTime: new Date() });
-  }
-  deletePending(index) {
-    this.PendingData.splice(index, 1);
-    this.PendingData = Object.assign([], this.PendingData);
+    this.Projects.unshift({ CreateDateTime: new Date() });
   }
   ngAfterViewInit() {
     $("table th").resizable({

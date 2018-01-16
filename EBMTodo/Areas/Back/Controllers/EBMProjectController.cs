@@ -62,7 +62,7 @@ namespace EBMTodo.Areas.Back.Controllers
                 foreach (var filter in model.Filters)
                 {
                     var prop = typeof(EBMProjectViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string))
+                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
                     {
                         LogInfo(filter.Key + ":" + filter.Value);
                         query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
