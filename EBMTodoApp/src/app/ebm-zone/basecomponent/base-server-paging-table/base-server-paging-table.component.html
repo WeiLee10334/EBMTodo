@@ -1,3 +1,4 @@
+<!-- example -->
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="table-responsive">
@@ -40,9 +41,9 @@
           <tr>
             <td [attr.colspan]="Columns.length+1">
               <div class="d-block mx-auto">
-                <pagination [boundaryLinks]="true" [totalItems]="PagingInfo.TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="PagingInfo.CurrentPage"
-                  [maxSize]="PagingInfo.MaxSize" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                  lastText="&raquo;" (pageChanged)="changePage($event)"></pagination>
+                <pagination [boundaryLinks]="true" [totalItems]="TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="CurrentPage"
+                  [maxSize]="10" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                  (pageChanged)="changePage($event)"></pagination>
               </div>
             </td>
           </tr>

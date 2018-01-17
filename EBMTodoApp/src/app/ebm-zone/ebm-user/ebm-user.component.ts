@@ -11,6 +11,9 @@ declare var $: any;
   styleUrls: ['./ebm-user.component.scss']
 })
 export class EbmUserComponent implements OnInit, AfterViewInit {
+  trackByFn(index, obj) {
+    return obj;
+  }
   Columns = [
     { name: "組員名稱", prop: "UserName", orderby: undefined },
     { name: "Email", prop: "Email", orderby: undefined },

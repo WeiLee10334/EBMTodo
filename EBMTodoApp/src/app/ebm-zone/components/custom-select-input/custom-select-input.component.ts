@@ -14,8 +14,11 @@ import { Console } from '@angular/core/src/console';
   }]
 })
 export class CustomSelectInputComponent implements OnInit, ControlValueAccessor {
+  trackByFn(index, obj) {
+    return obj;
+  }
   @Input() enableInput = true;
-  @Input() LabelName;
+  @Input() LabelName = "";
   @Input() type;
   @Input() filter;
   @Output() change = new EventEmitter<any>();

@@ -16,7 +16,7 @@
 </td>
 <td [attr.data-th]="'UserName'">
   <span>
-    <app-custom-select-input [(ngModel)]="ProjectMember['Id']" [enableInput]="Editable" [LabelName]="ProjectMember['UserName']" type="user"></app-custom-select-input>
+    <app-custom-select-input [(ngModel)]="ProjectMember['Id']" [enableInput]="Editable" [LabelName]="ProjectMember?.UserName||''" type="user"></app-custom-select-input>
   </span>
 </td>
 <td [attr.data-th]="'title'">

@@ -11,8 +11,5 @@ export class EbmProjectComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
   }
-
-
 }

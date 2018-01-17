@@ -33,7 +33,7 @@
           </tr>
         </tbody>
         <tbody>
-          <ng-container *ngFor="let row of Users;let i = index;trackBy:index">
+          <ng-container *ngFor="let row of Users;let i = index;trackBy:trackByFn">
             <tr app-user-table-row title="{{row.Id}}" [User]="row" (stateChanged)="dispatchAction($event,i)"></tr>
           </ng-container>
         </tbody>

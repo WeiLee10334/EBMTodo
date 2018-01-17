@@ -3,7 +3,7 @@
     aria-expanded="false">
   <div class="dropdown-menu" infiniteScroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="50" [scrollWindow]="false"
     (scrolled)="onScrollDown()">
-    <a class="dropdown-item" [ngClass]="{'active':i==SelectIndex}" *ngFor="let item of SelectArray;let i=index;trackBy:index"
+    <a class="dropdown-item" [ngClass]="{'active':i==SelectIndex}" *ngFor="let item of SelectArray;let i=index;trackBy:trackByFn"
       (click)="select(i)">{{item['LabelName']}}</a>
   </div>
 </ng-container>

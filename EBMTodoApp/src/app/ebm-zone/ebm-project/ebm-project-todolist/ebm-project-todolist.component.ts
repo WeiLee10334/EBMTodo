@@ -13,8 +13,8 @@ declare var $: any;
 export class EbmProjectTodolistComponent implements OnInit {
 
   constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
-  trackByFn(index, item) {
-    return index; // or item.name
+  trackByFn(index, obj) {
+    return obj; // or item.name
   }
   ProjectName;
   TodoLists = [];
