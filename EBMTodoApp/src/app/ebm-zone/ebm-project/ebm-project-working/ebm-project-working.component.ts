@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { DataStoreService } from '../../shared/services';
+import { DataStoreService } from '../../../shared/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
@@ -57,7 +57,7 @@ export class EbmProjectWorkingComponent implements OnInit, AfterViewInit {
             PID: Params["PID"],
             ProjectName: Params["ProjectName"]
           }
-          this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["/projectmember"], { queryParams: Model })));
+          this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["./"], { relativeTo: this.route, queryParams: Model })));
           this.QueryModel['Skip'] = 0;
           this.QueryModel['Length'] = 10;
           this.QueryModel['OrderBy'] = OrderBy;

@@ -7,10 +7,11 @@ import { EbmMemoComponent } from './ebm-memo/ebm-memo.component';
 import { EbmTodolistComponent } from './ebm-todolist/ebm-todolist.component';
 import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
-import { EbmProjectMemberComponent } from './ebm-project-member/ebm-project-member.component';
-import { EbmProjectWorkingComponent } from './ebm-project-working/ebm-project-working.component';
+import { EbmProjectMemberComponent } from './ebm-project/ebm-project-member/ebm-project-member.component';
+import { EbmProjectWorkingComponent } from './ebm-project/ebm-project-working/ebm-project-working.component';
 import { EbmUserComponent } from './ebm-user/ebm-user.component';
-import { EbmProjectTodolistComponent } from './ebm-project-todolist/ebm-project-todolist.component';
+import { EbmProjectTodolistComponent } from './ebm-project/ebm-project-todolist/ebm-project-todolist.component';
+import { EbmProjectListComponent } from './ebm-project/ebm-project-list/ebm-project-list.component';
 
 const routes: Routes = [
   {
@@ -20,11 +21,18 @@ const routes: Routes = [
       { path: "memo", component: EbmMemoComponent },
       { path: "todolist", component: EbmTodolistComponent },
       { path: "online", component: EbmOnlineComponent },
-      { path: "project", component: EbmProjectComponent },
-      { path: "projectmember", component: EbmProjectMemberComponent },
-      { path: "projectworking", component: EbmProjectWorkingComponent },
+      {
+        path: "project", component: EbmProjectComponent, children: [
+          { path: "", component: EbmProjectListComponent },
+          { path: "member", component: EbmProjectMemberComponent },
+          { path: "working", component: EbmProjectWorkingComponent },
+          { path: "todolist", component: EbmProjectTodolistComponent },
+          { path: "*", redirectTo: "project" }
+        ]
+      },
+
       { path: "user", component: EbmUserComponent },
-      { path: "projecttodolist", component: EbmProjectTodolistComponent }
+
     ]
   },
   { path: '**', redirectTo: 'working' }

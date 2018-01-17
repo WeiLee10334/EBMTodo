@@ -26,14 +26,10 @@
           <input type="text" formControlName="title" class="form-control">
         </div>
         <div class="col-12 col-sm-6">
-          <!-- <span class="input-group-addon">
+          <span>
             指派人員
-          </span> -->
+          </span>
           <app-custom-select-input formControlName="PMID" [enableInput]="true" [LabelName]="Form.get('MemberTitle').value" [filter]="{PID:Form.get('PID').value}" type="projectmember"></app-custom-select-input>
-
-          <!-- <select class="form-control" formControlName="PMID">
-            <option *ngFor="let member of Members" [value]="member.PMID">{{member.title}}</option>
-          </select> -->
         </div>
       </div>
       <div class="form-group row">

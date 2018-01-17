@@ -1,20 +1,22 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { DataStoreService } from '../../shared/services';
+import { DataStoreService } from '../../../shared/services';
+import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import { Location } from '@angular/common';
 declare var $: any;
 
 @Component({
-  selector: 'app-ebm-project-member',
-  templateUrl: './ebm-project-member.component.html',
-  styleUrls: ['./ebm-project-member.component.scss']
+  selector: 'app-ebm-project-list',
+  templateUrl: './ebm-project-list.component.html',
+  styleUrls: ['./ebm-project-list.component.scss']
 })
-export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
+export class EbmProjectListComponent implements OnInit, AfterViewInit {
   Columns = [
-    { name: "負責人", prop: "UserName", orderby: undefined },
-    { name: "職稱", prop: "title", orderby: undefined },
     { name: "專案名稱", prop: "ProjectName", orderby: undefined },
+    { name: "專案號", prop: "ProjectNo", orderby: undefined },
     { name: "建立時間", prop: "CreateDateTime", orderby: undefined }
   ]
   QueryModel = {
@@ -23,66 +25,51 @@ export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
   }
   CurrentPage;
   TotalItems;
-  Members = [];
+  Projects = [];
   ajax: Subscription;
-
   Filters = {};
-  ProjectMember = {
-    PID: "",
-    ProjectName: ""
-  }
+
   constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
+
   ngOnInit() {
     this.route.queryParams.subscribe((Params) => {
-      this.ProjectMember['ProjectName'] = Params["ProjectName"];
-      this.ProjectMember['PID'] = Params["PID"];
-
       let Skip = Params['Skip'];
       let Length = Params['Length'];
       let OrderBy = Params['OrderBy'];
-      if (this.ProjectMember['PID'] && this.ProjectMember['ProjectName']) {
-        if (Skip && Length) {
-          this.QueryModel['Skip'] = Skip;
-          this.QueryModel['Length'] = Length;
-          this.QueryModel['OrderBy'] = OrderBy;
-          this.QueryModel['PID'] = this.ProjectMember['PID'];
-          this.getData(this.QueryModel);
-        }
-        else {
-          let Model = {
-            Skip: 0,
-            Length: 10,
-            PID: Params["PID"],
-            ProjectName: Params["ProjectName"]
-          }
-          this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["/projectmember"], { queryParams: Model })));
-          this.QueryModel['Skip'] = 0;
-          this.QueryModel['Length'] = 10;
-          this.QueryModel['OrderBy'] = OrderBy;
-          this.QueryModel['PID'] = this.ProjectMember['PID'];
-          this.getData(this.QueryModel);
-        }
+      if (Skip && Length) {
+        this.QueryModel['Skip'] = Skip;
+        this.QueryModel['Length'] = Length;
+        this.QueryModel['OrderBy'] = OrderBy;
+        this.getData(this.QueryModel);
       }
       else {
-        this.router.navigate(["/project"])
+        let Model = {
+          Skip: 0,
+          Length: 10
+        }
+        this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["./"], { relativeTo: this.route, queryParams: Model })));
+        this.QueryModel['Skip'] = 0;
+        this.QueryModel['Length'] = 10;
+        this.QueryModel['OrderBy'] = OrderBy;
+        this.getData(this.QueryModel);
       }
-
     });
   }
   getData(model) {
     if (this.ajax) {
       this.ajax.unsubscribe();
     }
-    this.ajax = this.api.projectMemberData(model).subscribe(
+    this.ajax = this.api.projectData(model).subscribe(
       (data) => {
         this.TotalItems = data.Total;
-        this.Members = data.Data;
+        this.Projects = data.Data;
       },
       (err) => {
         console.log(err);
       });
   }
   changePage(event) {
+    console.log(event)
     this.QueryModel.Skip = this.QueryModel.Length * (event.page - 1);
     this.getData(this.QueryModel);
   }
@@ -99,14 +86,14 @@ export class EbmProjectMemberComponent implements OnInit, AfterViewInit {
   }
   dispatchAction(event, index) {
     if (!event) {
-      this.Members.splice(index, 1);
+      this.Projects.splice(index, 1);
     }
     else {
-      this.Members[index] = event;
+      this.Projects[index] = event;
     }
   }
   add() {
-    this.Members.unshift(this.ProjectMember);
+    this.Projects.unshift({ CreateDateTime: new Date() });
   }
   ngAfterViewInit() {
     $("table th").resizable({

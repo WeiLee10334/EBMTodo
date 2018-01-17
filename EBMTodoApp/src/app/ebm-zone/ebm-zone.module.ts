@@ -17,16 +17,17 @@ import { OnlineTableComponent } from './components/online-table/online-table.com
 import { OnlineTableRowComponent } from './components/online-table-row/online-table-row.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 import { ProjectTableRowComponent } from './components/project-table-row/project-table-row.component';
-import { EbmProjectMemberComponent } from './ebm-project-member/ebm-project-member.component';
+import { EbmProjectMemberComponent } from './ebm-project/ebm-project-member/ebm-project-member.component';
 import { ProjectMemberTableRowComponent } from './components/project-member-table-row/project-member-table-row.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { EbmUserComponent } from './ebm-user/ebm-user.component';
-import { EbmProjectWorkingComponent } from './ebm-project-working/ebm-project-working.component';
+import { EbmProjectWorkingComponent } from './ebm-project/ebm-project-working/ebm-project-working.component';
 import { UserTableRowComponent } from './components/user-table-row/user-table-row.component';
-import { EbmProjectTodolistComponent } from './ebm-project-todolist/ebm-project-todolist.component';
+import { EbmProjectTodolistComponent } from './ebm-project/ebm-project-todolist/ebm-project-todolist.component';
 import { ProjectWorkingTableRowComponent } from './components/project-working-table-row/project-working-table-row.component';
 import { CustomSelectInputComponent } from './components/custom-select-input/custom-select-input.component';
 import { ProjectTodolistCardComponent } from './components/project-todolist-card/project-todolist-card.component';
+import { EbmProjectListComponent } from './ebm-project/ebm-project-list/ebm-project-list.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { ProjectTodolistCardComponent } from './components/project-todolist-card
     EbmProjectTodolistComponent,
     ProjectWorkingTableRowComponent,
     CustomSelectInputComponent,
-    ProjectTodolistCardComponent
+    ProjectTodolistCardComponent,
+    EbmProjectListComponent
   ]
 })
 export class EbmZoneModule { }
