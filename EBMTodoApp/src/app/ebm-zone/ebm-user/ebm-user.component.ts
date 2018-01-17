@@ -3,6 +3,7 @@ import { DataStoreService } from '../../shared/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
+import { BaseServerPagingTableComponent } from '../basecomponent/base-server-paging-table/base-server-paging-table.component';
 declare var $: any;
 
 @Component({
@@ -10,98 +11,26 @@ declare var $: any;
   templateUrl: './ebm-user.component.html',
   styleUrls: ['./ebm-user.component.scss']
 })
-export class EbmUserComponent implements OnInit, AfterViewInit {
-  trackByFn(index, obj) {
-    return obj;
-  }
+export class EbmUserComponent extends BaseServerPagingTableComponent implements OnInit, AfterViewInit {
+
   Columns = [
     { name: "組員名稱", prop: "UserName", orderby: undefined },
     { name: "Email", prop: "Email", orderby: undefined },
     { name: "Line", prop: "UID", orderby: undefined },
   ]
-  QueryModel = {
-    Skip: 0,
-    Length: 10
-  }
-  CurrentPage;
-  TotalItems;
-  Users = [];
-  ajax: Subscription;
-  Filters = {};
-  constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
-
-  ngOnInit() {
-    this.route.queryParams.subscribe((Params) => {
-      let Skip = Params['Skip'];
-      let Length = Params['Length'];
-      let OrderBy = Params['OrderBy'];
-      if (Skip && Length) {
-        this.QueryModel['Skip'] = Skip;
-        this.QueryModel['Length'] = Length;
-        this.QueryModel['OrderBy'] = OrderBy;
-        this.getData(this.QueryModel);
-      }
-      else {
-        let Model = {
-          Skip: 0,
-          Length: 10
-        }
-        this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["/user"], { queryParams: Model })));
-        this.QueryModel['Skip'] = 0;
-        this.QueryModel['Length'] = 10;
-        this.QueryModel['OrderBy'] = OrderBy;
-        this.getData(this.QueryModel);
-      }
-    });
-  }
   getData(model) {
-    if (this.ajax) {
-      this.ajax.unsubscribe();
-    }
+    super.getData(model);
     this.ajax = this.api.userData(model).subscribe(
       (data) => {
-        this.TotalItems = data.Total;
-        this.Users = data.Data;
+        this.PagingInfo.TotalItems = data.Total;
+        this.PagingData = data.Data;
+        //why???
+        setTimeout(() => {
+          this.PagingInfo.CurrentPage = <number>(this.QueryModel['Skip'] / this.QueryModel['Length'] + 1);
+        }, 0)
       },
       (err) => {
         console.log(err);
       });
   }
-  changePage(event) {
-    console.log(event)
-    this.QueryModel.Skip = this.QueryModel.Length * (event.page - 1);
-    this.getData(this.QueryModel);
-  }
-  changeOrderBy(prop, reverse) {
-    this.QueryModel['OrderBy'] = prop;
-    this.QueryModel['Reverse'] = reverse;
-    this.Columns.find(x => x.prop === prop).orderby = reverse;
-    this.getData(this.QueryModel);
-  }
-  updateFilters(event, column) {
-    this.Filters[column.prop] = event.target.value;
-    this.QueryModel['Filters'] = this.Filters;
-    this.getData(this.QueryModel);
-  }
-  dispatchAction(event, index) {
-    if (!event) {
-      this.Users.splice(index, 1);
-    }
-    else {
-      this.Users[index] = event;
-    }
-  }
-  add() {
-    this.Users.unshift({ CreateDateTime: new Date() });
-  }
-  ngAfterViewInit() {
-    $("table th").resizable({
-      handles: "e",
-      minWidth: 0,
-      resize: function (event, ui) {
-        $(event.target).width(ui.size.width);
-      }
-    });
-  }
-
 }

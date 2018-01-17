@@ -31,6 +31,7 @@ export class EbmProjectWorkingComponent extends BaseServerPagingTableComponent i
     this.ProjectMember['PID'] = Params["PID"];
     if (this.ProjectMember['PID'] && this.ProjectMember['ProjectName']) {
       this.QueryModel['PID'] = Params['PID'];
+      this.QueryModel['ProjectName'] = Params['ProjectName'];
     }
     else {
       this.router.navigate(["/project"])

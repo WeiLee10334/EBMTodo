@@ -2,6 +2,7 @@ import { Component, OnInit, forwardRef, EventEmitter, Output, Input } from '@ang
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DataStoreService } from '../../../shared/services';
 import { Console } from '@angular/core/src/console';
+import { SimpleChange } from '@angular/core/src/change_detection/change_detection_util';
 
 @Component({
   selector: 'app-custom-select-input',
@@ -17,7 +18,14 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
   trackByFn(index, obj) {
     return obj;
   }
-  @Input() enableInput = true;
+  @Input() set enableInput(value) {
+    console.info('set enable',value)
+    if (value) {
+      this.getUsers();
+    }
+    this.enableSelect = value;
+  };
+  enableSelect = true;
   @Input() LabelName = "";
   @Input() type;
   @Input() filter;
@@ -30,7 +38,6 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
   // this is the initial value set to the component
   public writeValue(obj: any) {
     this.Id = obj;
-    console.log(obj)
   }
   Id;
   // registers 'fn' that will be fired when changes are made
@@ -43,15 +50,18 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
 
   //Api section
   SelectArray = [];
-  SelectIndex;
+  SelectIndex = -1
   Skip = 0;
   Length = 10;
   Total = 0;
   IsEnd = false;
   Filters = {};
   PagingUsers = {};
+
   ngOnInit() {
-    this.getUsers();
+    if (this.enableSelect) {
+      this.getUsers();
+    }
   }
   getUsers() {
     let model = {

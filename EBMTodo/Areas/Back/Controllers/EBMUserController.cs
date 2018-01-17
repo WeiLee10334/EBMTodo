@@ -88,6 +88,11 @@ namespace EBMTodo.Areas.Back.Controllers
                     if (result.Succeeded)
                     {
                         model.Id = user.Id;
+                        var line = db.LineUser.FirstOrDefault(x => x.UID == model.UID);
+                        if (line != null)
+                        {
+                            model.LineUserName = line.Name;
+                        }
                         return Ok(model);
                     }
                     return Content(HttpStatusCode.NotAcceptable, result.Errors);
@@ -116,6 +121,7 @@ namespace EBMTodo.Areas.Back.Controllers
                     data.LineID = model.UID;
                     db.Entry(data).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+                    model.LineUserName = db.LineUser.FirstOrDefault(x => x.UID == model.UID).Name;
                     return Ok(model);
                 }
                 catch (Exception e)

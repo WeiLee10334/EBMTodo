@@ -30,6 +30,7 @@ export class EbmProjectMemberComponent extends BaseServerPagingTableComponent im
     this.ProjectMember['PID'] = Params["PID"];
     if (this.ProjectMember['PID'] && this.ProjectMember['ProjectName']) {
       this.QueryModel['PID'] = Params['PID'];
+      this.QueryModel['ProjectName'] = Params['ProjectName'];
     }
     else {
       this.router.navigate(["/project"])
@@ -50,5 +51,7 @@ export class EbmProjectMemberComponent extends BaseServerPagingTableComponent im
         console.log(err);
       });
   }
-
+  add() {
+    this.PagingData.unshift({ PID: this.ProjectMember['PID'], ProjectName: this.ProjectMember['ProjectName'], CreateDateTime: new Date() });
+  }
 }

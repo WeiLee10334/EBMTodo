@@ -1,6 +1,6 @@
 <td>
   <div class="btn-group" dropdown placement="bottom right">
-    <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
+    <button dropdownToggle type="button" class="btn btn-primary dropdownToggle" *ngIf="ProjectMember['PMID']">
       <i class="fa fa-cog" aria-hidden="true"></i>
     </button>
     <ul *dropdownMenu class="dropdown-menu" role="menu">
@@ -13,6 +13,7 @@
     </ul>
   </div>
   <button class="btn btn-success" *ngIf="Editable" (click)="Save()">儲存</button>
+  <button class="btn btn-secondary" *ngIf="Editable&&!ProjectMember['PMID']" (click)="Delete()">取消</button>
 </td>
 <td [attr.data-th]="'UserName'">
   <span>
