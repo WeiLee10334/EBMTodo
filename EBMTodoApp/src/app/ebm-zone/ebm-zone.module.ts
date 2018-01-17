@@ -28,6 +28,7 @@ import { UserTableRowComponent } from './components/user-table-row/user-table-ro
 import { LineSelectComponent } from './components/line-select/line-select.component';
 import { EbmProjectTodolistComponent } from './ebm-project-todolist/ebm-project-todolist.component';
 import { ProjectWorkingTableRowComponent } from './components/project-working-table-row/project-working-table-row.component';
+import { CustomSelectInputComponent } from './components/custom-select-input/custom-select-input.component';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { ProjectWorkingTableRowComponent } from './components/project-working-ta
     UserTableRowComponent,
     LineSelectComponent,
     EbmProjectTodolistComponent,
-    ProjectWorkingTableRowComponent
+    ProjectWorkingTableRowComponent,
+    CustomSelectInputComponent
   ]
 })
 export class EbmZoneModule { }

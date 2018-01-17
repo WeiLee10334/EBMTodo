@@ -50,6 +50,8 @@ export class DataStoreService {
       })
       .catch(this.handleError);
   }
+  
+  //
   workingInit() {
     if (this.dataStore.has(StoreType.LineUser) && this.dataStore.has(StoreType.Project)) {
       return Observable.of({ lineusers: this.dataStore.get(StoreType.LineUser), projects: this.dataStore.get(StoreType.Project) });
@@ -126,6 +128,8 @@ export class DataStoreService {
     return this.HttpPost(model, '/api/ebmonline/delete');
   }
 
+
+  //new api
   projectData(model: any) {
     return this.HttpPost(model, '/api/back/EBMProject/GetList');
   }

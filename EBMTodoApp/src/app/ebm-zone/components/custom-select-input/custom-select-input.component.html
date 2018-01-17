@@ -1,0 +1,12 @@
+<ng-container *ngIf="enableInput">
+  <input type="text" class="form-control" [value]="SelectArray[SelectIndex]?.LabelName||LabelName" data-toggle="dropdown" aria-haspopup="true"
+    aria-expanded="false">
+  <div class="dropdown-menu" infiniteScroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="50" [scrollWindow]="false"
+    (scrolled)="onScrollDown()">
+    <a class="dropdown-item" [ngClass]="{'active':i==SelectIndex}" *ngFor="let item of SelectArray;let i=index;trackBy:index"
+      (click)="select(i)">{{item['LabelName']}}</a>
+  </div>
+</ng-container>
+<ng-container *ngIf="!enableInput">
+  {{SelectArray[SelectIndex]?.LabelName||LabelName}}
+</ng-container>
