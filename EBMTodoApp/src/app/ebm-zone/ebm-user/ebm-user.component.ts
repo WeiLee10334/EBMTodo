@@ -1,36 +1,14 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { DataStoreService } from '../../shared/services';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { Subscription } from 'rxjs/Subscription';
-import { BaseServerPagingTableComponent } from '../basecomponent/base-server-paging-table/base-server-paging-table.component';
-declare var $: any;
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-ebm-user',
   templateUrl: './ebm-user.component.html',
   styleUrls: ['./ebm-user.component.scss']
 })
-export class EbmUserComponent extends BaseServerPagingTableComponent implements OnInit, AfterViewInit {
+export class EbmUserComponent implements OnInit {
+  constructor() { }
+  ngOnInit() {
 
-  Columns = [
-    { name: "組員名稱", prop: "UserName", orderby: undefined },
-    { name: "Email", prop: "Email", orderby: undefined },
-    { name: "Line", prop: "UID", orderby: undefined },
-  ]
-  getData(model) {
-    super.getData(model);
-    this.ajax = this.api.userData(model).subscribe(
-      (data) => {
-        this.PagingInfo.TotalItems = data.Total;
-        this.PagingData = data.Data;
-        //why???
-        setTimeout(() => {
-          this.PagingInfo.CurrentPage = <number>(this.QueryModel['Skip'] / this.QueryModel['Length'] + 1);
-        }, 0)
-      },
-      (err) => {
-        console.log(err);
-      });
   }
 }
