@@ -17,6 +17,7 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
   @Input() enableInput = true;
   @Input() LabelName;
   @Input() type;
+  @Input() filter;
   @Output() change = new EventEmitter<any>();
   constructor(private api: DataStoreService) { }
   // the method set in registerOnChange, it is just 
@@ -54,6 +55,9 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
       Skip: this.Skip,
       Length: this.Length,
       Filters: this.Filters
+    }
+    if (this.filter) {
+      model.Filters = this.filter;
     }
     switch (this.type) {
       case "user":
@@ -103,6 +107,59 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
                 return false;
               })
 
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+        break;
+      case "project":
+        this.api.projectData(model).subscribe(
+          (data) => {
+            this.Total = data.Total;
+            data.Data.forEach((item) => {
+              let selectItem = {
+                Id: item.PID,
+                LabelName: item.ProjectName
+              }
+              this.SelectArray.push(selectItem);
+            });
+            this.Skip += this.Length;
+            if (this.Id) {
+              this.SelectIndex = this.SelectArray.findIndex((value, index, array) => {
+                if (value['Id'] == this.Id) {
+                  return true;
+                }
+                return false;
+              })
+
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+        break;
+      case "projectmember":
+        this.api.projectMemberData(model).subscribe(
+          (data) => {
+            this.Total = data.Total;
+            data.Data.forEach((item) => {
+              let selectItem = {
+                Id: item.PMID,
+                LabelName: item.title
+              }
+              this.SelectArray.push(selectItem);
+            });
+            this.Skip += this.Length;
+            if (this.Id) {
+              this.SelectIndex = this.SelectArray.findIndex((value, index, array) => {
+                if (value['Id'] == this.Id) {
+                  return true;
+                }
+                return false;
+              })
             }
           },
           (err) => {

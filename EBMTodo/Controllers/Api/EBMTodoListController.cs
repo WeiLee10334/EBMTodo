@@ -88,9 +88,11 @@ namespace EBMTodo.Controllers.Api
                 target.CompleteRate = model.CompleteRate;
                 target.Description = model.Description;
                 target.Tag = model.Tag;
+                target.PMID = Guid.Parse(model.PMID);
                 target.Memo = model.Memo;
                 db.Entry(target).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+                model.MemberTitle = target.EBMProjectMember.title;
                 return Ok(model);
             }
         }

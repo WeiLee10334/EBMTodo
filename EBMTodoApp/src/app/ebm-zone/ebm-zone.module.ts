@@ -19,16 +19,14 @@ import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 import { ProjectTableRowComponent } from './components/project-table-row/project-table-row.component';
 import { EbmProjectMemberComponent } from './ebm-project-member/ebm-project-member.component';
 import { ProjectMemberTableRowComponent } from './components/project-member-table-row/project-member-table-row.component';
-import { UserSelectComponent } from './components/user-select/user-select.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { ProjectSelectComponent } from './components/project-select/project-select.component';
 import { EbmUserComponent } from './ebm-user/ebm-user.component';
 import { EbmProjectWorkingComponent } from './ebm-project-working/ebm-project-working.component';
 import { UserTableRowComponent } from './components/user-table-row/user-table-row.component';
-import { LineSelectComponent } from './components/line-select/line-select.component';
 import { EbmProjectTodolistComponent } from './ebm-project-todolist/ebm-project-todolist.component';
 import { ProjectWorkingTableRowComponent } from './components/project-working-table-row/project-working-table-row.component';
 import { CustomSelectInputComponent } from './components/custom-select-input/custom-select-input.component';
+import { ProjectTodolistCardComponent } from './components/project-todolist-card/project-todolist-card.component';
 
 @NgModule({
   imports: [
@@ -59,15 +57,13 @@ import { CustomSelectInputComponent } from './components/custom-select-input/cus
     ProjectTableRowComponent,
     EbmProjectMemberComponent,
     ProjectMemberTableRowComponent,
-    UserSelectComponent,
-    ProjectSelectComponent,
     EbmUserComponent,
     EbmProjectWorkingComponent,
     UserTableRowComponent,
-    LineSelectComponent,
     EbmProjectTodolistComponent,
     ProjectWorkingTableRowComponent,
-    CustomSelectInputComponent
+    CustomSelectInputComponent,
+    ProjectTodolistCardComponent
   ]
 })
 export class EbmZoneModule { }

@@ -35,9 +35,12 @@ namespace EBMTodo.Areas.Back.Controllers
                 _userManager = value;
             }
         }
+
+
+
         [Route("GetList")]
         [HttpPost]
-        public IHttpActionResult GetList(EBMUserQueryModel model)
+        public IHttpActionResult GetList(PagingQueryModel model)
         {
             try
             {
@@ -164,7 +167,7 @@ namespace EBMTodo.Areas.Back.Controllers
         }
         [Route("GetLineList")]
         [HttpPost]
-        public IHttpActionResult GetLineList(EBMUserQueryModel model)
+        public IHttpActionResult GetLineList(PagingQueryModel model)
         {
             try
             {
@@ -249,8 +252,5 @@ namespace EBMTodo.Areas.Back.Controllers
         public string UID { set; get; }
 
         public string LineUserName { set; get; }
-    }
-    public class EBMUserQueryModel : PagingQueryModel
-    {
     }
 }

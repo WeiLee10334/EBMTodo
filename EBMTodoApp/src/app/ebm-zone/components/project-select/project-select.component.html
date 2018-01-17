@@ -1,6 +1,0 @@
-<input type="text" class="form-control" [value]="data?.ProjectName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<div class="dropdown-menu" infiniteScroll [infiniteScrollDistance]="6" [infiniteScrollThrottle]="50" [scrollWindow]="false"
-  (scrolled)="onScrollDown()">
-  <a class="dropdown-item" *ngFor="let Project of Projects" (click)="select(Project)">{{Project['ProjectName']}}</a>
-</div>
-

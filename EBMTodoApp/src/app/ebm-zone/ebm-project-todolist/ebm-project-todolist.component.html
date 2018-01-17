@@ -11,6 +11,7 @@
       [routerLinkActive]="'active'">專案人員</a>
 
     <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of PendingData;let i = index"></app-todolist-card>
+    <h2 *ngIf="TodoLists.length==0" class="text-center">尚無資料</h2>
     <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of TodoLists;let i = index"></app-todolist-card>
 
   </div>

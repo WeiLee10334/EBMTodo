@@ -108,8 +108,10 @@ namespace EBMTodo.Areas.Back.Controllers
                     data.Description = model.Description;
                     data.Tag = model.Tag;
                     data.Memo = model.Memo;
+                    data.PMID = Guid.Parse(model.PMID);
                     db.Entry(data).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+                    model.MemberTitle = data.EBMProjectMember.title;
                     return Ok(model);
                 }
                 catch (Exception e)
