@@ -55,19 +55,15 @@ export class BaseServerPagingTableComponent implements OnInit, AfterViewInit {
     if (this.ajax) {
       this.ajax.unsubscribe();
     }
-    // this.ajax = this.api.projectData(model).subscribe(
-    //   (data) => {
-    //     this.TotalItems = data.Total;
-    //     this.PagingData = data.Data;
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   });
   }
   changePage(event) {
-    this.QueryModel.Skip = this.QueryModel.Length * (event.page - 1);
-    this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["./"], { relativeTo: this.route, queryParams: this.QueryModel })));
-    this.getData(this.QueryModel);
+    if (event != this.PagingInfo.CurrentPage) {
+      this.QueryModel.Skip = this.QueryModel.Length * (event.page - 1);
+      this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["./"], { relativeTo: this.route, queryParams: this.QueryModel })));
+      this.getData(this.QueryModel);
+    }
+    console.log(event)
+
   }
   changeOrderBy(prop, reverse) {
     this.QueryModel['OrderBy'] = prop;

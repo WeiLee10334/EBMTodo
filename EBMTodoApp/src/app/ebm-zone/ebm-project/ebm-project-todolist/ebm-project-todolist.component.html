@@ -1,18 +1,28 @@
 <div class="container-fluid">
   <hr>
-  <h2>{{ProjectName}}</h2>
+  <h2>{{ProjectMember['ProjectName']}}</h2>
+
   <div class="row-fluid">
     <button class="btn btn-success" (click)="add()">
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
     <button class="btn btn-link" (click)="location.back()">回上一頁</button>
-
-    <a class="btn btn-link float-right" [routerLink]="['/projectmember']" [queryParams]="{ PID:this.QueryModel['PID'],ProjectName:ProjectName }"
+    <a class="btn btn-link float-right" [routerLink]="['../member']" [queryParams]="{ PID:this.QueryModel['PID'],ProjectName:ProjectName }"
       [routerLinkActive]="'active'">專案人員</a>
+    <div class="d-block mx-auto">
+      <pagination [boundaryLinks]="true" [totalItems]="PagingInfo.TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="PagingInfo.CurrentPage"
+        [maxSize]="PagingInfo.MaxSize" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;" (pageChanged)="changePage($event)"></pagination>
+    </div>
 
-    <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of PendingData;let i = index"></app-todolist-card>
-    <h2 *ngIf="TodoLists.length==0" class="text-center">尚無資料</h2>
-    <app-todolist-card [_Todo]="item" (changed)="todoChanged($event,i)" *ngFor="let item of TodoLists;let i = index"></app-todolist-card>
-
+    <h2 *ngIf="PagingData.length==0" class="text-center">尚無資料</h2>
+    <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
+      <app-project-todolist-card [ProjectTodoList]="row" (stateChanged)="dispatchAction($event,i)"></app-project-todolist-card>
+    </ng-container>
+    <div class="d-block mx-auto">
+      <pagination [boundaryLinks]="true" [totalItems]="PagingInfo.TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="PagingInfo.CurrentPage"
+        [maxSize]="PagingInfo.MaxSize" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;" (pageChanged)="changePage($event)"></pagination>
+    </div>
   </div>
 </div>

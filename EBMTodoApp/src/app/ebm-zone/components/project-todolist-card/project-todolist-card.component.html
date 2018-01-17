@@ -1,3 +1,88 @@
-<p>
-  project-todolist-card works!
-</p>
+<div class="card" *ngIf="!Editable">
+  <div class="card-body">
+    <button class="btn btn-warning float-right" (click)="Delete()"><i class="fa fa-times" aria-hidden="true"></i></button>
+    <h4 class="card-title">{{ProjectTodoList?.title}}
+      <small>{{ProjectTodoList?.MemberTitle}}</small>
+    </h4>
+    <h6 class="card-subtitle mb-2 text-muted" title="提出時間">
+      {{ProjectTodoList?.ApplyDateTime}}
+    </h6>
+    <p class="card-text">申請人:{{ProjectTodoList?.ApplyName}}</p>
+    <p class="card-text">內容:{{ProjectTodoList?.Description}}</p>
+    <p class="card-text">標籤:{{ProjectTodoList?.Tag}}</p>
+    <p class="card-text">備註:{{ProjectTodoList?.Memo}}</p>
+    <progressbar class="progress progress-striped" [max]="100" [value]="ProjectTodoList?.CompleteRate" type="success">{{ProjectTodoList?.CompleteRate}}%</progressbar>
+    <button type="button" class="btn btn-link float-right" (click)="Edit()">修改</button>
+  </div>
+</div>
+
+<div class="card" *ngIf="Editable">
+  <div class="card-body">
+    <div class="form-group row">
+      <div class="input-group col-12 col-sm-6">
+        <span class="input-group-addon">
+          標題
+        </span>
+        <input type="text" [(ngModel)]="ProjectTodoList.title" class="form-control">
+      </div>
+      <div class="col-12 col-sm-6">
+        <span>
+          指派人員
+        </span>
+        <app-custom-select-input [(ngModel)]="ProjectTodoList.PMID" [enableInput]="true" [LabelName]="FProjectTodoList?.MemberTitle||''"
+          [filter]="{PID:ProjectTodoList?.PID}" type="projectmember"></app-custom-select-input>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="input-group col-12 col-sm-6">
+        <span class="input-group-addon">
+          提出時間
+        </span>
+        <input type="text" class="form-control" bsDatepicker [(ngModel)]="ProjectTodoList.ApplyDateTime" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}">
+      </div>
+      <div class="input-group col-12 col-sm-6">
+        <span class="input-group-addon">
+          申請人
+        </span>
+        <input type="text" [(ngModel)]="ProjectTodoList.ApplyName" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-12">
+        <textarea [(ngModel)]="ProjectTodoList.Description" class="form-control" placeholder="工作內容"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="input-group col-12">
+        <span class="input-group-addon">
+          標籤
+        </span>
+        <input type="text" [(ngModel)]="ProjectTodoList.Tag" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="input-group col-12">
+        <span class="input-group-addon">
+          備註
+        </span>
+        <input type="text" [(ngModel)]="ProjectTodoList.Memo" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-12">
+        <div class="input-group">
+          <span class="input-group-addon">
+            完成度
+          </span>
+          <input type="number" [(ngModel)]="ProjectTodoList.CompleteRate" max="100" min="0" class="form-control">
+        </div>
+        <progressbar class="progress progress-striped" [max]="100" [value]="ProjectTodoList?.CompleteRate" type="success">{{ProjectTodoList?.CompleteRate}}%</progressbar>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group pb-1">
+      <button class="btn btn-success float-right" (click)="Save()">確認</button>
+      <button type="button" class="btn btn-secondary float-right" *ngIf="!ProjectTodoList?.PTLID" (click)="Delete()">取消</button>
+    </div>
+  </div>
+</div>

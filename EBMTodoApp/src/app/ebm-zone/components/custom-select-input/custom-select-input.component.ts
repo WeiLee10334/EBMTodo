@@ -19,7 +19,6 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
     return obj;
   }
   @Input() set enableInput(value) {
-    console.info('set enable',value)
     if (value) {
       this.getUsers();
     }

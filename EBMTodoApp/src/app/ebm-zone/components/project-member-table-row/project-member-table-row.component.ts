@@ -11,7 +11,6 @@ export class ProjectMemberTableRowComponent implements OnInit {
   @Output() stateChanged = new EventEmitter<any>();
   Editable = false;
 
-  User: any;
   constructor(private api: DataStoreService) { }
 
   ngOnInit() {

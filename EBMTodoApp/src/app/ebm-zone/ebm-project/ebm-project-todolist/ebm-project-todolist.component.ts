@@ -3,6 +3,7 @@ import { DataStoreService } from '../../../shared/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
+import { BaseServerPagingTableComponent } from '../../basecomponent/base-server-paging-table/base-server-paging-table.component';
 declare var $: any;
 
 @Component({
@@ -10,76 +11,42 @@ declare var $: any;
   templateUrl: './ebm-project-todolist.component.html',
   styleUrls: ['./ebm-project-todolist.component.scss']
 })
-export class EbmProjectTodolistComponent implements OnInit {
+export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent implements OnInit {
 
-  constructor(private api: DataStoreService, private router: Router, private route: ActivatedRoute, public location: Location) { }
-  trackByFn(index, obj) {
-    return obj; // or item.name
+  ProjectMember = {
+    PID: "",
+    ProjectName: ""
   }
-  ProjectName;
-  TodoLists = [];
-  PendingData = [];
-  QueryModel;
-  ngOnInit() {
-    this.QueryModel = {
-      Skip: 0,
-      Length: 9999
+  checkUrl(Params) {
+    super.checkUrl(Params);
+    this.ProjectMember['ProjectName'] = Params["ProjectName"];
+    this.ProjectMember['PID'] = Params["PID"];
+    if (this.ProjectMember['PID'] && this.ProjectMember['ProjectName']) {
+      this.QueryModel['PID'] = Params['PID'];
+      this.QueryModel['ProjectName'] = Params['ProjectName'];
     }
-    this.route.queryParams.subscribe((Params) => {
-      let PID = Params['PID'];
-      this.ProjectName = Params['ProjectName'];
-      if (PID) {
-        this.QueryModel['PID'] = PID;
-        this.getData(this.QueryModel);
-      }
-      else {
-        this.location.back();
-      }
-    })
+    else {
+      this.router.navigate(["/project"])
+    }
   }
   getData(model) {
-    this.api.projectTodoListData(model).subscribe(
+    super.getData(model);
+    this.ajax = this.api.projectTodoListData(model).subscribe(
       (data) => {
-        this.TodoLists = data.Data;
+        this.PagingInfo.TotalItems = data.Total;
+        this.PagingData = data.Data;
+        //why???
+        setTimeout(() => {
+          this.PagingInfo.CurrentPage = <number>(this.QueryModel['Skip'] / this.QueryModel['Length'] + 1);
+        }, 0)
       },
       (err) => {
         console.log(err);
-      }
-    )
+      });
   }
   add() {
-    this.PendingData.unshift({ PID: this.QueryModel['PID'] });
+    this.PagingData.unshift({ PID: this.ProjectMember['PID'], ProjectName: this.ProjectMember['ProjectName'], CreateDateTime: new Date() });
   }
-  todoChanged(event, index) {
-    if (event === null) {
-      this.PendingData.splice(index, 1);
-    }
-    else {
-      if (event.PTLID) {
-        this.api.projectTodoListUpdate(event).subscribe(
-          (data) => {
-            this.TodoLists[index] = Object.assign({}, data);
-          },
-          (err) => {
-            alert('操作錯誤');
-            console.log(err);
-          }
-        )
-      }
-      else {
-        this.api.projectTodoListCreate(event).subscribe(
-          (data) => {
-            this.PendingData.splice(index, 1);
-            this.TodoLists.unshift(data);
-          },
-          (err) => {
-            alert('操作錯誤');
-            console.log(err);
-          }
-        )
-      }
 
-    }
-  }
 
 }
