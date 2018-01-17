@@ -27,13 +27,9 @@
   </span>
 </td>
 <td [attr.data-th]="'UID'">
-  <!-- <span *ngIf="!Editable">{{User['UID']}}</span>
-  <span *ngIf="Editable">
-    <input type="text" class="form-control" [(ngModel)]="User['UID']">
-  </span> -->
-
-  <span *ngIf="!Editable">{{User['UID']}}</span>
-  <span *ngIf="Editable">
-    <app-line-select [(ngModel)]="LineUser" (change)="changeUser($event)"></app-line-select>
+  <span>
+    <app-custom-select-input [(ngModel)]="User['UID']" [enableInput]="Editable" [LabelName]="User['LineUserName']"
+      type="lineuser"></app-custom-select-input>
+    <!-- <app-user-select [(ngModel)]="ProjectMember['Id']" [enableInput]="Editable" [UserName]="ProjectMember['UserName']"></app-user-select> -->
   </span>
 </td>&nbsp;

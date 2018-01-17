@@ -7,19 +7,16 @@ import { DataStoreService } from '../../../shared/services';
   styleUrls: ['./user-table-row.component.scss']
 })
 export class UserTableRowComponent implements OnInit {
-  @Input() set _User(value) {
-    this.User = value;
-    if (!value.Id) {
-      this.Editable = true;
-    }
-  }
-  @Output() change = new EventEmitter<any>();
+  @Input() User: any;
+  @Output() stateChanged = new EventEmitter<any>();
   Editable = false;
-  User: any;
 
   constructor(private api: DataStoreService) { }
 
   ngOnInit() {
+    if (this.User && !this.User.Id) {
+      this.Editable = true;
+    }
   }
   changeUser(event) {
     this.User['UID'] = event['UID'];
@@ -31,11 +28,7 @@ export class UserTableRowComponent implements OnInit {
     if (!this.User.Id) {
       this.api.userCreate(this.User).subscribe(
         (data) => {
-          this._User = data;
-          this.change.emit({
-            type: User_Operation.Insert,
-            data: data
-          })
+          this.stateChanged.emit(data)
           this.Editable = false;
         },
         (err) => {
@@ -46,11 +39,8 @@ export class UserTableRowComponent implements OnInit {
     else {
       this.api.userUpdate(this.User).subscribe(
         (data) => {
-          this._User = data;
+          this.stateChanged.emit(data)
           this.Editable = false;
-          this.change.emit({
-            type: User_Operation.Update
-          })
         },
         (err) => {
           console.log(err);
@@ -61,19 +51,13 @@ export class UserTableRowComponent implements OnInit {
   }
   Delete() {
     if (!this.User.Id) {
-      this.change.emit({
-        type: User_Operation.DeletePending,
-        data: this.User
-      })
+      this.stateChanged.emit(null)
     }
     else {
       if (confirm("確定刪除?")) {
         this.api.userDelete(this.User).subscribe(
           (data) => {
-            this.change.emit({
-              type: User_Operation.Delete,
-              data: this.User
-            })
+            this.stateChanged.emit(null)
           },
           (err) => {
             console.log(err);
@@ -82,10 +66,4 @@ export class UserTableRowComponent implements OnInit {
       }
     }
   }
-}
-export enum User_Operation {
-  Insert,
-  Update,
-  Delete,
-  DeletePending
 }

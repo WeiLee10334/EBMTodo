@@ -50,7 +50,7 @@ namespace EBMTodo.Areas.Back.Controllers
                 foreach (var filter in model.Filters)
                 {
                     var prop = typeof(EBMUserViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string))
+                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
                     {
                         query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
                     }
@@ -177,7 +177,7 @@ namespace EBMTodo.Areas.Back.Controllers
                 foreach (var filter in model.Filters)
                 {
                     var prop = typeof(EBMLineUserViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string))
+                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
                     {
                         query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
                     }
@@ -236,7 +236,8 @@ namespace EBMTodo.Areas.Back.Controllers
                 Id = x.Id,
                 UserName = x.UserName,
                 Email = x.Email,
-                UID = x.LineID
+                UID = x.LineID,
+                LineUserName = context.LineUser.FirstOrDefault(y => y.UID == x.LineID) == null ? "" : context.LineUser.FirstOrDefault(y => y.UID == x.LineID).Name
             });
         }
         public string Id { set; get; }
@@ -246,6 +247,8 @@ namespace EBMTodo.Areas.Back.Controllers
         public string UserName { set; get; }
 
         public string UID { set; get; }
+
+        public string LineUserName { set; get; }
     }
     public class EBMUserQueryModel : PagingQueryModel
     {

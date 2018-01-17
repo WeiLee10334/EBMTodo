@@ -16,6 +16,7 @@ import { Console } from '@angular/core/src/console';
 export class CustomSelectInputComponent implements OnInit, ControlValueAccessor {
   @Input() enableInput = true;
   @Input() LabelName;
+  @Input() type;
   @Output() change = new EventEmitter<any>();
   constructor(private api: DataStoreService) { }
   // the method set in registerOnChange, it is just 
@@ -54,30 +55,63 @@ export class CustomSelectInputComponent implements OnInit, ControlValueAccessor 
       Length: this.Length,
       Filters: this.Filters
     }
-    this.api.userData(model).subscribe(
-      (data) => {
-        this.Total = data.Total;
-        data.Data.forEach((item) => {
-          let selectItem = {
-            
-          }
-          this.SelectArray.push(item);
-        });
-        this.Skip += this.Length;
-        if (this.Id) {
-          this.SelectIndex = this.SelectArray.findIndex((value, index, array) => {
-            if (value['Id'] == this.Id) {
-              return true;
-            }
-            return false;
-          })
+    switch (this.type) {
+      case "user":
+        this.api.userData(model).subscribe(
+          (data) => {
+            this.Total = data.Total;
+            data.Data.forEach((item) => {
+              let selectItem = {
+                Id: item.Id,
+                LabelName: item.UserName
+              }
+              this.SelectArray.push(selectItem);
+            });
+            this.Skip += this.Length;
+            if (this.Id) {
+              this.SelectIndex = this.SelectArray.findIndex((value, index, array) => {
+                if (value['Id'] == this.Id) {
+                  return true;
+                }
+                return false;
+              })
 
-        }
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+        break;
+      case "lineuser":
+        this.api.lineuserData(model).subscribe(
+          (data) => {
+            this.Total = data.Total;
+            data.Data.forEach((item) => {
+              let selectItem = {
+                Id: item.UID,
+                LabelName: item.UserName
+              }
+              this.SelectArray.push(selectItem);
+            });
+            this.Skip += this.Length;
+            if (this.Id) {
+              this.SelectIndex = this.SelectArray.findIndex((value, index, array) => {
+                if (value['Id'] == this.Id) {
+                  return true;
+                }
+                return false;
+              })
+
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+        break;
+    }
+
   }
   select(event) {
     this.SelectIndex = event;
