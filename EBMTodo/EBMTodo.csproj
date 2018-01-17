@@ -193,6 +193,7 @@
     <Compile Include="Areas\Back\BackAreaRegistration.cs" />
     <Compile Include="Areas\Back\Controllers\EBMProjectController.cs" />
     <Compile Include="Areas\Back\Controllers\EBMProjectMemberController.cs" />
+    <Compile Include="Areas\Back\Controllers\EBMProjectOnlineController.cs" />
     <Compile Include="Areas\Back\Controllers\EBMProjectTodoListController.cs" />
     <Compile Include="Areas\Back\Controllers\EBMUserController.cs" />
     <Compile Include="Areas\Back\Controllers\EBMProjectWorkingController.cs" />

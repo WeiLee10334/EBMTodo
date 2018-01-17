@@ -7,7 +7,7 @@
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
     <button class="btn btn-link" (click)="location.back()">回上一頁</button>
-    <a class="btn btn-link float-right" [routerLink]="['../member']" [queryParams]="{ PID:this.QueryModel['PID'],ProjectName:ProjectName }"
+    <a class="btn btn-link float-right" [routerLink]="['../member']" [queryParams]="{ PID:ProjectMember['PID'],ProjectName:ProjectMember['ProjectName'] }"
       [routerLinkActive]="'active'">專案人員</a>
     <div class="d-block mx-auto">
       <pagination [boundaryLinks]="true" [totalItems]="PagingInfo.TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="PagingInfo.CurrentPage"
