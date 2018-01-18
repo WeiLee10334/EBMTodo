@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <h2>{{User['UserName']}}</h2>
+  <div class="row-fluid">
+    <button class="btn btn-link" (click)="location.back()">回上一頁</button>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th *ngFor="let column of Columns" class="text-center">
+              <span>{{column.name||column.prop}}&nbsp;
+                <span *ngIf="column.orderby===undefined">
+                  <i class="fa fa-sort" aria-hidden="true" (click)="changeOrderBy(column.prop,true)"></i>
+                </span>
+                <span *ngIf="column.orderby!==undefined" (click)="changeOrderBy(column.prop,!column.orderby)">
+                  <i class="fa fa-sort-desc" *ngIf="!column.orderby" aria-hidden="true"></i>
+                  <i class="fa fa-sort-asc" *ngIf="column.orderby" aria-hidden="true"></i>
+                </span>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th *ngFor="let column of Columns" class="text-center">
+              <input class="form-control" (keyup)="updateFilters($event,column)">
+            </th>
+          </tr>
+        </tbody>
+        <tbody>
+          <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
+            <tr app-project-working-table-row [ProjectWorking]="row"></tr>
+          </ng-container>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td [attr.colspan]="Columns.length+1">
+              <div class="d-block mx-auto">
+                <pagination [boundaryLinks]="true" [totalItems]="PagingInfo.TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="PagingInfo.CurrentPage"
+                  [maxSize]="PagingInfo.MaxSize" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                  lastText="&raquo;" (pageChanged)="changePage($event)"></pagination>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

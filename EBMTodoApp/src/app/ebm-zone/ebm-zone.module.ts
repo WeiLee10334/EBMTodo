@@ -32,6 +32,7 @@ import { EbmUserListComponent } from './ebm-user/ebm-user-list/ebm-user-list.com
 import { EbmUserMemberComponent } from './ebm-user/ebm-user-member/ebm-user-member.component';
 import { EbmUserTodolistComponent } from './ebm-user/ebm-user-todolist/ebm-user-todolist.component';
 import { BaseServerPagingTableComponent } from './basecomponent/base-server-paging-table/base-server-paging-table.component';
+import { EbmUserWorkingComponent } from './ebm-user/ebm-user-working/ebm-user-working.component';
 
 @NgModule({
   imports: [
@@ -73,7 +74,8 @@ import { BaseServerPagingTableComponent } from './basecomponent/base-server-pagi
     EbmUserListComponent,
     EbmUserMemberComponent,
     EbmUserTodolistComponent,
-    BaseServerPagingTableComponent
+    BaseServerPagingTableComponent,
+    EbmUserWorkingComponent
   ]
 })
 export class EbmZoneModule { }

@@ -15,12 +15,6 @@ namespace EBMTodo.Areas.Back.Controllers
     public class EBMProjectWorkingController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        [Route("test")]
-        [HttpPost]
-        public IHttpActionResult test()
-        {
-            return Ok("Received");
-        }
         [Route("GetList")]
         [HttpPost]
         public IHttpActionResult GetList(EBMProjectWorkingQueryModel model)
@@ -37,6 +31,10 @@ namespace EBMTodo.Areas.Back.Controllers
                 if (!string.IsNullOrEmpty(model.PID))
                 {
                     query = query.Where(x => x.PID == model.PID);
+                }
+                if (!string.IsNullOrEmpty(model.Id))
+                {
+                    query = query.Where(x => x.Id == model.Id);
                 }
                 foreach (var filter in model.Filters)
                 {
@@ -108,6 +106,8 @@ namespace EBMTodo.Areas.Back.Controllers
     public class EBMProjectWorkingQueryModel : PagingQueryModel
     {
         public string PID { set; get; }
+
+        public string Id { set; get; }
 
         public DateTime? Start { set; get; }
 
