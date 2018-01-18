@@ -22,6 +22,9 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
     { name: "附註", prop: "Memo" },
     { name: "進度", prop: "CompleteRate" },
   ];
+  refresh() {
+    this.getData(this.QueryModel);
+  }
   getData(model) {
     super.getData(model);
     this.ajax = this.api.projectOnlineData(model).subscribe(
@@ -42,23 +45,15 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
   add() {
     this.PagingData.unshift({ ApplyDateTime: new Date() });
   }
+  //
+  lockedData = [];
   pendingData = [];
-  delete(event) {
-    if (this.pendingData.findIndex(x => x === event) == -1) {
-      this.pendingData.push(event);
-      this.api.projectOnlineDelete(event).subscribe(
-        (data) => {
-          this.pendingData.splice(this.pendingData.findIndex(x => x === event), 1);
-          this.PagingData.splice(this.PagingData.findIndex(x => x === event), 1);
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
-    }
-  }
-  modelChanged(event) {
-    if (event.POID) {
+  timeoutId;
+  timeoutDelay = 200;
+  update() {
+    console.log('update loop')
+    let event = this.pendingData.pop();
+    while (event) {
       this.api.projectOnlineUpdate(event).subscribe(
         (data) => {
           // this.PagingData[this.PagingData.findIndex(x => x === event)] = data;
@@ -68,14 +63,43 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
           console.log(err);
         }
       )
-
+      event = this.pendingData.pop();
+    }
+    this.timeoutId = undefined;
+  }
+  delete(event) {
+    if (this.lockedData.findIndex(x => x === event) == -1) {
+      this.lockedData.push(event);
+      this.api.projectOnlineDelete(event).subscribe(
+        (data) => {
+          this.lockedData.splice(this.lockedData.findIndex(x => x === event), 1);
+          this.PagingData.splice(this.PagingData.findIndex(x => x === event), 1);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+  }
+  modelChanged(event) {
+    console.log('change', event.POID)
+    if (event.POID) {
+      let index = this.pendingData.findIndex(x => x === event);
+      if (index == -1) {
+        this.pendingData.push(event);
+      }
+      if (!this.timeoutId) {
+        this.timeoutId = setTimeout(() => {
+          this.update()
+        }, this.timeoutDelay);
+      }
     }
     else {
-      if (this.pendingData.findIndex(x => x === event) == -1) {
-        this.pendingData.push(event);
+      if (this.lockedData.findIndex(x => x === event) == -1) {
+        this.lockedData.push(event);
         this.api.projectOnlineCreate(event).subscribe(
           (data) => {
-            this.pendingData.splice(this.pendingData.findIndex(x => x === event), 1);
+            this.lockedData.splice(this.lockedData.findIndex(x => x === event), 1);
             Object.assign(this.PagingData[this.PagingData.findIndex(x => x === event)], data);
           },
           (err) => {
