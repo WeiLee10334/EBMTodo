@@ -1,5 +1,58 @@
 <div class="container-fluid">
   <div class="row-fluid">
-    <app-online-table [_Data]="Data" [_Columns]="Columns"></app-online-table>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th *ngFor="let column of Columns" class="text-center">
+              <span>{{column.name||column.prop}}&nbsp;
+                <span *ngIf="column.orderby===undefined">
+                  <i class="fa fa-sort" aria-hidden="true" (click)="changeOrderBy(column.prop,true)"></i>
+                </span>
+                <span *ngIf="column.orderby!==undefined" (click)="changeOrderBy(column.prop,!column.orderby)">
+                  <i class="fa fa-sort-desc" *ngIf="!column.orderby" aria-hidden="true"></i>
+                  <i class="fa fa-sort-asc" *ngIf="column.orderby" aria-hidden="true"></i>
+                </span>
+              </span>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th *ngFor="let column of Columns" class="text-center">
+              <input class="form-control" placeholder="search" (keyup)="updateFilters($event,column)">
+            </th>
+            <th>
+              <button class="btn btn-success" (click)="add()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+            </th>
+          </tr>
+        </tbody>
+        <tbody>
+          <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
+            <tr app-ebm-online-table-row title="{{row.PID}}" [(ngModel)]="PagingData[i]" (ngModelChange)="modelChanged($event)">
+              <td>
+                <button class="btn btn-danger" (click)="delete(PagingData[i])">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td [attr.colspan]="Columns.length+1">
+              <div class="d-block mx-auto">
+                <pagination [boundaryLinks]="true" [totalItems]="PagingInfo.TotalItems" [itemsPerPage]="QueryModel.Length" [(ngModel)]="PagingInfo.CurrentPage"
+                  [maxSize]="PagingInfo.MaxSize" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                  lastText="&raquo;" (pageChanged)="changePage($event)"></pagination>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 </div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnlineTableRowComponent } from './online-table-row.component';
+import { BaseTableRowComponent } from './base-table-row.component';
 
-describe('OnlineTableRowComponent', () => {
-  let component: OnlineTableRowComponent;
-  let fixture: ComponentFixture<OnlineTableRowComponent>;
+describe('BaseTableRowComponent', () => {
+  let component: BaseTableRowComponent;
+  let fixture: ComponentFixture<BaseTableRowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OnlineTableRowComponent ]
+      declarations: [ BaseTableRowComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OnlineTableRowComponent);
+    fixture = TestBed.createComponent(BaseTableRowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

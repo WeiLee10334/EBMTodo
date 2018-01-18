@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnlineTableComponent } from './online-table.component';
+import { EbmOnlineTableRowComponent } from './ebm-online-table-row.component';
 
-describe('OnlineTableComponent', () => {
-  let component: OnlineTableComponent;
-  let fixture: ComponentFixture<OnlineTableComponent>;
+describe('EbmOnlineTableRowComponent', () => {
+  let component: EbmOnlineTableRowComponent;
+  let fixture: ComponentFixture<EbmOnlineTableRowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OnlineTableComponent ]
+      declarations: [ EbmOnlineTableRowComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OnlineTableComponent);
+    fixture = TestBed.createComponent(EbmOnlineTableRowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

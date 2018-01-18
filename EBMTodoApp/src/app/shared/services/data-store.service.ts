@@ -187,4 +187,16 @@ export class DataStoreService {
   projectTodoListDelete(model){
     return this.HttpPost(model, '/api/back/EBMProjectTodoList/Delete');
   }
+  projectOnlineData(model){
+    return this.HttpPost(model, '/api/back/EBMProjectOnline/GetList');
+  }
+  projectOnlineCreate(model){
+    return this.HttpPost(model, '/api/back/EBMProjectOnline/Create');
+  }
+  projectOnlineUpdate(model){
+    return this.HttpPost(model, '/api/back/EBMProjectOnline/Update');
+  }
+  projectOnlineDelete(model){
+    return this.HttpPost(model, '/api/back/EBMProjectOnline/Delete');
+  }
 }

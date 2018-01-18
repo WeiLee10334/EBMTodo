@@ -13,8 +13,6 @@ import { EbmMemoComponent } from './ebm-memo/ebm-memo.component';
 import { EbmTodolistComponent } from './ebm-todolist/ebm-todolist.component';
 import { TodolistCardComponent } from './components/todolist-card/todolist-card.component';
 import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
-import { OnlineTableComponent } from './components/online-table/online-table.component';
-import { OnlineTableRowComponent } from './components/online-table-row/online-table-row.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 import { ProjectTableRowComponent } from './components/project-table-row/project-table-row.component';
 import { EbmProjectMemberComponent } from './ebm-project/ebm-project-member/ebm-project-member.component';
@@ -33,6 +31,8 @@ import { EbmUserMemberComponent } from './ebm-user/ebm-user-member/ebm-user-memb
 import { EbmUserTodolistComponent } from './ebm-user/ebm-user-todolist/ebm-user-todolist.component';
 import { BaseServerPagingTableComponent } from './basecomponent/base-server-paging-table/base-server-paging-table.component';
 import { EbmUserWorkingComponent } from './ebm-user/ebm-user-working/ebm-user-working.component';
+import { EbmOnlineTableRowComponent } from './components/ebm-online-table-row/ebm-online-table-row.component';
+import { BaseTableRowComponent } from './basecomponent/base-table-row/base-table-row.component';
 
 @NgModule({
   imports: [
@@ -57,8 +57,6 @@ import { EbmUserWorkingComponent } from './ebm-user/ebm-user-working/ebm-user-wo
     EbmTodolistComponent,
     TodolistCardComponent,
     EbmOnlineComponent,
-    OnlineTableComponent,
-    OnlineTableRowComponent,
     EbmProjectComponent,
     ProjectTableRowComponent,
     EbmProjectMemberComponent,
@@ -75,7 +73,9 @@ import { EbmUserWorkingComponent } from './ebm-user/ebm-user-working/ebm-user-wo
     EbmUserMemberComponent,
     EbmUserTodolistComponent,
     BaseServerPagingTableComponent,
-    EbmUserWorkingComponent
+    EbmUserWorkingComponent,
+    EbmOnlineTableRowComponent,
+    BaseTableRowComponent
   ]
 })
 export class EbmZoneModule { }
