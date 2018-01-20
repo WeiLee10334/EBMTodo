@@ -33,6 +33,8 @@ import { BaseServerPagingTableComponent } from './basecomponent/base-server-pagi
 import { EbmUserWorkingComponent } from './ebm-user/ebm-user-working/ebm-user-working.component';
 import { EbmOnlineTableRowComponent } from './components/ebm-online-table-row/ebm-online-table-row.component';
 import { BaseTableRowComponent } from './basecomponent/base-table-row/base-table-row.component';
+import { ContentEditableDirective } from '../shared/directives/content-editable.directive';
+import { BasePagingTableComponent } from './basecomponent/base-paging-table/base-paging-table.component';
 
 @NgModule({
   imports: [
@@ -75,7 +77,9 @@ import { BaseTableRowComponent } from './basecomponent/base-table-row/base-table
     BaseServerPagingTableComponent,
     EbmUserWorkingComponent,
     EbmOnlineTableRowComponent,
-    BaseTableRowComponent
+    BaseTableRowComponent,
+    ContentEditableDirective,
+    BasePagingTableComponent
   ]
 })
 export class EbmZoneModule { }

@@ -1,8 +1,13 @@
 <div class="container-fluid">
   <div class="row-fluid">
-    <button class="btn btn-info" (click)="refresh()">
-      <i class="fa fa-repeat" aria-hidden="true"></i>
-    </button>
+    <div>
+      <button class="btn btn-info col-1" (click)="refresh()">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+      </button>
+      <span class="float-right">LastUpdate:{{lastupdate|date:'yyyy-MM-dd hh:mm:ss'}}</span>
+    </div>
+  </div>
+  <div class="row-fluid">
     <div class="table-responsive">
       <table class="table table-hover table-bordered">
         <thead>
@@ -36,7 +41,7 @@
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
             <tr app-ebm-online-table-row title="{{row.PID}}" [(ngModel)]="PagingData[i]" (ngModelChange)="modelChanged($event)">
-              <td>
+              <td class="d-flex">
                 <button class="btn btn-danger" (click)="delete(PagingData[i])">
                   <i class="fa fa-trash-o" aria-hidden="true"></i>
                 </button>

@@ -1,4 +1,6 @@
-<td *ngFor="let column of Columns" title="{{column.prop}}" [attr.data-th]="column.name||column.prop">
-  <textarea *ngIf="innerValue" [(ngModel)]="innerValue[column.prop]" (ngModelChange)="modelChanged($event,column.prop)" class="form-control"></textarea>
-</td>
+  <ng-container *ngIf="value">
+  <td *ngFor="let column of Columns" title="{{column.prop}}" [attr.data-th]="column.name||column.prop" contenteditable="true"
+    appContentEditable [(ngModel)]="value[column.prop]" (ngModelChange)="onChangeCallback(value)">
+  </td>
+</ng-container>
 <ng-content></ng-content>

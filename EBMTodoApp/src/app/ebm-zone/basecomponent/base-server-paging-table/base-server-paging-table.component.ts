@@ -56,6 +56,9 @@ export class BaseServerPagingTableComponent implements OnInit, AfterViewInit {
       this.ajax.unsubscribe();
     }
   }
+  refresh() {
+    this.getData(this.QueryModel);
+  }
   changePage(event) {
     if (event != this.PagingInfo.CurrentPage) {
       this.QueryModel.Skip = this.QueryModel.Length * (event.page - 1);

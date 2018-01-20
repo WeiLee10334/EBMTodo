@@ -22,16 +22,15 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
     { name: "附註", prop: "Memo" },
     { name: "進度", prop: "CompleteRate" },
   ];
-  refresh() {
-    this.getData(this.QueryModel);
-  }
+  lastupdate;
+
   getData(model) {
     super.getData(model);
     this.ajax = this.api.projectOnlineData(model).subscribe(
       (data) => {
         this.PagingInfo.TotalItems = data.Total;
         this.PagingData = data.Data;
-
+        this.lastupdate = new Date();
         //why???
         setTimeout(() => {
           this.PagingInfo.CurrentPage = <number>(this.QueryModel['Skip'] / this.QueryModel['Length'] + 1);
@@ -56,8 +55,7 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
     while (event) {
       this.api.projectOnlineUpdate(event).subscribe(
         (data) => {
-          // this.PagingData[this.PagingData.findIndex(x => x === event)] = data;
-          //Object.assign(this.PagingData[this.PagingData.findIndex(x => x === event)], data);
+          this.lastupdate = new Date();
         },
         (err) => {
           console.log(err);
@@ -68,17 +66,22 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
     this.timeoutId = undefined;
   }
   delete(event) {
-    if (this.lockedData.findIndex(x => x === event) == -1) {
-      this.lockedData.push(event);
-      this.api.projectOnlineDelete(event).subscribe(
-        (data) => {
-          this.lockedData.splice(this.lockedData.findIndex(x => x === event), 1);
-          this.PagingData.splice(this.PagingData.findIndex(x => x === event), 1);
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
+    if (event.POID) {
+      if (this.lockedData.findIndex(x => x === event) == -1) {
+        this.lockedData.push(event);
+        this.api.projectOnlineDelete(event).subscribe(
+          (data) => {
+            this.lockedData.splice(this.lockedData.indexOf(event), 1);
+            this.PagingData.splice(this.PagingData.indexOf(event), 1);
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+      }
+    }
+    else {
+      this.PagingData.splice(this.PagingData.findIndex(x => x === event), 1);
     }
   }
   modelChanged(event) {
@@ -99,8 +102,9 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
         this.lockedData.push(event);
         this.api.projectOnlineCreate(event).subscribe(
           (data) => {
-            this.lockedData.splice(this.lockedData.findIndex(x => x === event), 1);
-            Object.assign(this.PagingData[this.PagingData.findIndex(x => x === event)], data);
+            this.lockedData.splice(this.lockedData.indexOf(event), 1);
+            Object.assign(event, data);
+            this.lastupdate = new Date();
           },
           (err) => {
             console.log(err);

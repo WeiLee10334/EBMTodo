@@ -13,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class BaseTableRowComponent implements ControlValueAccessor {
   //The internal data model
-  public innerValue: any = '';
+  private innerValue: any = '';
 
   //Placeholders for the callbacks which are later provided
   //by the Control Value Accessor

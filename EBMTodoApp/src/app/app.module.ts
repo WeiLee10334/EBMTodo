@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components';
 import { DataStoreService } from './shared/services';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DataStoreService } from './shared/services';
     HttpModule
   ],
   providers: [
-    DataStoreService
+    DataStoreService,
+
   ],
   bootstrap: [AppComponent]
 })

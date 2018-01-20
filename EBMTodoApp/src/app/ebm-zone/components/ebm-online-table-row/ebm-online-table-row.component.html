@@ -1,74 +1,37 @@
-<ng-container *ngIf="innerValue">
-  <td [attr.data-th]="'title'">
-    <span *ngIf="!Editable">{{innerValue['title']}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" (ngModelChange)="modelChanged($event,'title')" [(ngModel)]="innerValue['title']">
-    </span>
+<ng-container *ngIf="value">
+  <td contenteditable="true" appContentEditable [attr.data-th]="'title'" (ngModelChange)="modelChanged($event,'title')" [(ngModel)]="value['title']">
   </td>
-  <td [attr.data-th]="'ApplyDateTime'">
-    <span *ngIf="!Editable">{{innerValue['ApplyDateTime']|date:'yyyy-MM-dd'}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" bsDatepicker (ngModelChange)="modelChanged($event,'ApplyDateTime')" [(ngModel)]="innerValue['ApplyDateTime']"
-        [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}" />
-    </span>
+  <td appContentEditable [attr.data-th]="'ApplyDateTime'" bsDatepicker [(ngModel)]="value['ApplyDateTime']" (bsValueChange)="modelChanged($event,'ApplyDateTime')"
+    type="date">
+    {{value['ApplyDateTime']|date:'yyyy-MM-dd'}}
   </td>
-  <td [attr.data-th]="'ApplyDepartment'">
-    <span *ngIf="!Editable">{{innerValue['ApplyDepartment']}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" (ngModelChange)="modelChanged($event,'ApplyDepartment')" [(ngModel)]="innerValue['ApplyDepartment']">
-    </span>
+  <td contenteditable="true" appContentEditable [attr.data-th]="'ApplyDepartment'" (ngModelChange)="modelChanged($event,'ApplyDepartment')"
+    [(ngModel)]="value['ApplyDepartment']">
   </td>
-  <td [attr.data-th]="'ApplyName'">
-    <span *ngIf="!Editable">{{innerValue['ApplyName']}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" (ngModelChange)="modelChanged($event,'ApplyName')" [(ngModel)]="innerValue['ApplyName']">
-    </span>
+  <td contenteditable="true" appContentEditable [attr.data-th]="'ApplyName'" (ngModelChange)="modelChanged($event,'ApplyName')"
+    [(ngModel)]="value['ApplyName']">
   </td>
-  <td [attr.data-th]="'Description'">
-    <span *ngIf="!Editable">{{innerValue['Description']}}</span>
-    <span *ngIf="Editable">
-      <textarea class="form-control" (ngModelChange)="modelChanged($event,'Description')" [(ngModel)]="innerValue['Description']">
-            </textarea>
-    </span>
+  <td contenteditable="true" appContentEditable [attr.data-th]="'Description'" (ngModelChange)="modelChanged($event,'Description')"
+    [(ngModel)]="value['Description']">
   </td>
-  <td [attr.data-th]="'HandleDateTime'">
-    <span *ngIf="!Editable">{{innerValue['HandleDateTime']|date:'yyyy-MM-dd'}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" bsDatepicker (ngModelChange)="modelChanged($event,'HandleDateTime')" [(ngModel)]="innerValue['HandleDateTime']"
-        [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}" />
-    </span>
+  <td appContentEditable [attr.data-th]="'HandleDateTime'" bsDatepicker [(ngModel)]="value['HandleDateTime']" (bsValueChange)="modelChanged($event,'HandleDateTime')"
+    type="date">
+    {{value['HandleDateTime']|date:'yyyy-MM-dd'}}
   </td>
-  <td [attr.data-th]="'HandleName'">
-    <span *ngIf="!Editable">{{innerValue['HandleName']}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" (ngModelChange)="modelChanged($event,'HandleName')" [(ngModel)]="innerValue['HandleName']">
-    </span>
+  <td contenteditable="true" appContentEditable [attr.data-th]="'HandleName'" (ngModelChange)="modelChanged($event,'HandleName')"
+    [(ngModel)]="value['HandleName']">
   </td>
-  <td [attr.data-th]="'ResolveDateTime'">
-    <span *ngIf="!Editable">{{innerValue['ResolveDateTime']|date:'yyyy-MM-dd'}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" bsDatepicker (ngModelChange)="modelChanged($event,'ResolveDateTime')" [(ngModel)]="innerValue['ResolveDateTime']"
-        [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}" />
-    </span>
+  <td appContentEditable [attr.data-th]="'ResolveDateTime'" bsDatepicker [(ngModel)]="value['ResolveDateTime']" (bsValueChange)="modelChanged($event,'ResolveDateTime')"
+    type="date">
+    {{value['ResolveDateTime']|date:'yyyy-MM-dd'}}
   </td>
-  <td [attr.data-th]="'ResponseName'">
-    <span *ngIf="!Editable">{{innerValue['ResponseName']}}</span>
-    <span *ngIf="Editable">
-      <input type="text" class="form-control" (ngModelChange)="modelChanged($event,'ResponseName')" [(ngModel)]="innerValue['ResponseName']">
-    </span>
+  <td contenteditable="true" appContentEditable [attr.data-th]="'ResponseName'" (ngModelChange)="modelChanged($event,'ResponseName')"
+    [(ngModel)]="value['ResponseName']">
   </td>
-  <td [attr.data-th]="'Memo'">
-    <span *ngIf="!Editable">{{innerValue['Memo']}}</span>
-    <span *ngIf="Editable">
-      <textarea class="form-control" (ngModelChange)="modelChanged($event,'Memo')" [(ngModel)]="innerValue['Memo']">
-              </textarea>
-    </span>
+  <td contenteditable="true" appContentEditable [attr.data-th]="'Memo'" (ngModelChange)="modelChanged($event,'Memo')" [(ngModel)]="value['Memo']">
   </td>
-  <td [attr.data-th]="'CompleteRate'">
-    <span *ngIf="!Editable">{{innerValue['CompleteRate']}}</span>
-    <span *ngIf="Editable">
-      <input type="number" class="form-control" (ngModelChange)="modelChanged($event,'CompleteRate')" [(ngModel)]="innerValue['CompleteRate']">
-    </span>
+  <td contenteditable="true" appContentEditable [attr.data-th]="'CompleteRate'" (ngModelChange)="modelChanged($event,'CompleteRate')"
+    [(ngModel)]="value['CompleteRate']">
   </td>
   <ng-content></ng-content>
 </ng-container>
