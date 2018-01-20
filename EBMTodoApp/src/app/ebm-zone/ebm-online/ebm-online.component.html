@@ -4,6 +4,12 @@
       <button class="btn btn-info col-1" (click)="refresh()">
         <i class="fa fa-repeat" aria-hidden="true"></i>
       </button>
+      <label>每頁:</label>
+      <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
       <span class="float-right">LastUpdate:{{lastupdate|date:'yyyy-MM-dd hh:mm:ss'}}</span>
     </div>
   </div>

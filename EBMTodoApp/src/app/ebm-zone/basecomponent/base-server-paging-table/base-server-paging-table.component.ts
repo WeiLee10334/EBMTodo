@@ -65,8 +65,12 @@ export class BaseServerPagingTableComponent implements OnInit, AfterViewInit {
       this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["./"], { relativeTo: this.route, queryParams: this.QueryModel })));
       this.getData(this.QueryModel);
     }
-    console.log(event)
-
+  }
+  changeLength(length) {
+    this.QueryModel['Skip'] = 0;
+    this.QueryModel['Length'] = length;
+    this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["./"], { relativeTo: this.route, queryParams: this.QueryModel })));
+    this.getData(this.QueryModel);
   }
   changeOrderBy(prop, reverse) {
     this.QueryModel['OrderBy'] = prop;

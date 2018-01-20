@@ -1,5 +1,5 @@
   <ng-container *ngIf="value">
-  <td *ngFor="let column of Columns" title="{{column.prop}}" [attr.data-th]="column.name||column.prop" contenteditable="true"
+  <td *ngFor="let column of Columns" title="{{column.prop}}" [attr.data-th]="column.name||column.prop" [attr.contenteditable]="Editable"
     appContentEditable [(ngModel)]="value[column.prop]" (ngModelChange)="onChangeCallback(value)">
   </td>
 </ng-container>

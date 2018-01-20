@@ -15,6 +15,7 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit {
   @Input() propValueAccessor: string = 'innerText';
   @Input() type: string = 'text';
   @Input() dateformat: string = 'yyyy-MM-dd';
+
   /**
    * This property is deprecated, use `propValueAccessor` instead.
    * 
@@ -66,11 +67,12 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit {
         break;
       default:
         this.innerValue = value;
-        this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, this.innerValue || '');
+    
         break;
     }
+    this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, this.innerValue || '');
     //this.innerValue = value;
-   
+
   }
 
   /**
@@ -97,6 +99,7 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit {
    * Depending on the value, it should enable or disable the appropriate DOM element.
    */
   setDisabledState(isDisabled: boolean): void {
+    console.log('set disabled', isDisabled);
     if (isDisabled) {
       this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
       this.removeDisabledState = this.renderer.listen(this.elementRef.nativeElement, 'keydown', this.listenerDisabledState);

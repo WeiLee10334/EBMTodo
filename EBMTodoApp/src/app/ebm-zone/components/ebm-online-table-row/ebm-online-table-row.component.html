@@ -1,36 +1,35 @@
 <ng-container *ngIf="value">
-  <td contenteditable="true" appContentEditable [attr.data-th]="'title'" (ngModelChange)="modelChanged($event,'title')" [(ngModel)]="value['title']">
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'title'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['title']">
   </td>
-  <td appContentEditable [attr.data-th]="'ApplyDateTime'" bsDatepicker [(ngModel)]="value['ApplyDateTime']" (bsValueChange)="modelChanged($event,'ApplyDateTime')"
-    type="date">
-    {{value['ApplyDateTime']|date:'yyyy-MM-dd'}}
+  <td appContentEditable [attr.data-th]="'ApplyDateTime'" [triggers]="Editable?'click':''" bsDatepicker [(ngModel)]="value['ApplyDateTime']"
+    (bsValueChange)="modelChanged($event,'ApplyDateTime')" type="date">
   </td>
-  <td contenteditable="true" appContentEditable [attr.data-th]="'ApplyDepartment'" (ngModelChange)="modelChanged($event,'ApplyDepartment')"
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ApplyDepartment'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ApplyDepartment']">
   </td>
-  <td contenteditable="true" appContentEditable [attr.data-th]="'ApplyName'" (ngModelChange)="modelChanged($event,'ApplyName')"
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ApplyName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ApplyName']">
   </td>
-  <td contenteditable="true" appContentEditable [attr.data-th]="'Description'" (ngModelChange)="modelChanged($event,'Description')"
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Description'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['Description']">
   </td>
-  <td appContentEditable [attr.data-th]="'HandleDateTime'" bsDatepicker [(ngModel)]="value['HandleDateTime']" (bsValueChange)="modelChanged($event,'HandleDateTime')"
-    type="date">
-    {{value['HandleDateTime']|date:'yyyy-MM-dd'}}
+  <td appContentEditable [attr.data-th]="'HandleDateTime'" [triggers]="Editable?'click':''" bsDatepicker [(ngModel)]="value['HandleDateTime']"
+    (bsValueChange)="modelChanged($event,'HandleDateTime')" type="date">
   </td>
-  <td contenteditable="true" appContentEditable [attr.data-th]="'HandleName'" (ngModelChange)="modelChanged($event,'HandleName')"
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'HandleName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['HandleName']">
   </td>
-  <td appContentEditable [attr.data-th]="'ResolveDateTime'" bsDatepicker [(ngModel)]="value['ResolveDateTime']" (bsValueChange)="modelChanged($event,'ResolveDateTime')"
-    type="date">
-    {{value['ResolveDateTime']|date:'yyyy-MM-dd'}}
+  <td appContentEditable [attr.data-th]="'ResolveDateTime'" [triggers]="Editable?'click':''" bsDatepicker [(ngModel)]="value['ResolveDateTime']"
+    (bsValueChange)="modelChanged($event,'ResolveDateTime')" type="date">
   </td>
-  <td contenteditable="true" appContentEditable [attr.data-th]="'ResponseName'" (ngModelChange)="modelChanged($event,'ResponseName')"
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ResponseName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ResponseName']">
   </td>
-  <td contenteditable="true" appContentEditable [attr.data-th]="'Memo'" (ngModelChange)="modelChanged($event,'Memo')" [(ngModel)]="value['Memo']">
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Memo'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['Memo']">
   </td>
-  <td contenteditable="true" appContentEditable [attr.data-th]="'CompleteRate'" (ngModelChange)="modelChanged($event,'CompleteRate')"
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'CompleteRate'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['CompleteRate']">
   </td>
   <ng-content></ng-content>

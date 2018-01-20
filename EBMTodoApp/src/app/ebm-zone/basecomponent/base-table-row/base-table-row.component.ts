@@ -14,11 +14,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class BaseTableRowComponent implements ControlValueAccessor {
   //The internal data model
   private innerValue: any = '';
-
+  
   //Placeholders for the callbacks which are later provided
   //by the Control Value Accessor
   private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+  protected onChangeCallback: (_: any) => void = () => { };
 
   //get accessor
   get value(): any {
@@ -40,7 +40,6 @@ export class BaseTableRowComponent implements ControlValueAccessor {
 
   //From ControlValueAccessor interface
   writeValue(value: any) {
-    console.log(value)
     if (value !== this.innerValue) {
       this.innerValue = value;
     }
@@ -59,7 +58,7 @@ export class BaseTableRowComponent implements ControlValueAccessor {
     console.log('setDisabled', isDisabled);
   }
   @Input() Columns: any[];
-
+  @Input() Editable = true;
   modelChanged(event, prop) {
     this.innerValue[prop] = event;
     this.onChangeCallback(this.innerValue);
