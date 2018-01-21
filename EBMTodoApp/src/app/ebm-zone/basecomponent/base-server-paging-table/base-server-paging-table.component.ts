@@ -84,17 +84,6 @@ export class BaseServerPagingTableComponent implements OnInit, AfterViewInit {
     this.QueryModel['Filters'] = this.Filters;
     this.getData(this.QueryModel);
   }
-  dispatchAction(event, index) {
-    if (!event) {
-      this.PagingData.splice(index, 1);
-    }
-    else {
-      this.PagingData[index] = event;
-    }
-  }
-  add() {
-    this.PagingData.unshift({ CreateDateTime: new Date() });
-  }
   ngAfterViewInit() {
     $("table th").resizable({
       handles: "e",

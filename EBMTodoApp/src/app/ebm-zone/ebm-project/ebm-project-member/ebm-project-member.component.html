@@ -1,4 +1,17 @@
 <div class="container-fluid">
+  <div class="row-fluid">
+    <div>
+      <button class="btn btn-info col-1" (click)="refresh()">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+      </button>
+      <label>每頁:</label>
+      <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+  </div>
   <h2>{{ProjectMember['ProjectName']}}</h2>
   <div class="row-fluid">
     <button class="btn btn-link" (click)="location.back()">回上一頁</button>
@@ -35,7 +48,26 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-            <tr app-project-member-table-row [ProjectMember]="row" (stateChanged)="dispatchAction($event,i)"></tr>
+            <tr [ngClass]="{'table-active':getEditable(PagingData[i])}" app-project-member-table-row [Editable]="getEditable(PagingData[i])||!PagingData[i]['PMID']"
+              [(ngModel)]="PagingData[i]">
+              <td>
+                <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['PMID']&&!getEditable(PagingData[i])">
+                  <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                  </button>
+                  <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem">
+                      <button class="btn btn-link dropdown-item" (click)="setEditable(PagingData[i])">修改</button>
+                    </li>
+                    <li role="menuitem">
+                      <button class="btn btn-link dropdown-item" (click)="Delete(PagingData[i])">刪除</button>
+                    </li>
+                  </ul>
+                </div>
+                <button class="btn btn-success" *ngIf="getEditable(PagingData[i])" (click)="Save(PagingData[i])">儲存</button>
+                <button class="btn btn-secondary" *ngIf="getEditable(PagingData[i])" (click)="Cancel(PagingData[i])">取消</button>
+              </td>
+            </tr>
           </ng-container>
         </tbody>
         <tfoot>

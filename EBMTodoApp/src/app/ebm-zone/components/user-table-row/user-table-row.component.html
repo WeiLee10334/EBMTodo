@@ -1,38 +1,14 @@
-<td>
-  <div class="btn-group" dropdown>
-    <button dropdownToggle type="button" class="btn btn-primary dropdownToggle" *ngIf="User['Id']">
-      <i class="fa fa-cog" aria-hidden="true"></i>
-    </button>
-    <ul *dropdownMenu class="dropdown-menu" role="menu">
-      <li role="menuitem">
-        <a class="btn btn-link dropdown-item" [routerLink]="['./working']" [queryParams]="{ Id:User['Id'],UserName:User['UserName'] }"
-          [routerLinkActive]="'active'">工作回報</a>
-      </li>
-      <li role="menuitem">
-        <button class="btn btn-link dropdown-item" (click)="Edit()">修改</button>
-      </li>
-      <li role="menuitem">
-        <button class="btn btn-link dropdown-item" (click)="Delete()">刪除</button>
-      </li>
-    </ul>
-  </div>
-  <button class="btn btn-success" *ngIf="Editable" (click)="Save()">儲存</button>
-  <button class="btn btn-secondary" *ngIf="Editable&&!User['Id']" (click)="Delete()">取消</button>
-</td>
-<td [attr.data-th]="'UserName'">
-  <span *ngIf="!Editable">{{User['UserName']}}</span>
-  <span *ngIf="Editable">
-    <input type="text" class="form-control" [(ngModel)]="User['UserName']">
-  </span>
-</td>
-<td [attr.data-th]="'Email'">
-  <span *ngIf="!Editable">{{User['Email']}}</span>
-  <span *ngIf="Editable">
-    <input type="text" class="form-control" [(ngModel)]="User['Email']">
-  </span>
-</td>
-<td [attr.data-th]="'UID'">
-  <span>
-    <app-custom-select-input [(ngModel)]="User['UID']" [enableInput]="Editable" [LabelName]="User['LineUserName']" type="lineuser"></app-custom-select-input>
-  </span>
-</td>&nbsp;
+<ng-container *ngIf="value">
+  <ng-content></ng-content>
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'UserName'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['UserName']">
+  </td>
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Email'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['Email']">
+  </td>
+  <td [attr.data-th]="'UID'">
+    <span>
+      <app-custom-select-input [(ngModel)]="value['UID']" [enableInput]="Editable" [LabelName]="value['LineUserName']" type="lineuser"></app-custom-select-input>
+    </span>
+  </td>
+</ng-container>

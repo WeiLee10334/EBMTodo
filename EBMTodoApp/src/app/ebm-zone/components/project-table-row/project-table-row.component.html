@@ -1,45 +1,12 @@
-<td>
-  <div class="btn-group" dropdown placement="bottom right">
-    <button dropdownToggle type="button" class="btn btn-primary dropdownToggle" *ngIf="Project['PID']">
-      <i class="fa fa-cog" aria-hidden="true"></i>
-    </button>
-    <ul *dropdownMenu class="dropdown-menu" role="menu">
-      <li role="menuitem">
-        <a class="btn btn-link dropdown-item" [routerLink]="['./member']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
-          [routerLinkActive]="'active'">專案人員</a>
-      </li>
-      <li role="menuitem">
-        <a class="btn btn-link dropdown-item" [routerLink]="['./todolist']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
-          [routerLinkActive]="'active'">待辦事項</a>
-      </li>
-      <li role="menuitem">
-        <a class="btn btn-link dropdown-item" [routerLink]="['./working']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
-          [routerLinkActive]="'active'">工作回報</a>
-      </li>
-      <li role="menuitem">
-        <button class="btn btn-link dropdown-item" (click)="Edit()">修改</button>
-      </li>
-      <li role="menuitem">
-        <button class="btn btn-link dropdown-item" (click)="Delete()">刪除</button>
-      </li>
-    </ul>
-  </div>
-  <button class="btn btn-success" *ngIf="Editable" (click)="Save()">儲存</button>
-  <button class="btn btn-secondary" *ngIf="Editable&&!Project['PID']" (click)="Delete()">取消</button>
-</td>
-<td [attr.data-th]="'ProjectName'">
-  <span *ngIf="!Editable">{{Project['ProjectName']}}</span>
-  <span *ngIf="Editable">
-    <input type="text" class="form-control" [(ngModel)]="Project['ProjectName']">
-  </span>
-</td>
-<td [attr.data-th]="'ProjectNo'">
-  <span *ngIf="!Editable">{{Project['ProjectNo']}}</span>
-  <span *ngIf="Editable">
-    <input type="text" class="form-control" [(ngModel)]="Project['ProjectNo']">
-  </span>
-</td>
-<td [attr.data-th]="'CreateDateTime'">
-  {{Project['CreateDateTime']|date:'yyyy-MM-dd'}}
-</td>
-&nbsp;
+<ng-container *ngIf="value">
+  <ng-content></ng-content>
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ProjectName'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['ProjectName']">
+  </td>
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ProjectNo'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['ProjectNo']">
+  </td>
+  <td [attr.data-th]="'CreateDateTime'">
+    {{value['CreateDateTime']|date:'yyyy-MM-dd'}}
+  </td>
+</ng-container>

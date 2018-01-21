@@ -10,7 +10,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { EbmScheduleComponent } from './ebm-schedule/ebm-schedule.component';
 import { EbmMemoComponent } from './ebm-memo/ebm-memo.component';
-import { EbmTodolistComponent } from './ebm-todolist/ebm-todolist.component';
 import { TodolistCardComponent } from './components/todolist-card/todolist-card.component';
 import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
@@ -55,7 +54,6 @@ import { ContentEditableDirective } from '../shared/directives/content-editable.
     EbmWorkingComponent,
     EbmScheduleComponent,
     EbmMemoComponent,
-    EbmTodolistComponent,
     TodolistCardComponent,
     EbmOnlineComponent,
     EbmProjectComponent,

@@ -33,4 +33,65 @@ export class EbmUserListComponent extends BaseServerPagingTableComponent impleme
         console.log(err);
       });
   }
+  //
+  PendingMap = new Map<any, any>()
+  getEditable(event) {
+    return this.PendingMap.has(event);
+  }
+  add() {
+    let item = { CreateDateTime: new Date() };
+    this.PagingData.unshift(item);
+    this.PendingMap.set(item, null);
+  }
+  setEditable(event) {
+    let tmp = Object.assign({}, event);
+    this.PendingMap.set(event, tmp);
+  }
+  Save(event) {
+    if (event.Id) {
+      this.api.userUpdate(event).subscribe(
+        (data) => {
+          this.PendingMap.delete(event);
+          Object.assign(event, data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+    else {
+      this.api.userCreate(event).subscribe(
+        (data) => {
+          this.PendingMap.delete(event);
+          Object.assign(event, data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+  }
+  Cancel(event) {
+    let cache = this.PendingMap.get(event);
+    if (cache) {
+      Object.assign(event, cache);
+      this.PendingMap.delete(event);
+    }
+    else {
+      this.PendingMap.delete(event);
+      this.PagingData.splice(this.PagingData.indexOf(event), 1);
+    }
+  }
+  Delete(event) {
+    if (confirm("確定刪除?")) {
+      this.api.userDelete(event).subscribe(
+        (data) => {
+          this.PagingData.splice(this.PagingData.indexOf(event), 1);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+  }
 }

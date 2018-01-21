@@ -1,4 +1,17 @@
 <div class="container-fluid">
+  <div class="row-fluid">
+    <div>
+      <button class="btn btn-info col-1" (click)="refresh()">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+      </button>
+      <label>每頁:</label>
+      <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+  </div>
   <h2>{{User['UserName']}}</h2>
   <div class="row-fluid">
     <button class="btn btn-link" (click)="location.back()">回上一頁</button>
@@ -28,7 +41,7 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-            <tr app-project-working-table-row [ProjectWorking]="row"></tr>
+            <tr app-project-working-table-row [(ngModel)]="PagingData[i]"></tr>
           </ng-container>
         </tbody>
         <tfoot>

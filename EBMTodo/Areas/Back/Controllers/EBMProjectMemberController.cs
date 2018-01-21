@@ -33,6 +33,10 @@ namespace EBMTodo.Areas.Back.Controllers
                 {
                     query = query.Where(x => x.PID == model.PID);
                 }
+                if (!string.IsNullOrEmpty(model.Id))
+                {
+                    query = query.Where(x => x.Id == model.Id);
+                }
                 foreach (var filter in model.Filters)
                 {
                     var prop = typeof(EBMProjectMemberViewModel).GetProperty(filter.Key);
@@ -169,6 +173,8 @@ namespace EBMTodo.Areas.Back.Controllers
     public class EBMProjectMemberQueryModel : PagingQueryModel
     {
         public string PID { set; get; }
+
+        public string Id { set; get; }
 
         public DateTime? Start { set; get; }
 
