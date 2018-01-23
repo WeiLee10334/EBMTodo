@@ -12,7 +12,10 @@ declare var $: any;
   styleUrls: ['./ebm-project-todolist.component.scss']
 })
 export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent implements OnInit {
-
+  QueryModel = {
+    Skip: 0,
+    Length: 50
+  }
   ProjectMember = {
     PID: "",
     ProjectName: ""
@@ -44,9 +47,81 @@ export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent 
         console.log(err);
       });
   }
-  add() {
-    this.PagingData.unshift({ PID: this.ProjectMember['PID'], ProjectName: this.ProjectMember['ProjectName'], CreateDateTime: new Date() });
+  //
+  PendingMap = new Map<any, any>()
+  getEditable(event) {
+    return this.PendingMap.has(event);
   }
-
-
+  add() {
+    let item = { CreateDateTime: new Date(), PID: this.ProjectMember['PID'], ProjectName: this.ProjectMember['ProjectName'] };
+    this.PagingData.unshift(item);
+    this.PendingMap.set(item, null);
+  }
+  setEditable(event) {
+    let tmp = Object.assign({}, event);
+    this.PendingMap.set(event, tmp);
+  }
+  Save(event) {
+    if (event.PTLID) {
+      this.api.projectTodoListUpdate(event).subscribe(
+        (data) => {
+          this.PendingMap.delete(event);
+          Object.assign(event, data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+    else {
+      this.api.projectTodoListCreate(event).subscribe(
+        (data) => {
+          this.PendingMap.delete(event);
+          Object.assign(event, data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+  }
+  Cancel(event) {
+    let cache = this.PendingMap.get(event);
+    if (cache) {
+      Object.assign(event, cache);
+      this.PendingMap.delete(event);
+    }
+    else {
+      this.PendingMap.delete(event);
+      this.PagingData.splice(this.PagingData.indexOf(event), 1);
+    }
+  }
+  Delete(event) {
+    if (confirm("確定刪除?")) {
+      this.api.projectTodoListDelete(event).subscribe(
+        (data) => {
+          this.PagingData.splice(this.PagingData.indexOf(event), 1);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+  }
+  DispatchAction(event, item) {
+    switch (event) {
+      case 'edit':
+        this.setEditable(item);
+        break;
+      case 'save':
+        this.Save(item);
+        break;
+      case 'cancel':
+        this.Cancel(item);
+        break;
+      case 'delete':
+        this.Delete(item);
+        break;
+    }
+  }
 }

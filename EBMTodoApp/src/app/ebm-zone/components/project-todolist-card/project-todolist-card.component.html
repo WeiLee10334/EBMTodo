@@ -1,88 +1,113 @@
-<div class="card" *ngIf="!Editable">
-  <div class="card-body">
-    <button class="btn btn-warning float-right" (click)="Delete()"><i class="fa fa-times" aria-hidden="true"></i></button>
-    <h4 class="card-title">{{ProjectTodoList?.title}}
-      <small>{{ProjectTodoList?.MemberTitle}}</small>
-    </h4>
-    <h6 class="card-subtitle mb-2 text-muted" title="提出時間">
-      {{ProjectTodoList?.ApplyDateTime}}
-    </h6>
-    <p class="card-text">申請人:{{ProjectTodoList?.ApplyName}}</p>
-    <p class="card-text">內容:{{ProjectTodoList?.Description}}</p>
-    <p class="card-text">標籤:{{ProjectTodoList?.Tag}}</p>
-    <p class="card-text">備註:{{ProjectTodoList?.Memo}}</p>
-    <progressbar class="progress progress-striped" [max]="100" [value]="ProjectTodoList?.CompleteRate" type="success">{{ProjectTodoList?.CompleteRate}}%</progressbar>
-    <button type="button" class="btn btn-link float-right" (click)="Edit()">修改</button>
+<ng-container *ngIf="value">
+  <div class="card" *ngIf="!Editable">
+    <div class="card-header">
+      <div class="btn-group float-right" dropdown placement="bottom">
+        <button dropdownToggle type="button" class="btn btn-light">
+          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem">
+            <button class="btn btn-link dropdown-item" (click)="emit('edit')">修改</button>
+          </li>
+          <li role="menuitem">
+            <button class="btn btn-link dropdown-item" (click)="emit('delete')">刪除</button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-title">
+        <h4>
+          <a class="font-weight-bold" href="javascript:void(0)" (click)="isCollapsed = !isCollapsed">{{value.title}}</a>
+          <small class="text-muted">{{value.MemberTitle}}
+            <span class="badge badge-secondary">{{value.Tag}}</span>
+          </small>
+        </h4>
+      </div>
+      <h6 class="card-subtitle mb-2 text-muted" title="提出時間">
+        {{value.ApplyDateTime|date:'yyyy-MM-dd'}}
+      </h6>
+      <div [collapse]="isCollapsed" class="card-body">
+        <p class="card-text">申請人:{{value.ApplyName}}</p>
+        <p class="card-text">內容:{{value.Description}}</p>
+        <p class="card-text">備註:{{value.Memo}}</p>
+        <p class="card-text">進度
+          <progressbar class="progress progress-striped" [max]="100" [value]="value?.CompleteRate" type="success">{{value.CompleteRate}}%</progressbar>
+        </p>
+      </div>
+      <button class="btn btn-light btn-sm btn-block" (click)="isCollapsed = !isCollapsed">
+        <i class="fa fa-arrow-down" aria-hidden="true" *ngIf="isCollapsed"></i>
+        <i class="fa fa-arrow-up" aria-hidden="true" *ngIf="!isCollapsed"></i>
+      </button>
+    </div>
   </div>
-</div>
 
-<div class="card" *ngIf="Editable">
-  <div class="card-body">
-    <div class="form-group row">
-      <div class="input-group col-12 col-sm-6">
-        <span class="input-group-addon">
-          標題
-        </span>
-        <input type="text" [(ngModel)]="ProjectTodoList.title" class="form-control">
-      </div>
-      <div class="col-12 col-sm-6">
-        <span>
-          指派人員
-        </span>
-        <app-custom-select-input [(ngModel)]="ProjectTodoList.PMID" [enableInput]="true" [LabelName]="FProjectTodoList?.MemberTitle||''"
-          [filter]="{PID:ProjectTodoList?.PID}" type="projectmember"></app-custom-select-input>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="input-group col-12 col-sm-6">
-        <span class="input-group-addon">
-          提出時間
-        </span>
-        <input type="text" class="form-control" bsDatepicker [(ngModel)]="ProjectTodoList.ApplyDateTime" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}">
-      </div>
-      <div class="input-group col-12 col-sm-6">
-        <span class="input-group-addon">
-          申請人
-        </span>
-        <input type="text" [(ngModel)]="ProjectTodoList.ApplyName" class="form-control">
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-12">
-        <textarea [(ngModel)]="ProjectTodoList.Description" class="form-control" placeholder="工作內容"></textarea>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="input-group col-12">
-        <span class="input-group-addon">
-          標籤
-        </span>
-        <input type="text" [(ngModel)]="ProjectTodoList.Tag" class="form-control">
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="input-group col-12">
-        <span class="input-group-addon">
-          備註
-        </span>
-        <input type="text" [(ngModel)]="ProjectTodoList.Memo" class="form-control">
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-12">
-        <div class="input-group">
+  <div class="card" *ngIf="Editable">
+    <div class="card-body">
+      <div class="form-group row">
+        <div class="input-group col-12 col-sm-6">
           <span class="input-group-addon">
-            完成度
+            標題
           </span>
-          <input type="number" [(ngModel)]="ProjectTodoList.CompleteRate" max="100" min="0" class="form-control">
+          <input type="text" [(ngModel)]="value.title" class="form-control">
         </div>
-        <progressbar class="progress progress-striped" [max]="100" [value]="ProjectTodoList?.CompleteRate" type="success">{{ProjectTodoList?.CompleteRate}}%</progressbar>
+        <div class="col-12 col-sm-6">
+          <span>
+            指派人員
+          </span>
+          <app-custom-select-input [(ngModel)]="value.PMID" [enableInput]="true" [LabelName]="value.MemberTitle" [filter]="{PID:value.PID}"
+            type="projectmember"></app-custom-select-input>
+        </div>
       </div>
-    </div>
-    <hr>
-    <div class="form-group pb-1">
-      <button class="btn btn-success float-right" (click)="Save()">確認</button>
-      <button type="button" class="btn btn-secondary float-right" *ngIf="!ProjectTodoList?.PTLID" (click)="Delete()">取消</button>
+      <div class="form-group row">
+        <div class="input-group col-12 col-sm-6">
+          <span class="input-group-addon">
+            提出時間
+          </span>
+          <input type="text" class="form-control" bsDatepicker [(ngModel)]="value.ApplyDateTime" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}">
+        </div>
+        <div class="input-group col-12 col-sm-6">
+          <span class="input-group-addon">
+            申請人
+          </span>
+          <input type="text" [(ngModel)]="value.ApplyName" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-12">
+          <textarea [(ngModel)]="value.Description" class="form-control" placeholder="工作內容"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="input-group col-12">
+          <span class="input-group-addon">
+            標籤
+          </span>
+          <input type="text" [(ngModel)]="value.Tag" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="input-group col-12">
+          <span class="input-group-addon">
+            備註
+          </span>
+          <input type="text" [(ngModel)]="value.Memo" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-12">
+          <div class="input-group">
+            <span class="input-group-addon">
+              完成度
+            </span>
+            <input type="number" [(ngModel)]="value.CompleteRate" max="100" min="0" class="form-control">
+          </div>
+          <progressbar class="progress progress-striped" [max]="100" [value]="value.CompleteRate" type="success">{{value.CompleteRate}}%</progressbar>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group pb-1">
+        <button class="btn btn-success float-right" (click)="emit('save')">確認</button>
+        <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')">取消</button>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

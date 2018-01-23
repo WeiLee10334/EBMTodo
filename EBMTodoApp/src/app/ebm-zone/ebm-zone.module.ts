@@ -5,7 +5,7 @@ import { EbmZoneRoutingModule } from './ebm-zone-routing.module';
 import { EbmZoneComponent } from './ebm-zone.component';
 import { EbmWorkingComponent } from './ebm-working/ebm-working.component';
 import { SharedModule } from '../shared/modules/index';
-import { AccordionModule, BsDatepickerModule, ProgressbarModule, BsDropdownModule, PaginationModule } from 'ngx-bootstrap';
+import { AccordionModule, BsDatepickerModule, ProgressbarModule, BsDropdownModule, PaginationModule, CollapseModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { EbmScheduleComponent } from './ebm-schedule/ebm-schedule.component';
@@ -47,7 +47,8 @@ import { ContentEditableDirective } from '../shared/directives/content-editable.
     SharedModule,
     InfiniteScrollModule,
     BsDropdownModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    CollapseModule.forRoot()
   ],
   declarations: [
     EbmZoneComponent,

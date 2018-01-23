@@ -34,8 +34,13 @@
         </thead>
         <tbody>
           <tr>
-            <th *ngFor="let column of Columns" class="text-center">
-              <input class="form-control" placeholder="search" (keyup)="updateFilters($event,column)">
+            <th *ngFor="let column of Columns" class="text-center" [ngSwitch]="column.template">
+              <span class="w-100" *ngSwitchCase="'date'">
+                  ----------
+              </span>
+              <span *ngSwitchDefault>
+                <input class="form-control" placeholder="search" (keyup)="updateFilters($event,column)">
+              </span>
             </th>
             <th>
               <button class="btn btn-success" (click)="add()">

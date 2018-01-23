@@ -1,15 +1,17 @@
 <div class="container-fluid">
-  <div class="row-fluid">
-    <div>
-      <button class="btn btn-info col-1" (click)="refresh()">
-        <i class="fa fa-repeat" aria-hidden="true"></i>
-      </button>
-      <label>每頁:</label>
-      <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-      </select>
+  <div class="row">
+    <div class="col col-12">
+      <span class="float-right">
+        <button class="btn btn-info" (click)="refresh()">
+          <i class="fa fa-repeat" aria-hidden="true"></i>
+        </button>
+        <label>每頁:</label>
+        <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </span>
     </div>
   </div>
   <div class="row-fluid">

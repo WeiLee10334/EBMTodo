@@ -32,6 +32,10 @@ namespace EBMTodo.Areas.Back.Controllers
                 {
                     query = query.Where(x => x.PID == model.PID);
                 }
+                if (!string.IsNullOrEmpty(model.PMID))
+                {
+                    query = query.Where(x => x.PMID == model.PMID);
+                }
                 foreach (var filter in model.Filters)
                 {
                     var prop = typeof(EBMTodoListViewModel).GetProperty(filter.Key);
@@ -163,7 +167,8 @@ namespace EBMTodo.Areas.Back.Controllers
                 MemberTitle = x.EBMProjectMember == null ? null : x.EBMProjectMember.title,
                 Memo = x.Memo,
                 Tag = x.Tag,
-                PID = x.EBMProjectMember == null ? null : x.EBMProjectMember.PID.ToString()
+                PID = x.EBMProjectMember == null ? null : x.EBMProjectMember.PID.ToString(),
+                ProjectName = x.EBMProjectMember == null ? null : x.EBMProjectMember.EBMProject.ProjectName
             });
         }
         public string PTLID { set; get; }
@@ -187,6 +192,8 @@ namespace EBMTodo.Areas.Back.Controllers
         public string Memo { set; get; }
 
         public string PID { set; get; }
+
+        public string ProjectName { set; get; }
     }
     public class EBMTodoListQueryModel : PagingQueryModel
     {
@@ -195,5 +202,7 @@ namespace EBMTodo.Areas.Back.Controllers
         public DateTime? End { set; get; }
 
         public string PID { set; get; }
+
+        public string PMID { set; get; }
     }
 }
