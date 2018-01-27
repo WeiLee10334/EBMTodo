@@ -6,11 +6,12 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components';
 import { DataStoreService } from './shared/services';
 import { DatePipe } from '@angular/common';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
 
   ],
   imports: [

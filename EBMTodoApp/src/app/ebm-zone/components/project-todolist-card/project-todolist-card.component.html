@@ -7,7 +7,7 @@
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
           <li role="menuitem">
-            <button class="btn btn-link dropdown-item" (click)="emit('edit')">修改</button>
+            <button class="btn btn-link dropdown-item" (click)="Editable=true">修改</button>
           </li>
           <li role="menuitem">
             <button class="btn btn-link dropdown-item" (click)="emit('delete')">刪除</button>
@@ -42,29 +42,28 @@
 
   <div class="card" *ngIf="Editable">
     <div class="card-body">
-      <div class="form-group row">
-        <div class="input-group col-12 col-sm-6">
+      <div class="form-group">
+        <div class="input-group">
           <span class="input-group-addon">
             標題
           </span>
           <input type="text" [(ngModel)]="value.title" class="form-control">
         </div>
-        <div class="col-12 col-sm-6">
-          <span>
-            指派人員
-          </span>
-          <app-custom-select-input [(ngModel)]="value.PMID" [enableInput]="true" [LabelName]="value.MemberTitle" [filter]="{PID:value.PID}"
-            type="projectmember"></app-custom-select-input>
-        </div>
       </div>
-      <div class="form-group row">
-        <div class="input-group col-12 col-sm-6">
+      <div class="form-group">
+        <app-custom-select-input [(ngModel)]="value.PMID" [enableInput]="true" [LabelName]="value.MemberTitle" [filter]="{PID:value.PID}"
+          type="projectmember"></app-custom-select-input>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
           <span class="input-group-addon">
             提出時間
           </span>
           <input type="text" class="form-control" bsDatepicker [(ngModel)]="value.ApplyDateTime" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}">
         </div>
-        <div class="input-group col-12 col-sm-6">
+      </div>
+      <div class="form-group">
+        <div class="input-group">
           <span class="input-group-addon">
             申請人
           </span>
@@ -106,7 +105,7 @@
       <hr>
       <div class="form-group pb-1">
         <button class="btn btn-success float-right" (click)="emit('save')">確認</button>
-        <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')">取消</button>
+        <button type="button" class="btn btn-secondary float-right" (click)="emit('delete')">取消</button>
       </div>
     </div>
   </div>

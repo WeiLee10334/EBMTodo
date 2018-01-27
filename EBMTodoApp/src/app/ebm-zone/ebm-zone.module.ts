@@ -33,6 +33,7 @@ import { EbmUserWorkingComponent } from './ebm-user/ebm-user-working/ebm-user-wo
 import { EbmOnlineTableRowComponent } from './components/ebm-online-table-row/ebm-online-table-row.component';
 import { BaseTableRowComponent } from './basecomponent/base-table-row/base-table-row.component';
 import { ContentEditableDirective } from '../shared/directives/content-editable.directive';
+import { MenuComponent } from '../shared/components/menu/menu.component';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { ContentEditableDirective } from '../shared/directives/content-editable.
     EbmUserWorkingComponent,
     EbmOnlineTableRowComponent,
     BaseTableRowComponent,
-    ContentEditableDirective
+    ContentEditableDirective,
+    MenuComponent
   ]
 })
 export class EbmZoneModule { }

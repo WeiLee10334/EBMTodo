@@ -28,6 +28,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "jquery-ui-dist": "^1.12.1",
+    "jquery.mmenu": "^7.0.1",
     "ngx-bootstrap": "^2.0.0-beta.10",
     "ngx-infinite-scroll": "^0.8.0",
     "popper.js": "^1.12.9",

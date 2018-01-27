@@ -2,9 +2,6 @@
   <div class="row">
     <div class="col col-12">
       <span class="float-right">
-        <button class="btn btn-info" (click)="refresh()">
-          <i class="fa fa-repeat" aria-hidden="true"></i>
-        </button>
         <label>每頁:</label>
         <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
           <option value="10">10</option>
@@ -20,6 +17,9 @@
         <thead>
           <tr>
             <th>
+              <button class="btn btn-info" (click)="refresh()">
+                <i class="fa fa-repeat" aria-hidden="true"></i>
+              </button>
             </th>
             <th *ngFor="let column of Columns" class="text-center">
               <span>{{column.name||column.prop}}&nbsp;

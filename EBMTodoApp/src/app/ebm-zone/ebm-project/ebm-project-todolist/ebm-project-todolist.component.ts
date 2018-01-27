@@ -16,15 +16,15 @@ export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent 
     Skip: 0,
     Length: 50
   }
-  ProjectMember = {
+  Project = {
     PID: "",
     ProjectName: ""
   }
   checkUrl(Params) {
     super.checkUrl(Params);
-    this.ProjectMember['ProjectName'] = Params["ProjectName"];
-    this.ProjectMember['PID'] = Params["PID"];
-    if (this.ProjectMember['PID'] && this.ProjectMember['ProjectName']) {
+    this.Project['ProjectName'] = Params["ProjectName"];
+    this.Project['PID'] = Params["PID"];
+    if (this.Project['PID'] && this.Project['ProjectName']) {
       this.QueryModel['PID'] = Params['PID'];
       this.QueryModel['ProjectName'] = Params['ProjectName'];
     }
@@ -53,7 +53,7 @@ export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent 
     return this.PendingMap.has(event);
   }
   add() {
-    let item = { CreateDateTime: new Date(), PID: this.ProjectMember['PID'], ProjectName: this.ProjectMember['ProjectName'] };
+    let item = { ApplyDateTime: new Date(), PID: this.Project['PID'], ProjectName: this.Project['ProjectName'] };
     this.PagingData.unshift(item);
     this.PendingMap.set(item, null);
   }

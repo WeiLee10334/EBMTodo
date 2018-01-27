@@ -21,15 +21,15 @@ export class EbmProjectWorkingComponent extends BaseServerPagingTableComponent i
     { name: "類型", prop: "WorkingType", orderby: undefined }
   ]
 
-  ProjectMember = {
+  Project = {
     PID: "",
     ProjectName: ""
   }
   checkUrl(Params) {
     super.checkUrl(Params);
-    this.ProjectMember['ProjectName'] = Params["ProjectName"];
-    this.ProjectMember['PID'] = Params["PID"];
-    if (this.ProjectMember['PID'] && this.ProjectMember['ProjectName']) {
+    this.Project['ProjectName'] = Params["ProjectName"];
+    this.Project['PID'] = Params["PID"];
+    if (this.Project['PID'] && this.Project['ProjectName']) {
       this.QueryModel['PID'] = Params['PID'];
       this.QueryModel['ProjectName'] = Params['ProjectName'];
     }

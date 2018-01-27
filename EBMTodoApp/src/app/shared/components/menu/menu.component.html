@@ -1,4 +1,8 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+<!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+  <button class="btn btn-dark menu-btn" (click)="menuOpen=!menuOpen">
+    <i *ngIf="!menuOpen" class="fa fa-arrow-right" aria-hidden="true"></i>
+    <i *ngIf="menuOpen" class="fa fa-arrow-left" aria-hidden="true"></i>
+  </button>
   <a class="navbar-brand" [routerLink]="['/']">EBM TODO</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler"
@@ -22,9 +26,7 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/schedule']" [routerLinkActive]="'active'">Schedule</a>
       </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/todolist']" [routerLinkActive]="'active'">Todolist</a>
-      </li> -->
+
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/online']" [routerLinkActive]="'active'">Online</a>
       </li>
@@ -36,4 +38,23 @@
       </li>
     </ul>
   </div>
-</nav>
+</nav> -->
+
+<div #sideNav id="mySidenav" class="sidenav" [ngStyle]="{'width': menuOpen?200+'px': 0}">
+
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main" [ngStyle]="{'margin-left': sideNav.style.width}">
+  <!-- Use any element to open the sidenav -->
+  <button class="btn btn-dark menu-btn" (click)="menuOpen=!menuOpen">
+    <i *ngIf="!menuOpen" class="fa fa-arrow-right" aria-hidden="true"></i>
+    <i *ngIf="menuOpen" class="fa fa-arrow-left" aria-hidden="true"></i>
+  </button>
+  <ng-content></ng-content>
+</div>

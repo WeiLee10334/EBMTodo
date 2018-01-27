@@ -2,28 +2,31 @@
   <div class="row">
     <div class="col col-12">
       <h3>
-        {{ProjectMember['ProjectName']}}
-        <span class="float-right">
-          <button class="btn btn-success" (click)="add()">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
-          <button class="btn btn-info" (click)="refresh()">
-            <i class="fa fa-repeat" aria-hidden="true"></i>
-          </button>
-          <label class="small">每頁:</label>
-          <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="200">200</option>
-          </select>
-        </span>
+        <button class="btn btn-dark" (click)="location.back()">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </button>
+        待辦事項:{{Project['ProjectName']}}
       </h3>
     </div>
   </div>
   <div class="row">
     <div class="col col-12">
-      <button class="btn btn-link" (click)="location.back()">回上一頁</button>
-      <a class="btn btn-link float-right" [routerLink]="['../member']" [queryParams]="{ PID:ProjectMember['PID'],ProjectName:ProjectMember['ProjectName'] }"
+      <span class="float-right">
+        <label class="small">每頁:</label>
+        <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+        </select>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn btn-success" (click)="add()">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+    <div class="col col-12">
+      <a class="btn btn-link float-right" [routerLink]="['../member']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
         [routerLinkActive]="'active'">專案人員</a>
       <h2 *ngIf="PagingData.length==0" class="text-center">尚無資料</h2>
     </div>
