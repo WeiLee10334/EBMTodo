@@ -3,6 +3,5 @@
         "target": "http://todo.youaresuck.com",
         "secure": false,
         "changeOrigin": true
-    }
-    
+    }   
 }

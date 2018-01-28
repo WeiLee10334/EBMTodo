@@ -1,16 +1,6 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col col-12">
-      <h3>
-        <button class="btn btn-dark" (click)="location.back()">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i>
-        </button>
-        待辦事項:{{Project['ProjectName']}}
-      </h3>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col col-12">
       <span class="float-right">
         <label class="small">每頁:</label>
         <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
@@ -26,8 +16,6 @@
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
     <div class="col col-12">
-      <a class="btn btn-link float-right" [routerLink]="['../member']" [queryParams]="{ PID:Project['PID'],ProjectName:Project['ProjectName'] }"
-        [routerLinkActive]="'active'">專案人員</a>
       <h2 *ngIf="PagingData.length==0" class="text-center">尚無資料</h2>
     </div>
   </div>

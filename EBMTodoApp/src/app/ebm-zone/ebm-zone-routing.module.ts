@@ -14,6 +14,7 @@ import { EbmProjectListComponent } from './ebm-project/ebm-project-list/ebm-proj
 import { EbmUserListComponent } from './ebm-user/ebm-user-list/ebm-user-list.component';
 import { EbmUserMemberComponent } from './ebm-user/ebm-user-member/ebm-user-member.component';
 import { EbmUserWorkingComponent } from './ebm-user/ebm-user-working/ebm-user-working.component';
+import { EbmProjectDetailComponent } from './ebm-project/ebm-project-detail/ebm-project-detail.component';
 
 const routes: Routes = [
   {
@@ -25,9 +26,15 @@ const routes: Routes = [
       {
         path: "project", component: EbmProjectComponent, children: [
           { path: "", component: EbmProjectListComponent },
-          { path: "member", component: EbmProjectMemberComponent },
-          { path: "working", component: EbmProjectWorkingComponent },
-          { path: "todolist", component: EbmProjectTodolistComponent },
+          {
+            path: "detail", component: EbmProjectDetailComponent, children: [
+              { path: "member", component: EbmProjectMemberComponent },
+              { path: "working", component: EbmProjectWorkingComponent },
+              { path: "todolist", component: EbmProjectTodolistComponent },
+              { path: "", redirectTo: "member" }
+            ]
+          },
+
           { path: "*", redirectTo: "project" }
         ]
       },

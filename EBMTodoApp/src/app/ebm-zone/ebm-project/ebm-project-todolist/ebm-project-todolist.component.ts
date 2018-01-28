@@ -22,6 +22,7 @@ export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent 
   }
   checkUrl(Params) {
     super.checkUrl(Params);
+
     this.Project['ProjectName'] = Params["ProjectName"];
     this.Project['PID'] = Params["PID"];
     if (this.Project['PID'] && this.Project['ProjectName']) {
@@ -117,6 +118,7 @@ export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent 
         this.Save(item);
         break;
       case 'cancel':
+        console.log(this.PendingMap.get(item));
         this.Cancel(item);
         break;
       case 'delete':

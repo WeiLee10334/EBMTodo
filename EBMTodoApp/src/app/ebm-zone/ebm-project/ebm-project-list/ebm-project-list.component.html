@@ -56,7 +56,7 @@
                     <i class="fa fa-cog" aria-hidden="true"></i>
                   </button>
                   <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li role="menuitem">
+                    <!-- <li role="menuitem">
                       <a class="btn btn-link dropdown-item" [routerLink]="['./member']" [queryParams]="{ PID:PagingData[i]['PID'],ProjectName:PagingData[i]['ProjectName'] }"
                         [routerLinkActive]="'active'">專案人員</a>
                     </li>
@@ -67,7 +67,7 @@
                     <li role="menuitem">
                       <a class="btn btn-link dropdown-item" [routerLink]="['./working']" [queryParams]="{ PID:PagingData[i]['PID'],ProjectName:PagingData[i]['ProjectName'] }"
                         [routerLinkActive]="'active'">工作回報</a>
-                    </li>
+                    </li> -->
                     <li role="menuitem">
                       <button class="btn btn-link dropdown-item" (click)="setEditable(PagingData[i])">修改</button>
                     </li>
@@ -78,6 +78,9 @@
                 </div>
                 <button class="btn btn-success" *ngIf="getEditable(PagingData[i])" (click)="Save(PagingData[i])">儲存</button>
                 <button class="btn btn-secondary" *ngIf="getEditable(PagingData[i])" (click)="Cancel(PagingData[i])">取消</button>
+                <button class="btn btn-dark" *ngIf="PagingData[i]['PID']&&!getEditable(PagingData[i])" [routerLink]="['./detail']" [queryParams]="{ PID:PagingData[i]['PID'],ProjectName:PagingData[i]['ProjectName'] }">
+                  <i class="fa fa-tachometer" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </ng-container>

@@ -35,6 +35,16 @@ export class BaseServerPagingTableComponent implements OnInit, AfterViewInit {
   constructor(protected api: DataStoreService, protected router: Router, protected route: ActivatedRoute, public location: Location, protected ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    // this.api.HttpPost({
+    //   "Email": "string3@test.com",
+    //   "CallBackUrl": "http://yutestapi.azurewebsites.net/swagger/ui/index#!/Account/Account_Register_Test"
+    // }, 'http://yutestapi.azurewebsites.net/api/Account/Register_Test').subscribe(
+    //   (data) => {
+    //     console.log(data)
+    //   },
+    //   (err) => {
+    //     console.log(err)
+    //   })
     this.route.queryParams.subscribe((Params) => {
       this.checkUrl(Params);
       this.location.replaceState(this.router.serializeUrl(this.router.createUrlTree(["./"], { relativeTo: this.route, queryParams: this.QueryModel })));
