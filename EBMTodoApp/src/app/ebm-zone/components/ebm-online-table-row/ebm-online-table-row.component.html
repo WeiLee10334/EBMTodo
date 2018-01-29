@@ -2,8 +2,11 @@
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'title'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['title']">
   </td>
-  <td [attr.data-th]="'ApplyDateTime'">
+  <!-- <td [attr.data-th]="'ApplyDateTime'">
     <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['ApplyDateTime']" (ngModelChange)="onChangeCallback(value)">
+  </td> -->
+  <td [attr.contenteditable]="Editable" appJDatetimepicker appContentEditable [attr.data-th]="'ApplyDateTime'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['ApplyDateTime']" type="date">
   </td>
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ApplyDepartment'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ApplyDepartment']">
@@ -14,14 +17,20 @@
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Description'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['Description']">
   </td>
-  <td [attr.data-th]="'HandleDateTime'">
+  <!-- <td [attr.data-th]="'HandleDateTime'">
     <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['HandleDateTime']" (ngModelChange)="onChangeCallback(value)">
+  </td> -->
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'HandleDateTime'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['HandleDateTime']" type="date">
   </td>
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'HandleName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['HandleName']">
   </td>
-  <td [attr.data-th]="'ResolveDateTime'">
+  <!-- <td [attr.data-th]="'ResolveDateTime'">
     <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['ResolveDateTime']" (ngModelChange)="onChangeCallback(value)">
+  </td> -->
+  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ResolveDateTime'" (ngModelChange)="onChangeCallback(value)"
+    [(ngModel)]="value['ResolveDateTime']" type="date">
   </td>
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ResponseName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ResponseName']">

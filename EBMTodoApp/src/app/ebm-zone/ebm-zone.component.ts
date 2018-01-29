@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ebm-zone.component.scss']
 })
 export class EbmZoneComponent implements OnInit {
-
+  value = "abcdefg";
   constructor() { }
 
   ngOnInit() {

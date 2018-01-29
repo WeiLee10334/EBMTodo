@@ -1,7 +1,8 @@
 import { Directive, Input, ElementRef, HostListener, OnInit, forwardRef, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-
+import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+declare var $: any;
 @Directive({
   selector: '[appContentEditable]',
   providers:
@@ -10,12 +11,12 @@ import { DatePipe } from '@angular/common';
       DatePipe
     ]
 })
-export class ContentEditableDirective implements ControlValueAccessor, OnInit {
+export class ContentEditableDirective implements ControlValueAccessor, OnInit, AfterViewInit {
   private innerValue = '';
   @Input() propValueAccessor: string = 'innerText';
   @Input() type: string = 'text';
   @Input() dateformat: string = 'yyyy-MM-dd';
-
+  private calendar;
   /**
    * This property is deprecated, use `propValueAccessor` instead.
    * 
@@ -30,9 +31,19 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit {
   private removeDisabledState: () => void;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2, private datepipe: DatePipe) { }
+  ngAfterViewInit() {
 
+  }
   ngOnInit() {
     this.propValueAccessor = this.propValueAccesor || this.propValueAccessor;
+  }
+
+  @HostListener('focus', ['$event'])
+  callOnFocus(event) {
+    if (this.type === 'date') {
+      this.renderer.appendChild(this.elementRef.nativeElement, this.calendar);
+
+    }
   }
 
   @HostListener('keyup', ['$event'])
@@ -49,6 +60,10 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit {
 
   @HostListener('blur')
   callOnTouched() {
+    if (this.type === 'date') {
+      this.renderer.removeChild(this.elementRef.nativeElement, this.calendar);
+    }
+
     if (typeof this.onTouched == 'function')
       this.onTouched();
   }
@@ -67,12 +82,10 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit {
         break;
       default:
         this.innerValue = value;
-    
         break;
     }
-    this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, this.innerValue || '');
-    //this.innerValue = value;
 
+    this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, this.innerValue || '');
   }
 
   /**
@@ -83,6 +96,22 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit {
    * the form model when values propagate from the view (view -> model).
    */
   registerOnChange(fn: () => void): void {
+    if (this.type === 'date') {
+      this.calendar = this.renderer.createElement('div');
+      this.renderer.setStyle(this.calendar, 'position', 'absolute');
+      this.renderer.setStyle(this.calendar, 'top', $(this.elementRef.nativeElement).height() + 'px');
+      this.renderer.setStyle(this.calendar, 'z-index', 1024);
+      $(this.calendar).datepicker({
+        dateFormat: "yy-mm-dd",
+        onSelect: (e) => {
+          console.log(e)
+          this.renderer.removeChild(this.elementRef.nativeElement, this.calendar);
+          this.innerValue = this.datepipe.transform(e, this.dateformat);
+          this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, this.innerValue || '');
+          this.onChange(this.elementRef.nativeElement[this.propValueAccessor]);
+        }
+      });
+    }
     this.onChange = fn;
   }
 

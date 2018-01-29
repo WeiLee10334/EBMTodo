@@ -1,13 +1,8 @@
 th ,td{
     padding: 0;
     vertical-align: middle;
+    position: relative;
 }
-.table-cell{
-    display: table-cell;
-    border: none;
-}
-.date-input{
-    padding: 0px;
-    vertical-align: middle;
-    border: none;
+td[contenteditable="true"] {
+    border: solid 2px gray;
 }

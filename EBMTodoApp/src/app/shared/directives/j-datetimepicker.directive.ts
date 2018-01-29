@@ -1,5 +1,5 @@
 import { Directive, ElementRef, AfterViewInit, HostListener } from '@angular/core';
-import { NgModel, DefaultValueAccessor } from '@angular/forms';
+import { NgModel } from '@angular/forms';
 import * as moment from 'moment';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 declare var $: any;
@@ -22,7 +22,7 @@ export class JDatetimepickerDirective implements AfterViewInit {
   }
 
 
-  constructor(private el: ElementRef, private valueAccessor: DefaultValueAccessor, private model: NgModel) {
+  constructor(private el: ElementRef, private model: NgModel) {
 
   }
 }
