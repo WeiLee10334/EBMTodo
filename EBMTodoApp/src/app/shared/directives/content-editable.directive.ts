@@ -42,7 +42,6 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit, A
   callOnFocus(event) {
     if (this.type === 'date') {
       this.renderer.appendChild(this.elementRef.nativeElement, this.calendar);
-
     }
   }
 
@@ -60,12 +59,18 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit, A
 
   @HostListener('blur')
   callOnTouched() {
-    if (this.type === 'date') {
-      this.renderer.removeChild(this.elementRef.nativeElement, this.calendar);
+    if (typeof this.onTouched == 'function') {
+      if (this.type === 'date') {
+        try {
+          this.renderer.removeChild(this.elementRef.nativeElement, this.calendar);
+        }
+        catch (e) {
+          console.log(e);
+        }
+      }
+      this.onTouched();
     }
 
-    if (typeof this.onTouched == 'function')
-      this.onTouched();
   }
 
   /**

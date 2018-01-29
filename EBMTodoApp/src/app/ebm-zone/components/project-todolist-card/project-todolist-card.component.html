@@ -1,7 +1,7 @@
 <ng-container *ngIf="value">
-  <div class="card" *ngIf="!Editable">
+  <div class="card">
     <div class="card-header">
-      <div class="btn-group float-right" dropdown placement="bottom">
+      <div class="btn-group float-right" dropdown placement="bottom" *ngIf="!Editable">
         <button dropdownToggle type="button" class="btn btn-light">
           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
@@ -15,32 +15,60 @@
         </ul>
       </div>
       <div class="card-title">
-        <h4>
-          <a class="font-weight-bold" href="javascript:void(0)" (click)="isCollapsed = !isCollapsed">{{value.title}}</a>
-          <small class="text-muted">{{value.MemberTitle}}
-            <span class="badge badge-secondary">{{value.Tag}}</span>
-          </small>
-        </h4>
+        <ul class="list-inline">
+          <li class="list-inline-item h3 font-weight-bold">
+            <dt class="font-weight-bold" *ngIf="Editable">標題:</dt>
+            <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['title']"
+              class="card-text editable"></dd>
+          </li>
+          <li class="list-inline-item">
+            <dt class="font-weight-bold" *ngIf="Editable">指派:</dt>
+            <dd *ngIf="Editable">
+              <app-custom-select-input [(ngModel)]="value.PMID" [enableInput]="true" [LabelName]="value.MemberTitle" [filter]="{PID:value.PID}"
+                type="projectmember" *ngIf="Editable"></app-custom-select-input>
+            </dd>
+            <dd class="card-text" *ngIf="!Editable">
+              {{value['MemberTitle']}}
+            </dd>
+          </li>
+          <li class="list-inline-item">
+            <dt class="font-weight-bold" *ngIf="Editable">Tag:</dt>
+            <dd class="card-text">
+              <i class="fa fa-tag editable" aria-hidden="true" [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)"
+                [(ngModel)]="value['Tag']"></i>
+            </dd>
+          </li>
+        </ul>
       </div>
-      <h6 class="card-subtitle mb-2 text-muted" title="提出時間">
-        {{value.ApplyDateTime|date:'yyyy-MM-dd'}}
+      <h6 class="card-subtitle mb-2 text-muted" data-placeholder="提出時間" [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)"
+        [(ngModel)]="value['ApplyDateTime']" type="date">
       </h6>
-      <div [collapse]="isCollapsed" class="card-body">
-        <p class="card-text">申請人:{{value.ApplyName}}</p>
-        <p class="card-text">內容:{{value.Description}}</p>
-        <p class="card-text">備註:{{value.Memo}}</p>
-        <p class="card-text">進度
+      <div [collapse]="isCollapsed&&!Editable" class="card-body">
+        <dt class="font-weight-bold">申請人:</dt>
+        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['ApplyName']"
+          class="card-text editable"></dd>
+        <dt class="font-weight-bold">內容:</dt>
+        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Description']"
+          class="card-text editable"></dd>
+        <dt class="font-weight-bold">備註:</dt>
+        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Memo']"
+          class="card-text editable"></dd>
+        <dt class="font-weight-bold">進度:</dt>
+        <dd class="card-text">
+          <input type="number" [(ngModel)]="value['CompleteRate']" (ngModelChange)="onChangeCallback(value)" *ngIf="Editable">
           <progressbar class="progress progress-striped" [max]="100" [value]="value?.CompleteRate" type="success">{{value.CompleteRate}}%</progressbar>
-        </p>
+        </dd>
       </div>
-      <button class="btn btn-light btn-sm btn-block" (click)="isCollapsed = !isCollapsed">
+      <button class="btn btn-success float-right" (click)="emit('save')" *ngIf="Editable">確認</button>
+      <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')" *ngIf="Editable">取消</button>
+      <button class="btn btn-light btn-sm btn-block" (click)="isCollapsed = !isCollapsed" *ngIf="!Editable">
         <i class="fa fa-arrow-down" aria-hidden="true" *ngIf="isCollapsed"></i>
         <i class="fa fa-arrow-up" aria-hidden="true" *ngIf="!isCollapsed"></i>
       </button>
     </div>
   </div>
 
-  <div class="card" *ngIf="Editable">
+  <!-- <div class="card" *ngIf="Editable">
     <div class="card-body">
       <div class="form-group">
         <div class="input-group">
@@ -108,5 +136,5 @@
         <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')">取消</button>
       </div>
     </div>
-  </div>
+  </div> -->
 </ng-container>

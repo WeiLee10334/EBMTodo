@@ -39,7 +39,7 @@
                 yyyy-MM-dd
               </span>
               <span *ngSwitchDefault>
-                <input class="form-control" placeholder="search" (keyup)="updateFilters($event,column)">
+                <input class="form-control" placeholder="search" (keyup)="updateFilters($event.target.value,column)">
               </span>
             </th>
             <th>

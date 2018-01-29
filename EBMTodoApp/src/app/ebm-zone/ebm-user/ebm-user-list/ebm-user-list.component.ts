@@ -14,9 +14,9 @@ declare var $: any;
 export class EbmUserListComponent extends BaseServerPagingTableComponent implements OnInit, AfterViewInit {
 
   Columns = [
-    { name: "組員名稱", prop: "UserName", orderby: undefined },
-    { name: "Email", prop: "Email", orderby: undefined },
-    { name: "Line", prop: "UID", orderby: undefined },
+    { name: "組員名稱", prop: "UserName" },
+    { name: "Email", prop: "Email" },
+    { name: "Line", prop: "UID" },
   ]
   getData(model) {
     super.getData(model);

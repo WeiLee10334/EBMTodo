@@ -17,9 +17,9 @@ declare var $: any;
 
 export class EbmProjectListComponent extends BaseServerPagingTableComponent implements OnInit, AfterViewInit {
     Columns = [
-        { name: "專案名稱", prop: "ProjectName", orderby: undefined },
-        { name: "專案號", prop: "ProjectNo", orderby: undefined },
-        { name: "建立時間", prop: "CreateDateTime", orderby: undefined }
+        { name: "專案名稱", prop: "ProjectName" },
+        { name: "專案號", prop: "ProjectNo" },
+        { name: "建立時間", prop: "CreateDateTime", template: 'date' }
     ]
 
     getData(model) {

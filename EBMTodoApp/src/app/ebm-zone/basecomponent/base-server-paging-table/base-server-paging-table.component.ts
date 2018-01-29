@@ -80,7 +80,7 @@ export class BaseServerPagingTableComponent implements OnInit, AfterViewInit {
     this.getData(this.QueryModel);
   }
   updateFilters(event, column) {
-    this.Filters[column.prop] = event.target.value;
+    this.Filters[column.prop] = event;
     this.QueryModel['Filters'] = this.Filters;
     this.getData(this.QueryModel);
   }

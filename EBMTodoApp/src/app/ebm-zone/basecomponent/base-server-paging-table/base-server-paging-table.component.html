@@ -28,7 +28,7 @@
               </button>
             </th>
             <th *ngFor="let column of Columns" class="text-center">
-              <input class="form-control" (keyup)="updateFilters($event,column)">
+              <input class="form-control" (keyup)="updateFilters($event.target.value,column)">
             </th>
           </tr>
         </tbody>

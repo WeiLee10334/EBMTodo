@@ -41,15 +41,19 @@
                 <i class="fa fa-plus" aria-hidden="true"></i>
               </button>
             </th>
-            <th *ngFor="let column of Columns" class="text-center">
-              <input class="form-control" (keyup)="updateFilters($event,column)">
+            <th *ngFor="let column of Columns" class="text-center" [ngSwitch]="column.template">
+              <span class="w-100" *ngSwitchCase="'date'">
+                yyyy-MM-dd
+              </span>
+              <span *ngSwitchDefault>
+                <input class="form-control" placeholder="search" (keyup)="updateFilters($event.target.value,column)">
+              </span>
             </th>
           </tr>
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-            <tr app-project-member-table-row [Editable]="PagingData[i]._Editable||!PagingData[i]['PMID']"
-              [(ngModel)]="PagingData[i]">
+            <tr app-project-member-table-row [Editable]="PagingData[i]._Editable||!PagingData[i]['PMID']" [(ngModel)]="PagingData[i]">
               <td>
                 <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['PMID']&&!PagingData[i]._Editable">
                   <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">

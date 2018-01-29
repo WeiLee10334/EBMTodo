@@ -12,6 +12,7 @@ declare var $: any;
   styleUrls: ['./ebm-project-todolist.component.scss']
 })
 export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent implements OnInit {
+
   QueryModel = {
     Skip: 0,
     Length: 50
@@ -118,7 +119,6 @@ export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent 
         this.Save(item);
         break;
       case 'cancel':
-        console.log(this.PendingMap.get(item));
         this.Cancel(item);
         break;
       case 'delete':

@@ -14,10 +14,10 @@ declare var $: any;
 export class EbmProjectMemberComponent extends BaseServerPagingTableComponent implements OnInit, AfterViewInit {
 
   Columns = [
-    { name: "負責人", prop: "UserName", orderby: undefined },
-    { name: "職稱", prop: "title", orderby: undefined },
-    { name: "專案名稱", prop: "ProjectName", orderby: undefined },
-    { name: "建立時間", prop: "CreateDateTime", orderby: undefined }
+    { name: "負責人", prop: "UserName" },
+    { name: "職稱", prop: "title" },
+    { name: "專案名稱", prop: "ProjectName" },
+    { name: "建立時間", prop: "CreateDateTime", template: 'date' }
   ]
 
   Project = {

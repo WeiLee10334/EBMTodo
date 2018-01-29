@@ -5,12 +5,11 @@ import { EbmZoneRoutingModule } from './ebm-zone-routing.module';
 import { EbmZoneComponent } from './ebm-zone.component';
 import { EbmWorkingComponent } from './ebm-working/ebm-working.component';
 import { SharedModule } from '../shared/modules/index';
-import { AccordionModule, BsDatepickerModule, ProgressbarModule, BsDropdownModule, PaginationModule, CollapseModule } from 'ngx-bootstrap';
+import { AccordionModule, ProgressbarModule, BsDropdownModule, PaginationModule, CollapseModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { EbmScheduleComponent } from './ebm-schedule/ebm-schedule.component';
 import { EbmMemoComponent } from './ebm-memo/ebm-memo.component';
-import { TodolistCardComponent } from './components/todolist-card/todolist-card.component';
 import { EbmOnlineComponent } from './ebm-online/ebm-online.component';
 import { EbmProjectComponent } from './ebm-project/ebm-project.component';
 import { ProjectTableRowComponent } from './components/project-table-row/project-table-row.component';
@@ -47,7 +46,6 @@ import { EbmProjectScheduleComponent } from './ebm-project/ebm-project-schedule/
     ReactiveFormsModule,
     AccordionModule.forRoot(),
     ProgressbarModule.forRoot(),
-    BsDatepickerModule.forRoot(),
     SharedModule,
     InfiniteScrollModule,
     BsDropdownModule.forRoot(),
@@ -59,7 +57,6 @@ import { EbmProjectScheduleComponent } from './ebm-project/ebm-project-schedule/
     EbmWorkingComponent,
     EbmScheduleComponent,
     EbmMemoComponent,
-    TodolistCardComponent,
     EbmOnlineComponent,
     EbmProjectComponent,
     ProjectTableRowComponent,

@@ -3,6 +3,9 @@ th ,td{
     vertical-align: middle;
     position: relative;
 }
-td[contenteditable="true"] {
-    border: solid 2px gray;
+[contenteditable="true"] {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    background: white;
+    min-width: 5em;
 }
