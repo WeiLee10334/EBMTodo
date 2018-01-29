@@ -48,10 +48,10 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-            <tr [ngClass]="{'table-active':getEditable(PagingData[i])}" app-project-member-table-row [Editable]="getEditable(PagingData[i])||!PagingData[i]['PMID']"
+            <tr app-project-member-table-row [Editable]="PagingData[i]._Editable||!PagingData[i]['PMID']"
               [(ngModel)]="PagingData[i]">
               <td>
-                <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['PMID']&&!getEditable(PagingData[i])">
+                <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['PMID']&&!PagingData[i]._Editable">
                   <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                   </button>
@@ -64,8 +64,8 @@
                     </li>
                   </ul>
                 </div>
-                <button class="btn btn-success" *ngIf="getEditable(PagingData[i])" (click)="Save(PagingData[i])">儲存</button>
-                <button class="btn btn-secondary" *ngIf="getEditable(PagingData[i])" (click)="Cancel(PagingData[i])">取消</button>
+                <button class="btn btn-success" *ngIf="PagingData[i]._Editable" (click)="Save(PagingData[i])">儲存</button>
+                <button class="btn btn-secondary" *ngIf="PagingData[i]._Editable" (click)="Cancel(PagingData[i])">取消</button>
               </td>
             </tr>
           </ng-container>

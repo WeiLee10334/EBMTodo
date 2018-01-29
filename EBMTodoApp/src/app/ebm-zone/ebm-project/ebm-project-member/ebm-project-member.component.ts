@@ -53,38 +53,44 @@ export class EbmProjectMemberComponent extends BaseServerPagingTableComponent im
   }
   //
   PendingMap = new Map<any, any>()
-  getEditable(event) {
-    return this.PendingMap.has(event);
-  }
   add() {
-    let item = { CreateDateTime: new Date(), PID: this.Project['PID'], ProjectName: this.Project['ProjectName'] };
+    let item = { CreateDateTime: new Date(), _Editable: true, PID: this.Project['PID'], ProjectName: this.Project['ProjectName'] };
     this.PagingData.unshift(item);
     this.PendingMap.set(item, null);
   }
   setEditable(event) {
     let tmp = Object.assign({}, event);
     this.PendingMap.set(event, tmp);
+    event._Editable = true;
   }
   Save(event) {
+    let model = Object.assign({}, event);
+    delete model._Editable;
     if (event.PMID) {
-      this.api.projectMemberUpdate(event).subscribe(
+      this.api.projectMemberUpdate(model).subscribe(
         (data) => {
           this.PendingMap.delete(event);
           Object.assign(event, data);
         },
         (err) => {
           console.log(err);
+        },
+        () => {
+          delete event._Editable;
         }
       )
     }
     else {
-      this.api.projectMemberCreate(event).subscribe(
+      this.api.projectMemberCreate(model).subscribe(
         (data) => {
           this.PendingMap.delete(event);
           Object.assign(event, data);
         },
         (err) => {
           console.log(err);
+        },
+        () => {
+          delete event._Editable;
         }
       )
     }
@@ -92,6 +98,7 @@ export class EbmProjectMemberComponent extends BaseServerPagingTableComponent im
   Cancel(event) {
     let cache = this.PendingMap.get(event);
     if (cache) {
+      delete event._Editable;
       Object.assign(event, cache);
       this.PendingMap.delete(event);
     }

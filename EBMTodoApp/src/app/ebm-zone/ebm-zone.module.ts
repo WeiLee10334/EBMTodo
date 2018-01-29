@@ -35,6 +35,8 @@ import { BaseTableRowComponent } from './basecomponent/base-table-row/base-table
 import { ContentEditableDirective } from '../shared/directives/content-editable.directive';
 import { MenuComponent } from '../shared/components/menu/menu.component';
 import { EbmProjectDetailComponent } from './ebm-project/ebm-project-detail/ebm-project-detail.component';
+import { JDatetimepickerDirective } from '../shared/directives/j-datetimepicker.directive';
+import { EbmProjectScheduleComponent } from './ebm-project/ebm-project-schedule/ebm-project-schedule.component';
 
 @NgModule({
   imports: [
@@ -80,7 +82,9 @@ import { EbmProjectDetailComponent } from './ebm-project/ebm-project-detail/ebm-
     BaseTableRowComponent,
     ContentEditableDirective,
     MenuComponent,
-    EbmProjectDetailComponent
+    EbmProjectDetailComponent,
+    JDatetimepickerDirective,
+    EbmProjectScheduleComponent
   ]
 })
 export class EbmZoneModule { }

@@ -2,8 +2,8 @@
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'title'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['title']">
   </td>
-  <td appContentEditable [attr.data-th]="'ApplyDateTime'" [triggers]="Editable?'click':''" bsDatepicker [(ngModel)]="value['ApplyDateTime']"
-    (bsValueChange)="modelChanged($event,'ApplyDateTime')" type="date">
+  <td [attr.data-th]="'ApplyDateTime'">
+    <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['ApplyDateTime']" (ngModelChange)="onChangeCallback(value)">
   </td>
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ApplyDepartment'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ApplyDepartment']">
@@ -14,14 +14,14 @@
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Description'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['Description']">
   </td>
-  <td appContentEditable [attr.data-th]="'HandleDateTime'" [triggers]="Editable?'click':''" bsDatepicker [(ngModel)]="value['HandleDateTime']"
-    (bsValueChange)="modelChanged($event,'HandleDateTime')" type="date">
+  <td [attr.data-th]="'HandleDateTime'">
+    <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['HandleDateTime']" (ngModelChange)="onChangeCallback(value)">
   </td>
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'HandleName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['HandleName']">
   </td>
-  <td appContentEditable [attr.data-th]="'ResolveDateTime'" [triggers]="Editable?'click':''" bsDatepicker [(ngModel)]="value['ResolveDateTime']"
-    (bsValueChange)="modelChanged($event,'ResolveDateTime')" type="date">
+  <td [attr.data-th]="'ResolveDateTime'">
+    <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['ResolveDateTime']" (ngModelChange)="onChangeCallback(value)">
   </td>
   <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ResponseName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ResponseName']">

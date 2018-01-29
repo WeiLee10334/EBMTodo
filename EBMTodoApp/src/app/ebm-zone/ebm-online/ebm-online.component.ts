@@ -50,7 +50,6 @@ export class EbmOnlineComponent extends BaseServerPagingTableComponent implement
   timeoutId;
   timeoutDelay = 200;
   update() {
-    console.log('update loop')
     let event = this.pendingData.pop();
     while (event) {
       this.api.projectOnlineUpdate(event).subscribe(

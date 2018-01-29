@@ -1,5 +1,5 @@
 <ng-container *ngIf="enableSelect">
-  <input type="text" class="form-control" [value]="SelectArray[SelectIndex]?.LabelName||LabelName" data-toggle="dropdown" aria-haspopup="true"
+  <input type="text" class="form-control" [value]="SelectArray[SelectIndex]?.LabelName||''" data-toggle="dropdown" aria-haspopup="true"
     aria-expanded="false">
   <div class="dropdown-menu" infiniteScroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="50" [scrollWindow]="false"
     (scrolled)="onScrollDown()">
@@ -12,6 +12,6 @@
     {{SelectArray[SelectIndex].LabelName}}
   </span>
   <span *ngIf="SelectIndex<0">
-    {{LabelName}}
+    {{LabelName||''}}
   </span>
 </ng-container>

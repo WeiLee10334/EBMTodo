@@ -7,7 +7,7 @@
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
           <li role="menuitem">
-            <button class="btn btn-link dropdown-item" (click)="Editable=true">修改</button>
+            <button class="btn btn-link dropdown-item" (click)="emit('edit')">修改</button>
           </li>
           <li role="menuitem">
             <button class="btn btn-link dropdown-item" (click)="emit('delete')">刪除</button>
@@ -59,7 +59,7 @@
           <span class="input-group-addon">
             提出時間
           </span>
-          <input type="text" class="form-control" bsDatepicker [(ngModel)]="value.ApplyDateTime" [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}">
+          <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value.ApplyDateTime">
         </div>
       </div>
       <div class="form-group">

@@ -158,25 +158,6 @@ namespace EBMTodo.Areas.Back.Controllers
             }
             return BadRequest("not exist");
         }
-
-        [Route("GetMembers")]
-        [HttpPost]
-        public IHttpActionResult GetMembers(EBMProjectViewModel model)
-        {
-            var data = db.EBMProject.Find(Guid.Parse(model.PID));
-            if (data != null)
-            {
-                try
-                {
-                    return Ok(data.EBMProjectMember.ToList());
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
-        }
     }
     public class EBMProjectViewModel
     {

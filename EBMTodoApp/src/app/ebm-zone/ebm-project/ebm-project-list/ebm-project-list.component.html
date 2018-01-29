@@ -1,6 +1,16 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col col-12">
+    <div class="col col-6">
+      <div class="input-group">
+        <input type="text" placeholder="StartDataTime" class="form-control" appJDatetimepicker [(ngModel)]="QueryModel.Start" (ngModelChange)="getData(QueryModel)">
+        <div class="input-group-append">
+          <span class="input-group-text">~</span>
+        </div>
+        <input type="text" placeholder="EndDataTime" class="form-control" appJDatetimepicker [(ngModel)]="QueryModel.End" (ngModelChange)="getData(QueryModel)">
+      </div>
+
+    </div>
+    <div class="col col-6">
       <span class="float-right">
         <label>每頁:</label>
         <select [(ngModel)]="QueryModel['Length']" (ngModelChange)="changeLength(QueryModel['Length'])">
@@ -48,10 +58,9 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-            <tr [ngClass]="{'table-active':getEditable(PagingData[i])}" app-project-table-row title="{{row.PID}}" [Editable]="getEditable(PagingData[i])||!PagingData[i]['PID']"
-              [(ngModel)]="PagingData[i]">
+            <tr app-project-table-row title="{{row.PID}}" [Editable]="PagingData[i]._Editable||!PagingData[i]['PID']" [(ngModel)]="PagingData[i]">
               <td>
-                <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['PID']&&!getEditable(PagingData[i])">
+                <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['PID']&&!PagingData[i]._Editable">
                   <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                   </button>
@@ -76,9 +85,9 @@
                     </li>
                   </ul>
                 </div>
-                <button class="btn btn-success" *ngIf="getEditable(PagingData[i])" (click)="Save(PagingData[i])">儲存</button>
-                <button class="btn btn-secondary" *ngIf="getEditable(PagingData[i])" (click)="Cancel(PagingData[i])">取消</button>
-                <button class="btn btn-dark" *ngIf="PagingData[i]['PID']&&!getEditable(PagingData[i])" [routerLink]="['./detail']" [queryParams]="{ PID:PagingData[i]['PID'],ProjectName:PagingData[i]['ProjectName'] }">
+                <button class="btn btn-success" *ngIf="PagingData[i]._Editable" (click)="Save(PagingData[i])">儲存</button>
+                <button class="btn btn-secondary" *ngIf="PagingData[i]._Editable" (click)="Cancel(PagingData[i])">取消</button>
+                <button class="btn btn-dark" *ngIf="PagingData[i]['PID']&&!PagingData[i]._Editable" [routerLink]="['./detail']" [queryParams]="{ PID:PagingData[i]['PID'],ProjectName:PagingData[i]['ProjectName'] }">
                   <i class="fa fa-tachometer" aria-hidden="true"></i>
                 </button>
               </td>

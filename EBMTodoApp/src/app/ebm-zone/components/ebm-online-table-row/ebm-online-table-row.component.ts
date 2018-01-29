@@ -13,5 +13,5 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   }]
 })
 export class EbmOnlineTableRowComponent extends BaseTableRowComponent {
-
+  
 }
