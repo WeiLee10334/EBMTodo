@@ -1,0 +1,12 @@
+[contenteditable="true"] {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    background: white;
+    min-width: 5em;
+}
+
+[contentEditable=true]:empty:not(:focus):before {
+    content: attr(data-placeholder);
+    font-weight: lighter;
+    color: gray;
+}

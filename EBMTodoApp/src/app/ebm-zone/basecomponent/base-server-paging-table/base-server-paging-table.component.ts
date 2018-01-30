@@ -20,7 +20,9 @@ export class BaseServerPagingTableComponent implements OnInit, AfterViewInit {
   Columns = []
   QueryModel = {
     Skip: 0,
-    Length: 10
+    Length: 10,
+    Start: undefined,
+    End: undefined
   }
   PagingInfo = {
     CurrentPage: 1,

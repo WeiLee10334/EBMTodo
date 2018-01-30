@@ -15,7 +15,9 @@ export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent 
 
   QueryModel = {
     Skip: 0,
-    Length: 50
+    Length: 50,
+    Start: undefined,
+    End: undefined
   }
   Project = {
     PID: "",

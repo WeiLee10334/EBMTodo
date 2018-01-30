@@ -1,54 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataStoreService } from '../../shared/services';
-import { FormGroup, FormControl } from '@angular/forms';
-import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { BaseServerPagingTableComponent } from '../basecomponent/base-server-paging-table/base-server-paging-table.component';
+
 @Component({
   selector: 'app-ebm-memo',
   templateUrl: './ebm-memo.component.html',
   styleUrls: ['./ebm-memo.component.scss']
 })
-export class EbmMemoComponent implements OnInit {
+export class EbmMemoComponent extends BaseServerPagingTableComponent implements OnInit {
 
-  constructor(public api: DataStoreService) { }
-  Form = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-    UIDs: new FormControl([])
-  })
-  Options;
-  Settings: IMultiSelectSettings = {
-    checkedStyle: 'fontawesome',
-    buttonClasses: 'btn btn-success btn-block',
-    displayAllSelectedText: true,
-    showCheckAll: true,
-    showUncheckAll: true,
-  };
-  Data;
-  Groupby = 'day';
-  Columns = [
-    { name: "註記", prop: "memo" },
-    { name: "人員", prop: "WorkerName" },
-    { name: "時間", prop: "CreateDateTime" },
-    { name: "內容", prop: "Content" },
-    { name: "標籤", prop: "Tag" },
-    { name: "類型", prop: "memoType" }
-  ]
-  ngOnInit() {
-    this.api.workingInit().subscribe(
+  QueryModel = {
+    Skip: 0,
+    Length: 50,
+    Start: undefined,
+    End: undefined
+  }
+  getData(model) {
+    super.getData(model);
+    this.ajax = this.api.ebmMemoData(model).subscribe(
       (data) => {
-        this.Options = data;
+        this.PagingInfo.TotalItems = data.Total;
+        this.PagingData = data.Data;
+        //why???
+        setTimeout(() => {
+          this.PagingInfo.CurrentPage = <number>(this.QueryModel['Skip'] / this.QueryModel['Length'] + 1);
+        }, 0)
       },
       (err) => {
         console.log(err);
-      }
-    )
+      });
   }
-  submit() {
-    if (this.Groupby == "member") {
-      this.api.memoDataByUID(this.Form.value).subscribe(
+  //
+  PendingMap = new Map<any, any>()
+  getEditable(event) {
+    return this.PendingMap.has(event);
+  }
+  add() {
+    let item = { CreateDateTime: new Date() };
+    this.PagingData.unshift(item);
+    this.PendingMap.set(item, null);
+  }
+  setEditable(event) {
+    let tmp = Object.assign({}, event);
+    this.PendingMap.set(event, tmp);
+  }
+  Save(event) {
+    if (event.MID) {
+      this.api.ebmMemoUpdate(event).subscribe(
         (data) => {
-          console.log(data);
-          this.Data = data;
+          this.PendingMap.delete(event);
+          Object.assign(event, data);
         },
         (err) => {
           console.log(err);
@@ -56,22 +57,54 @@ export class EbmMemoComponent implements OnInit {
       )
     }
     else {
-      let query = Object.assign({ groupby: this.Groupby }, this.Form.value);
-      this.api.memoDataByTime(query).subscribe(
+      this.api.ebmMemoCreate(event).subscribe(
         (data) => {
-          console.log(data);
-          this.Data = data;
+          this.PendingMap.delete(event);
+          Object.assign(event, data);
         },
         (err) => {
           console.log(err);
         }
       )
     }
-
   }
-  changeGroup(by: string) {
-    console.log(by);
-    this.Groupby = by;
-    this.submit();
+  Cancel(event) {
+    let cache = this.PendingMap.get(event);
+    if (cache) {
+      Object.assign(event, cache);
+      this.PendingMap.delete(event);
+    }
+    else {
+      this.PendingMap.delete(event);
+      this.PagingData.splice(this.PagingData.indexOf(event), 1);
+    }
+  }
+  Delete(event) {
+    if (confirm("確定刪除?")) {
+      this.api.ebmMemoDelete(event).subscribe(
+        (data) => {
+          this.PagingData.splice(this.PagingData.indexOf(event), 1);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+  }
+  DispatchAction(event, item) {
+    switch (event) {
+      case 'edit':
+        this.setEditable(item);
+        break;
+      case 'save':
+        this.Save(item);
+        break;
+      case 'cancel':
+        this.Cancel(item);
+        break;
+      case 'delete':
+        this.Delete(item);
+        break;
+    }
   }
 }

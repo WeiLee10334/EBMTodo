@@ -95,39 +95,6 @@ export class DataStoreService {
     return this.HttpPost(model, '/api/schedule/getDataByUID');
   }
 
-  todolistInit() {
-    if (this.dataStore.has(StoreType.Member)) {
-      return Observable.of(this.dataStore.get(StoreType.Member));
-    }
-    else {
-      return this.HttpPost(null, '/api/ebmtodoList/initData').do(
-        (data) => {
-          console.log(data)
-          this.dataStore.set(StoreType.Member, data);
-        }
-      );
-    }
-  }
-  todolistData() {
-    return this.HttpPost(null, '/api/ebmtodoList/getData');
-  }
-  createOrUpdateTodolist(model) {
-    return this.HttpPost(model, '/api/ebmtodoList/CreateOrUpdate');
-  }
-
-  onlineData() {
-    return this.HttpPost(null, '/api/ebmonline/getData');
-  }
-  onlineInsert(model) {
-    return this.HttpPost(model, '/api/ebmonline/insert');
-  }
-  onlineUpdate(model) {
-    return this.HttpPost(model, '/api/ebmonline/update');
-  }
-  onlineDelete(model) {
-    return this.HttpPost(model, '/api/ebmonline/delete');
-  }
-
 
   //new api
   projectData(model: any) {
@@ -198,5 +165,17 @@ export class DataStoreService {
   }
   projectOnlineDelete(model){
     return this.HttpPost(model, '/api/back/EBMProjectOnline/Delete');
+  }
+  ebmMemoData(model){
+    return this.HttpPost(model, '/api/back/EBMMemo/GetList');
+  }
+  ebmMemoCreate(model){
+    return this.HttpPost(model, '/api/back/EBMMemo/Create');
+  }
+  ebmMemoUpdate(model){
+    return this.HttpPost(model, '/api/back/EBMMemo/Update');
+  }
+  ebmMemoDelete(model){
+    return this.HttpPost(model, '/api/back/EBMMemo/Delete');
   }
 }

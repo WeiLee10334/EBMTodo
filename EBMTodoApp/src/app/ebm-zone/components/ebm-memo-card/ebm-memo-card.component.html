@@ -1,0 +1,43 @@
+<ng-container *ngIf="value">
+  <div class="card">
+    <div class="card-header">
+      <div class="btn-group float-right" dropdown placement="bottom" *ngIf="!Editable">
+        <button dropdownToggle type="button" class="btn btn-light">
+          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem">
+            <button class="btn btn-link dropdown-item" (click)="emit('edit')">修改</button>
+          </li>
+          <li role="menuitem">
+            <button class="btn btn-link dropdown-item" (click)="emit('delete')">刪除</button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-title">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <dt class="font-weight-bold" *ngIf="Editable">Tag:</dt>
+            <dd class="card-text">
+              <i class="fa fa-tag editable" aria-hidden="true" [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)"
+                [(ngModel)]="value['Tag']"></i>
+            </dd>
+          </li>
+        </ul>
+      </div>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {{value['CreateDateTime']|date:'yyyy-MM-dd'}}
+      </h6>
+      <div class="card-body">
+        <dt class="font-weight-bold">內容:</dt>
+        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Content']"
+          class="card-text editable"></dd>
+        <dt class="font-weight-bold">備註:</dt>
+        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['memo']"
+          class="card-text editable"></dd>
+      </div>
+      <button class="btn btn-success float-right" (click)="emit('save')" *ngIf="Editable">確認</button>
+      <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')" *ngIf="Editable">取消</button>
+    </div>
+  </div>
+</ng-container>

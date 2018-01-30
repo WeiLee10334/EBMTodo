@@ -61,14 +61,14 @@
                     <i class="fa fa-cog" aria-hidden="true"></i>
                   </button>
                   <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li role="menuitem">
+                    <!-- <li role="menuitem">
                       <a class="btn btn-link dropdown-item" [routerLink]="['./working']" [queryParams]="{ Id:PagingData[i]['Id'],UserName:PagingData[i]['UserName'] }"
                         [routerLinkActive]="'active'">工作回報</a>
                     </li>
                     <li role="menuitem">
                       <a class="btn btn-link dropdown-item" [routerLink]="['./member']" [queryParams]="{ Id:PagingData[i]['Id'],UserName:PagingData[i]['UserName'] }"
                         [routerLinkActive]="'active'">專案角色</a>
-                    </li>
+                    </li> -->
                     <li role="menuitem">
                       <button class="btn btn-link dropdown-item" (click)="setEditable(PagingData[i])">修改</button>
                     </li>

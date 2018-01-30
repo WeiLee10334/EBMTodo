@@ -86,11 +86,6 @@ namespace EBMTodo.Areas.Back.Controllers
     [RoutePrefix("api/back/EBMProject")]
     public class EBMProjectController : BaseApiController<EBMProjectViewModel, EBMProjectQueryModel, ApplicationDbContext>
     {
-        public override IQueryable<EBMProjectViewModel> SetFilter(IQueryable<EBMProjectViewModel> query, Dictionary<string, string> filters)
-        {
-            return base.SetFilter(query, filters);
-        }
-
         public override IQueryable<EBMProjectViewModel> SetDateTimeRange(IQueryable<EBMProjectViewModel> query, DateTime? Start, DateTime? End)
         {
             Start = Start == null ? DateTime.MinValue : Start;
