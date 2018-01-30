@@ -14,143 +14,35 @@ using System.Web.Http;
 namespace EBMTodo.Areas.Back.Controllers
 {
     [RoutePrefix("api/back/EBMProjectSchedule")]
-    public class EBMProjectScheduleController : ApiController
+    public class EBMProjectScheduleController : BaseApiController<EBMProjectScheduleViewModel, EBMProjectScheduleQueryModel, ApplicationDbContext>
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        [Route("GetList")]
-        [HttpPost]
-        public IHttpActionResult GetList(EBMProjectScheduleQueryModel model)
+        public override IQueryable<EBMProjectScheduleViewModel> SetOrderBy(IQueryable<EBMProjectScheduleViewModel> query, string orderby, bool reverse)
         {
-            try
+            if (!string.IsNullOrEmpty(orderby))
             {
-                var dataset = EBMProjectScheduleViewModel.GetQueryable(db);
-                model.Start = model.Start == null ? DateTime.MinValue : model.Start;
-                model.End = model.End == null ? DateTime.MaxValue : model.End;
-                model.OrderBy = typeof(EBMProjectScheduleViewModel).GetProperty(model.OrderBy) == null ?
-                (model.Reverse ? "ScheduleDateTime descending" : "ScheduleDateTime") :
-                (model.Reverse ? model.OrderBy + " descending" : model.OrderBy);
-                var query = dataset.Where(x => x.ScheduleDateTime >= model.Start && x.ScheduleDateTime <= model.End);
-                foreach (var filter in model.Filters)
-                {
-                    var prop = typeof(EBMProjectScheduleViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
-                    {
-                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
-                    }
-                }
-                var data = query;
-                var result = new PagingViewModel<EBMProjectScheduleViewModel>()
-                {
-                    Skip = model.Skip,
-                    Length = model.Length,
-                    Total = data.Count(),
-                    Data = data.OrderBy(model.OrderBy).Skip(model.Skip).Take(model.Length).ToList()
-                };
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.NotAcceptable, e.Message);
-            }
-        }
-        [Route("Create")]
-        [HttpPost]
-        public IHttpActionResult Create(EBMProjectScheduleViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var data = new EBMProjectSchedule()
-                    {
-                        CreateDateTime = DateTime.Now,
-                        Title = model.Title,
-                        scheduleType = model.scheduleType,
-                        ScheduleDateTime = model.ScheduleDateTime,
-                        Description = model.Description,
-                        PID = Guid.Parse(model.PID),
-                        Id = model.Id,
-                        Target = model.Target,
-                        FinishDateTime = model.FinishDateTime,
-                        WokingHour = model.WokingHour,
-                        ProgressingFlag = model.ProgressingFlag
-                    };
-                    db.EBMProjectSchedule.Add(data);
-                    db.SaveChanges();
-                    model.PSID = data.PSID.ToString();
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
+                query = reverse ? query.OrderBy($"{orderby} descending") : query.OrderBy(orderby);
+                return query;
             }
             else
             {
-                return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+                return query.OrderBy("ScheduleDateTime descending");
             }
-
-        }
-        [Route("Update")]
-        [HttpPost]
-        public IHttpActionResult Update(EBMProjectScheduleViewModel model)
-        {
-            var data = db.EBMProjectSchedule.Find(Guid.Parse(model.PSID));
-            if (data != null)
-            {
-                try
-                {
-                    data.CreateDateTime = DateTime.Now;
-                    data.Title = model.Title;
-                    data.scheduleType = model.scheduleType;
-                    data.ScheduleDateTime = model.ScheduleDateTime;
-                    data.Description = model.Description;
-                    data.PID = Guid.Parse(model.PID);
-                    data.Id = model.Id;
-                    data.Target = model.Target;
-                    data.FinishDateTime = model.FinishDateTime;
-                    data.WokingHour = model.WokingHour;
-                    data.ProgressingFlag = model.ProgressingFlag;
-                    db.Entry(data).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
-        }
-        [Route("Delete")]
-        [HttpPost]
-        public IHttpActionResult Delete(EBMProjectScheduleViewModel model)
-        {
-            var data = db.EBMProjectSchedule.Find(Guid.Parse(model.PSID));
-            if (data != null)
-            {
-                try
-                {
-                    db.Entry(data).State = System.Data.Entity.EntityState.Deleted;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
         }
 
+        public override IQueryable<EBMProjectScheduleViewModel> SetDateTimeRange(IQueryable<EBMProjectScheduleViewModel> query, DateTime? Start, DateTime? End)
+        {
+            Start = Start == null ? DateTime.MinValue : Start;
+            End = End == null ? DateTime.MaxValue : End;
+            return query.Where(x => x.ScheduleDateTime >= Start && x.ScheduleDateTime <= End);
+        }
     }
-    public class EBMProjectScheduleViewModel
+    public class EBMProjectScheduleViewModel : IQueryableViewModel<EBMProjectScheduleViewModel>
     {
         public EBMProjectScheduleViewModel()
         {
 
         }
-        public static IQueryable<EBMProjectScheduleViewModel> GetQueryable(ApplicationDbContext context)
+        public IQueryable<EBMProjectScheduleViewModel> GetQueryable(ApplicationDbContext context)
         {
             return context.EBMProjectSchedule.Select(x => new EBMProjectScheduleViewModel()
             {
@@ -167,6 +59,63 @@ namespace EBMTodo.Areas.Back.Controllers
                 Id = x.Id,
                 PID = x.PID.ToString()
             });
+        }
+
+        public EBMProjectScheduleViewModel Create(ApplicationDbContext context, EBMProjectScheduleViewModel model)
+        {
+            var data = new EBMProjectSchedule()
+            {
+                CreateDateTime = DateTime.Now,
+                Title = model.Title,
+                scheduleType = model.scheduleType,
+                ScheduleDateTime = model.ScheduleDateTime,
+                Description = model.Description,
+                PID = Guid.Parse(model.PID),
+                Id = model.Id,
+                Target = model.Target,
+                FinishDateTime = model.FinishDateTime,
+                WokingHour = model.WokingHour,
+                ProgressingFlag = model.ProgressingFlag
+            };
+            context.EBMProjectSchedule.Add(data);
+            context.SaveChanges();
+            model.PSID = data.PSID.ToString();
+            return model;
+        }
+
+        public EBMProjectScheduleViewModel Update(ApplicationDbContext context, EBMProjectScheduleViewModel model)
+        {
+            var data = context.EBMProjectSchedule.Find(Guid.Parse(model.PSID));
+            if (data != null)
+            {
+                data.CreateDateTime = DateTime.Now;
+                data.Title = model.Title;
+                data.scheduleType = model.scheduleType;
+                data.ScheduleDateTime = model.ScheduleDateTime;
+                data.Description = model.Description;
+                data.PID = Guid.Parse(model.PID);
+                data.Id = model.Id;
+                data.Target = model.Target;
+                data.FinishDateTime = model.FinishDateTime;
+                data.WokingHour = model.WokingHour;
+                data.ProgressingFlag = model.ProgressingFlag;
+                context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+                return model;
+            }
+            return null;
+        }
+
+        public void Delete(ApplicationDbContext context, EBMProjectScheduleViewModel model)
+        {
+            var data = context.EBMProjectSchedule.Find(Guid.Parse(model.PSID));
+            if (data != null)
+            {
+
+                context.Entry(data).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+
         }
 
         public string PSID { set; get; }
@@ -196,8 +145,5 @@ namespace EBMTodo.Areas.Back.Controllers
     }
     public class EBMProjectScheduleQueryModel : PagingQueryModel
     {
-        public DateTime? Start { set; get; }
-
-        public DateTime? End { set; get; }
     }
 }

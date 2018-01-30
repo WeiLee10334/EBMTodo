@@ -12,62 +12,46 @@ using System.Web.Http;
 namespace EBMTodo.Areas.Back.Controllers
 {
     [RoutePrefix("api/back/EBMProjectWorking")]
-    public class EBMProjectWorkingController : ApiController
+    public class EBMProjectWorkingController : BaseApiController<EBMProjectWorkingViewModel, EBMProjectWorkingQueryModel, ApplicationDbContext>
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        [Route("GetList")]
-        [HttpPost]
-        public IHttpActionResult GetList(EBMProjectWorkingQueryModel model)
+        public override IQueryable<EBMProjectWorkingViewModel> SetOrderBy(IQueryable<EBMProjectWorkingViewModel> query, string orderby, bool reverse)
         {
-            try
+            if (!string.IsNullOrEmpty(orderby))
             {
-                var dataset = EBMProjectWorkingViewModel.GetQueryable(db);
-                model.Start = model.Start == null ? DateTime.MinValue : model.Start;
-                model.End = model.End == null ? DateTime.MaxValue : model.End;
-                model.OrderBy = typeof(EBMProjectWorkingViewModel).GetProperty(model.OrderBy) == null ?
-                (model.Reverse ? "RecordDateTime descending" : "RecordDateTime") :
-                (model.Reverse ? model.OrderBy + " descending" : model.OrderBy);
-                var query = dataset.Where(x => x.RecordDateTime >= model.Start && x.RecordDateTime <= model.End);
-                if (!string.IsNullOrEmpty(model.PID))
-                {
-                    query = query.Where(x => x.PID == model.PID);
-                }
-                if (!string.IsNullOrEmpty(model.Id))
-                {
-                    query = query.Where(x => x.Id == model.Id);
-                }
-                foreach (var filter in model.Filters)
-                {
-                    var prop = typeof(EBMProjectWorkingViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
-                    {
-                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
-                    }
-                }
-
-                var data = query;
-                var result = new PagingViewModel<EBMProjectWorkingViewModel>()
-                {
-                    Skip = model.Skip,
-                    Length = model.Length,
-                    Total = data.Count(),
-                    Data = data.OrderBy(model.OrderBy).Skip(model.Skip).Take(model.Length).ToList()
-                };
-                return Ok(result);
+                query = reverse ? query.OrderBy($"{orderby} descending") : query.OrderBy(orderby);
+                return query;
             }
-            catch (Exception e)
+            else
             {
-                return Content(HttpStatusCode.NotAcceptable, e.Message);
+                return query.OrderBy("RecordDateTime descending");
             }
         }
+        public override IQueryable<EBMProjectWorkingViewModel> ExtraFilter(IQueryable<EBMProjectWorkingViewModel> query, EBMProjectWorkingQueryModel model)
+        {
+            if (!string.IsNullOrEmpty(model.PID))
+            {
+                query = query.Where(x => x.PID == model.PID);
+            }
+            if (!string.IsNullOrEmpty(model.Id))
+            {
+                query = query.Where(x => x.Id == model.Id);
+            }
+            return query;
+        }
+        public override IQueryable<EBMProjectWorkingViewModel> SetDateTimeRange(IQueryable<EBMProjectWorkingViewModel> query, DateTime? Start, DateTime? End)
+        {
+            Start = Start == null ? DateTime.MinValue : Start;
+            End = End == null ? DateTime.MaxValue : End;
+            return query.Where(x => x.RecordDateTime >= Start && x.RecordDateTime <= End);
+        }
     }
-    public class EBMProjectWorkingViewModel
+    public class EBMProjectWorkingViewModel : IQueryableViewModel<EBMProjectWorkingViewModel>
     {
         public EBMProjectWorkingViewModel()
         {
 
         }
-        public static IQueryable<EBMProjectWorkingViewModel> GetQueryable(ApplicationDbContext context)
+        public IQueryable<EBMProjectWorkingViewModel> GetQueryable(ApplicationDbContext context)
         {
             return context.EBMProjectWorking.Select(x => new EBMProjectWorkingViewModel()
             {
@@ -83,6 +67,22 @@ namespace EBMTodo.Areas.Back.Controllers
                 UserName = x.ApplicationUser.UserName
             });
         }
+
+        public EBMProjectWorkingViewModel Create(ApplicationDbContext context, EBMProjectWorkingViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public EBMProjectWorkingViewModel Update(ApplicationDbContext context, EBMProjectWorkingViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(ApplicationDbContext context, EBMProjectWorkingViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public string PWID { set; get; }
 
         public string PID { set; get; }
@@ -108,9 +108,5 @@ namespace EBMTodo.Areas.Back.Controllers
         public string PID { set; get; }
 
         public string Id { set; get; }
-
-        public DateTime? Start { set; get; }
-
-        public DateTime? End { set; get; }
     }
 }

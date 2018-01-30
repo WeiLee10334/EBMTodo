@@ -15,7 +15,7 @@ using System.Web.Http;
 namespace EBMTodo.Areas.Back.Controllers
 {
     [RoutePrefix("api/back/EBMUser")]
-    public class EBMUserController : ApiController
+    public class EBMUserController : BaseApiController<EBMUserViewModel, EBMUserQueryModel, ApplicationDbContext>
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationUserManager _userManager;
@@ -36,47 +36,9 @@ namespace EBMTodo.Areas.Back.Controllers
             }
         }
 
-
-
-        [Route("GetList")]
-        [HttpPost]
-        public IHttpActionResult GetList(PagingQueryModel model)
-        {
-            try
-            {
-                var dataset = EBMUserViewModel.GetQueryable(db);
-                model.OrderBy = typeof(EBMUserViewModel).GetProperty(model.OrderBy) == null ?
-                (model.Reverse ? "UserName descending" : "UserName") :
-                (model.Reverse ? model.OrderBy + " descending" : model.OrderBy);
-                var query = dataset;
-
-                foreach (var filter in model.Filters)
-                {
-                    var prop = typeof(EBMUserViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
-                    {
-                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
-                    }
-                }
-
-                var data = query;
-                var result = new PagingViewModel<EBMUserViewModel>()
-                {
-                    Skip = model.Skip,
-                    Length = model.Length,
-                    Total = data.Count(),
-                    Data = data.OrderBy(model.OrderBy).Skip(model.Skip).Take(model.Length).ToList()
-                };
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.NotAcceptable, e.Message);
-            }
-        }
         [Route("Create")]
         [HttpPost]
-        public IHttpActionResult Create(EBMUserViewModel model)
+        public override IHttpActionResult Create(EBMUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -108,49 +70,7 @@ namespace EBMTodo.Areas.Back.Controllers
                 return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
             }
         }
-        [Route("Update")]
-        [HttpPost]
-        public IHttpActionResult Update(EBMUserViewModel model)
-        {
-            var data = db.Users.Find(model.Id);
-            if (data != null)
-            {
-                try
-                {
-                    data.UserName = model.UserName;
-                    data.LineID = model.UID;
-                    db.Entry(data).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    model.LineUserName = db.LineUser.FirstOrDefault(x => x.UID == model.UID).Name;
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
-        }
-        [Route("Delete")]
-        [HttpPost]
-        public IHttpActionResult Delete(EBMUserViewModel model)
-        {
-            var data = db.Users.Find(model.Id);
-            if (data != null)
-            {
-                try
-                {
-                    db.Entry(data).State = System.Data.Entity.EntityState.Deleted;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
-        }
+
         [Route("Register")]
         [HttpPost]
         public IHttpActionResult Register(EBMUserRegisterViewModel model)
@@ -207,6 +127,19 @@ namespace EBMTodo.Areas.Back.Controllers
                 return Content(HttpStatusCode.NotAcceptable, e.Message);
             }
         }
+
+        public override IQueryable<EBMUserViewModel> SetOrderBy(IQueryable<EBMUserViewModel> query, string orderby, bool reverse)
+        {
+            if (!string.IsNullOrEmpty(orderby))
+            {
+                query = reverse ? query.OrderBy($"{orderby} descending") : query.OrderBy(orderby);
+                return query;
+            }
+            else
+            {
+                return query.OrderBy("UserName descending");
+            }
+        }
     }
     public class EBMUserRegisterViewModel
     {
@@ -232,13 +165,17 @@ namespace EBMTodo.Areas.Back.Controllers
 
         public string UserName { set; get; }
     }
-    public class EBMUserViewModel
+    public class EBMUserQueryModel : PagingQueryModel
+    {
+
+    }
+    public class EBMUserViewModel : IQueryableViewModel<EBMUserViewModel>
     {
         public EBMUserViewModel()
         {
 
         }
-        public static IQueryable<EBMUserViewModel> GetQueryable(ApplicationDbContext context)
+        public IQueryable<EBMUserViewModel> GetQueryable(ApplicationDbContext context)
         {
             return context.Users.Select(x => new EBMUserViewModel()
             {
@@ -249,6 +186,37 @@ namespace EBMTodo.Areas.Back.Controllers
                 LineUserName = context.LineUser.FirstOrDefault(y => y.UID == x.LineID) == null ? "" : context.LineUser.FirstOrDefault(y => y.UID == x.LineID).Name
             });
         }
+
+        public EBMUserViewModel Create(ApplicationDbContext context, EBMUserViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public EBMUserViewModel Update(ApplicationDbContext context, EBMUserViewModel model)
+        {
+            var data = context.Users.Find(model.Id);
+            if (data != null)
+            {
+                data.UserName = model.UserName;
+                data.LineID = model.UID;
+                context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+                model.LineUserName = context.LineUser.FirstOrDefault(x => x.UID == model.UID).Name;
+                return model;
+            }
+            return null;
+        }
+
+        public void Delete(ApplicationDbContext context, EBMUserViewModel model)
+        {
+            var data = context.Users.Find(model.Id);
+            if (data != null)
+            {
+                context.Entry(data).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
         public string Id { set; get; }
 
         public string Email { set; get; }

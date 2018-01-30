@@ -12,148 +12,42 @@ using System.Web.Http;
 namespace EBMTodo.Areas.Back.Controllers
 {
     [RoutePrefix("api/back/EBMProjectTodoList")]
-    public class EBMProjectTodoListController : ApiController
+    public class EBMProjectTodoListController : BaseApiController<EBMTodoListViewModel, EBMTodoListQueryModel, ApplicationDbContext>
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        [Route("GetList")]
-        [HttpPost]
-        public IHttpActionResult GetList(EBMTodoListQueryModel model)
+
+        public override IQueryable<EBMTodoListViewModel> SetFilter(IQueryable<EBMTodoListViewModel> query, Dictionary<string, string> filters)
         {
-            try
-            {
-                var dataset = EBMTodoListViewModel.GetQueryable(db);
-                model.Start = model.Start == null ? DateTime.MinValue : model.Start;
-                model.End = model.End == null ? DateTime.MaxValue : model.End;
-                model.OrderBy = typeof(EBMTodoListViewModel).GetProperty(model.OrderBy) == null ?
-                (model.Reverse ? "ApplyDateTime descending" : "ApplyDateTime") :
-                (model.Reverse ? model.OrderBy + " descending" : model.OrderBy);
-                var query = dataset.Where(x => x.ApplyDateTime >= model.Start && x.ApplyDateTime <= model.End);
-                if (!string.IsNullOrEmpty(model.PID))
-                {
-                    query = query.Where(x => x.PID == model.PID);
-                }
-                if (!string.IsNullOrEmpty(model.PMID))
-                {
-                    query = query.Where(x => x.PMID == model.PMID);
-                }
-                foreach (var filter in model.Filters)
-                {
-                    var prop = typeof(EBMTodoListViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
-                    {
-                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
-                    }
-                }
-                var data = query;
-                var result = new PagingViewModel<EBMTodoListViewModel>()
-                {
-                    Skip = model.Skip,
-                    Length = model.Length,
-                    Total = data.Count(),
-                    Data = data.OrderBy(model.OrderBy).Skip(model.Skip).Take(model.Length).ToList()
-                };
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.NotAcceptable, e.Message);
-            }
+            return base.SetFilter(query, filters);
         }
-        [Route("Create")]
-        [HttpPost]
-        public IHttpActionResult Create(EBMTodoListViewModel model)
+
+        public override IQueryable<EBMTodoListViewModel> SetDateTimeRange(IQueryable<EBMTodoListViewModel> query, DateTime? Start, DateTime? End)
         {
-            if (ModelState.IsValid)
+            Start = Start == null ? DateTime.MinValue : Start;
+            End = End == null ? DateTime.MaxValue : End;
+            return query.Where(x => x.ApplyDateTime >= Start && x.ApplyDateTime <= End);
+        }
+
+        public override IQueryable<EBMTodoListViewModel> SetOrderBy(IQueryable<EBMTodoListViewModel> query, string orderby, bool reverse)
+        {
+            if (!string.IsNullOrEmpty(orderby))
             {
-                try
-                {
-                    var data = new EBMProjectTodoList()
-                    {
-                        title = model.title,
-                        CreateDateTime = DateTime.Now,
-                        ApplyDateTime = model.ApplyDateTime,
-                        ApplyName = model.ApplyName,
-                        Description = model.Description,
-                        PMID = Guid.Parse(model.PMID),
-                        CompleteRate = model.CompleteRate,
-                        Tag = model.Tag,
-                        Memo = model.Memo
-                    };
-                    db.EBMProjectTodoList.Add(data);
-                    db.SaveChanges();
-                    model.PTLID = data.PTLID.ToString();
-                    model.ApplyDateTime = data.ApplyDateTime;
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
+                query = reverse ? query.OrderBy($"{orderby} descending") : query.OrderBy(orderby);
+                return query;
             }
             else
             {
-                return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+                return query.OrderBy("ApplyDateTime descending");
             }
-
-        }
-        [Route("Update")]
-        [HttpPost]
-        public IHttpActionResult Update(EBMTodoListViewModel model)
-        {
-            var data = db.EBMProjectTodoList.Find(Guid.Parse(model.PTLID));
-            if (data != null)
-            {
-                try
-                {
-                    data.title = model.title;
-                    data.ApplyDateTime = model.ApplyDateTime;
-                    data.ApplyName = model.ApplyName;
-                    data.CompleteRate = model.CompleteRate;
-                    data.Description = model.Description;
-                    data.Tag = model.Tag;
-                    data.Memo = model.Memo;
-                    data.PMID = Guid.Parse(model.PMID);
-                    db.Entry(data).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    model.MemberTitle = data.EBMProjectMember.title;
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
-        }
-        [Route("Delete")]
-        [HttpPost]
-        public IHttpActionResult Delete(EBMTodoListViewModel model)
-        {
-            var data = db.EBMProjectTodoList.Find(Guid.Parse(model.PTLID));
-            if (data != null)
-            {
-                try
-                {
-                    db.Entry(data).State = System.Data.Entity.EntityState.Deleted;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
         }
 
     }
-    public class EBMTodoListViewModel
+    public class EBMTodoListViewModel : IQueryableViewModel<EBMTodoListViewModel>
     {
         public EBMTodoListViewModel()
         {
 
         }
-        public static IQueryable<EBMTodoListViewModel> GetQueryable(ApplicationDbContext context)
+        public IQueryable<EBMTodoListViewModel> GetQueryable(ApplicationDbContext context)
         {
             return context.EBMProjectTodoList.Select(x => new EBMTodoListViewModel()
             {
@@ -171,6 +65,60 @@ namespace EBMTodo.Areas.Back.Controllers
                 ProjectName = x.EBMProjectMember == null ? null : x.EBMProjectMember.EBMProject.ProjectName
             });
         }
+
+        public EBMTodoListViewModel Create(ApplicationDbContext context, EBMTodoListViewModel model)
+        {
+            var data = new EBMProjectTodoList()
+            {
+                title = model.title,
+                CreateDateTime = DateTime.Now,
+                ApplyDateTime = model.ApplyDateTime,
+                ApplyName = model.ApplyName,
+                Description = model.Description,
+                PMID = Guid.Parse(model.PMID),
+                CompleteRate = model.CompleteRate,
+                Tag = model.Tag,
+                Memo = model.Memo
+            };
+            context.EBMProjectTodoList.Add(data);
+            context.SaveChanges();
+            model.PTLID = data.PTLID.ToString();
+            model.ApplyDateTime = data.ApplyDateTime;
+            return model;
+        }
+
+        public EBMTodoListViewModel Update(ApplicationDbContext context, EBMTodoListViewModel model)
+        {
+
+            var data = context.EBMProjectTodoList.Find(Guid.Parse(model.PTLID));
+            if (data != null)
+            {
+                data.title = model.title;
+                data.ApplyDateTime = model.ApplyDateTime;
+                data.ApplyName = model.ApplyName;
+                data.CompleteRate = model.CompleteRate;
+                data.Description = model.Description;
+                data.Tag = model.Tag;
+                data.Memo = model.Memo;
+                data.PMID = Guid.Parse(model.PMID);
+                context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+                model.MemberTitle = data.EBMProjectMember.title;
+                return model;
+            }
+            return null;
+        }
+
+        public void Delete(ApplicationDbContext context, EBMTodoListViewModel model)
+        {
+            var data = context.EBMProjectTodoList.Find(Guid.Parse(model.PTLID));
+            if (data != null)
+            {
+                context.Entry(data).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
         public string PTLID { set; get; }
 
         public DateTime ApplyDateTime { set; get; }
@@ -197,10 +145,6 @@ namespace EBMTodo.Areas.Back.Controllers
     }
     public class EBMTodoListQueryModel : PagingQueryModel
     {
-        public DateTime? Start { set; get; }
-
-        public DateTime? End { set; get; }
-
         public string PID { set; get; }
 
         public string PMID { set; get; }

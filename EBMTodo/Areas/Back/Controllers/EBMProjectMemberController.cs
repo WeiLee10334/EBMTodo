@@ -13,137 +13,53 @@ using System.Web.Http;
 namespace EBMTodo.Areas.Back.Controllers
 {
     [RoutePrefix("api/back/EBMProjectMember")]
-    public class EBMProjectMemberController : ApiController
+    public class EBMProjectMemberController : BaseApiController<EBMProjectMemberViewModel, EBMProjectMemberQueryModel, ApplicationDbContext>
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        [Route("GetList")]
-        [HttpPost]
-        public IHttpActionResult GetList(EBMProjectMemberQueryModel model)
+        public override IQueryable<EBMProjectMemberViewModel> ExtraFilter(IQueryable<EBMProjectMemberViewModel> query, EBMProjectMemberQueryModel model)
         {
-            try
+            if (!string.IsNullOrEmpty(model.PID))
             {
-                var dataset = EBMProjectMemberViewModel.GetQueryable(db);
-                model.Start = model.Start == null ? DateTime.MinValue : model.Start;
-                model.End = model.End == null ? DateTime.MaxValue : model.End;
-                model.OrderBy = typeof(EBMProjectMemberViewModel).GetProperty(model.OrderBy) == null ?
-                (model.Reverse ? "CreateDateTime descending" : "CreateDateTime") :
-                (model.Reverse ? model.OrderBy + " descending" : model.OrderBy);
-                var query = dataset.Where(x => x.CreateDateTime >= model.Start && x.CreateDateTime <= model.End);
-                if (!string.IsNullOrEmpty(model.PID))
-                {
-                    query = query.Where(x => x.PID == model.PID);
-                }
-                if (!string.IsNullOrEmpty(model.Id))
-                {
-                    query = query.Where(x => x.Id == model.Id);
-                }
-                foreach (var filter in model.Filters)
-                {
-                    var prop = typeof(EBMProjectMemberViewModel).GetProperty(filter.Key);
-                    if (prop != null && prop.PropertyType == typeof(string) && !string.IsNullOrEmpty(filter.Value))
-                    {
-                        query = query.Where(filter.Key + ".Contains(@0)", filter.Value);
-                    }
-                }
-
-                var data = query;
-                var result = new PagingViewModel<EBMProjectMemberViewModel>()
-                {
-                    Skip = model.Skip,
-                    Length = model.Length,
-                    Total = data.Count(),
-                    Data = data.OrderBy(model.OrderBy).Skip(model.Skip).Take(model.Length).ToList()
-                };
-                return Ok(result);
+                query = query.Where(x => x.PID == model.PID);
             }
-            catch (Exception e)
+            if (!string.IsNullOrEmpty(model.Id))
             {
-                return Content(HttpStatusCode.NotAcceptable, e.Message);
+                query = query.Where(x => x.Id == model.Id);
             }
+            return query;
         }
-        [Route("Create")]
-        [HttpPost]
-        public IHttpActionResult Create(EBMProjectMemberViewModel model)
+
+        public override IQueryable<EBMProjectMemberViewModel> SetDateTimeRange(IQueryable<EBMProjectMemberViewModel> query, DateTime? Start, DateTime? End)
         {
-            if (ModelState.IsValid)
+            Start = Start == null ? DateTime.MinValue : Start;
+            End = End == null ? DateTime.MaxValue : End;
+            return query.Where(x => x.CreateDateTime >= Start && x.CreateDateTime <= End);
+        }
+
+        public override IQueryable<EBMProjectMemberViewModel> SetFilter(IQueryable<EBMProjectMemberViewModel> query, Dictionary<string, string> filters)
+        {
+            return base.SetFilter(query, filters);
+        }
+
+        public override IQueryable<EBMProjectMemberViewModel> SetOrderBy(IQueryable<EBMProjectMemberViewModel> query, string orderby, bool reverse)
+        {
+            if (!string.IsNullOrEmpty(orderby))
             {
-                try
-                {
-                    var data = new EBMProjectMember()
-                    {
-                        title = model.title,
-                        CreateDateTime = DateTime.Now,
-                        PID = Guid.Parse(model.PID)
-                    };
-                    db.EBMProjectMember.Add(data);
-                    db.SaveChanges();
-                    model.PMID = data.PMID.ToString();
-                    model.CreateDateTime = data.CreateDateTime;
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.InnerException.InnerException.Message);
-                }
+                query = reverse ? query.OrderBy($"{orderby} descending") : query.OrderBy(orderby);
+                return query;
             }
             else
             {
-                return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+                return query.OrderBy("CreateDateTime descending");
             }
-
-        }
-        [Route("Update")]
-        [HttpPost]
-        public IHttpActionResult Update(EBMProjectMemberViewModel model)
-        {
-            var data = db.EBMProjectMember.Find(Guid.Parse(model.PMID));
-            if (data != null)
-            {
-                try
-                {
-                    data.title = model.title;
-                    data.Id = model.Id;
-                    data.PID = Guid.Parse(model.PID);
-                    db.Entry(data).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-
-                    return Ok(model);
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
-        }
-        [Route("Delete")]
-        [HttpPost]
-        public IHttpActionResult Delete(EBMProjectMemberViewModel model)
-        {
-            var data = db.EBMProjectMember.Find(Guid.Parse(model.PMID));
-            if (data != null)
-            {
-                try
-                {
-                    db.Entry(data).State = System.Data.Entity.EntityState.Deleted;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
-            }
-            return BadRequest("not exist");
         }
     }
-    public class EBMProjectMemberViewModel
+    public class EBMProjectMemberViewModel : IQueryableViewModel<EBMProjectMemberViewModel>
     {
         public EBMProjectMemberViewModel()
         {
 
         }
-        public static IQueryable<EBMProjectMemberViewModel> GetQueryable(ApplicationDbContext context)
+        public IQueryable<EBMProjectMemberViewModel> GetQueryable(ApplicationDbContext context)
         {
             return context.EBMProjectMember.Select(x => new EBMProjectMemberViewModel()
             {
@@ -156,6 +72,49 @@ namespace EBMTodo.Areas.Back.Controllers
                 ProjectName = x.EBMProject.ProjectName
             });
         }
+
+        public EBMProjectMemberViewModel Create(ApplicationDbContext context, EBMProjectMemberViewModel model)
+        {
+            var data = new EBMProjectMember()
+            {
+                title = model.title,
+                CreateDateTime = DateTime.Now,
+                PID = Guid.Parse(model.PID)
+            };
+            context.EBMProjectMember.Add(data);
+            context.SaveChanges();
+            model.PMID = data.PMID.ToString();
+            model.CreateDateTime = data.CreateDateTime;
+            return model;
+        }
+
+        public EBMProjectMemberViewModel Update(ApplicationDbContext context, EBMProjectMemberViewModel model)
+        {
+            var data = context.EBMProjectMember.Find(Guid.Parse(model.PMID));
+            if (data != null)
+            {
+
+                data.title = model.title;
+                data.Id = model.Id;
+                data.PID = Guid.Parse(model.PID);
+                context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+                return model;
+            }
+            return null;
+        }
+
+        public void Delete(ApplicationDbContext context, EBMProjectMemberViewModel model)
+        {
+            var data = context.EBMProjectMember.Find(Guid.Parse(model.PMID));
+            if (data != null)
+            {
+
+                context.Entry(data).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
         public string PMID { set; get; }
 
         public DateTime? CreateDateTime { set; get; }
@@ -175,9 +134,5 @@ namespace EBMTodo.Areas.Back.Controllers
         public string PID { set; get; }
 
         public string Id { set; get; }
-
-        public DateTime? Start { set; get; }
-
-        public DateTime? End { set; get; }
     }
 }

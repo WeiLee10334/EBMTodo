@@ -18,7 +18,7 @@ namespace EBMTodo.Areas.Back.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         [Route("GetList")]
         [HttpPost]
-        public IHttpActionResult GetList(EBMProjectQueryModel model)
+        public IHttpActionResult GetList(PagingQueryModel model)
         {
             try
             {

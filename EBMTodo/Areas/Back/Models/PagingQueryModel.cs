@@ -5,7 +5,7 @@ using System.Web;
 
 namespace EBMTodo.Areas.Back.Models
 {
-    public class PagingQueryModel
+    public abstract class PagingQueryModel
     {
         public PagingQueryModel()
         {
@@ -24,5 +24,9 @@ namespace EBMTodo.Areas.Back.Models
         public int Skip { set; get; }
 
         public int Length { set; get; }
+
+        public DateTime? Start { set; get; }
+
+        public DateTime? End { set; get; }
     }
 }
