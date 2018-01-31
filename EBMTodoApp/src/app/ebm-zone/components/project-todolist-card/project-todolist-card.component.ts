@@ -16,7 +16,7 @@ export class ProjectTodolistCardComponent extends BaseTableRowComponent {
   isCollapsed = true;
   @Output() actionChanged = new EventEmitter<any>();
   emit(action: string) {
-    this.Editable = false;
+    this.disabled = true;
     this.actionChanged.emit(action);
   }
 

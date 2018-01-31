@@ -6,7 +6,7 @@
         (ngModelChange)="onChangeCallback(value)"></app-custom-select-input>
     </span>
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'title'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'title'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['title']">
   </td>
   <td [attr.data-th]="'ProjectName'">

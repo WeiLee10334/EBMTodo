@@ -1,11 +1,28 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataStoreService } from '../../shared/services';
 import { BaseServerPagingTableComponent } from '../basecomponent/base-server-paging-table/base-server-paging-table.component';
-
+import { trigger, transition, animate, style, query, stagger, keyframes, sequence } from '@angular/animations';
+export const itemAnimation = trigger('anim', [
+  transition(':leave', [
+    style({ height: '*', opacity: '1', transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)' }),
+    sequence([
+      animate(".25s ease", style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none' })),
+      animate(".1s ease", style({ height: '0', opacity: 0, transform: 'translateX(20px)', 'box-shadow': 'none' }))
+    ])
+  ]),
+  transition(':enter', [
+    style({ height: '0', opacity: '0', transform: 'translateX(20px)', 'box-shadow': 'none' }),
+    sequence([
+      animate(".1s ease", style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none' })),
+      animate(".35s ease", style({ height: '*', opacity: 1, transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)' }))
+    ])
+  ])
+])
 @Component({
   selector: 'app-ebm-memo',
   templateUrl: './ebm-memo.component.html',
-  styleUrls: ['./ebm-memo.component.scss']
+  styleUrls: ['./ebm-memo.component.scss'],
+  animations: [itemAnimation]
 })
 export class EbmMemoComponent extends BaseServerPagingTableComponent implements OnInit {
 
@@ -32,9 +49,6 @@ export class EbmMemoComponent extends BaseServerPagingTableComponent implements 
   }
   //
   PendingMap = new Map<any, any>()
-  getEditable(event) {
-    return this.PendingMap.has(event);
-  }
   add() {
     let item = { CreateDateTime: new Date() };
     this.PagingData.unshift(item);
@@ -43,8 +57,10 @@ export class EbmMemoComponent extends BaseServerPagingTableComponent implements 
   setEditable(event) {
     let tmp = Object.assign({}, event);
     this.PendingMap.set(event, tmp);
+    event._Editable = true;
   }
   Save(event) {
+    console.log(event)
     if (event.MID) {
       this.api.ebmMemoUpdate(event).subscribe(
         (data) => {
@@ -53,6 +69,9 @@ export class EbmMemoComponent extends BaseServerPagingTableComponent implements 
         },
         (err) => {
           console.log(err);
+        },
+        () => {
+          delete event._Editable;
         }
       )
     }
@@ -64,6 +83,9 @@ export class EbmMemoComponent extends BaseServerPagingTableComponent implements 
         },
         (err) => {
           console.log(err);
+        },
+        () => {
+          delete event._Editable;
         }
       )
     }
@@ -71,6 +93,7 @@ export class EbmMemoComponent extends BaseServerPagingTableComponent implements 
   Cancel(event) {
     let cache = this.PendingMap.get(event);
     if (cache) {
+      delete event._Editable;
       Object.assign(event, cache);
       this.PendingMap.delete(event);
     }

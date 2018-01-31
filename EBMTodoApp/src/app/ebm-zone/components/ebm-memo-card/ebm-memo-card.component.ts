@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
-import { BaseTableRowComponent } from '../../basecomponent/base-table-row/base-table-row.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DynamicFormComponent } from '../../basecomponent/dynamic-form/dynamic-form.component';
 
 @Component({
   selector: 'app-ebm-memo-card',
@@ -12,12 +12,10 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     multi: true
   }]
 })
-export class EbmMemoCardComponent extends BaseTableRowComponent {
-  isCollapsed = true;
+export class EbmMemoCardComponent extends DynamicFormComponent {
   @Output() actionChanged = new EventEmitter<any>();
   emit(action: string) {
-    this.Editable = false;
+    this.disabled = true;
     this.actionChanged.emit(action);
   }
-
 }

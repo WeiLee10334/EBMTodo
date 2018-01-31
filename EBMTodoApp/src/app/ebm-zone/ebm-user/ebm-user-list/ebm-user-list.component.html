@@ -53,7 +53,7 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-            <tr [ngClass]="{'table-active':getEditable(PagingData[i])}" app-user-table-row title="{{row.PID}}" [Editable]="getEditable(PagingData[i])||!PagingData[i]['Id']"
+            <tr [ngClass]="{'table-active':getEditable(PagingData[i])}" app-user-table-row title="{{row.PID}}" [disabled]="!PagingData[i]._Editable&&PagingData[i]['Id']"
               [(ngModel)]="PagingData[i]">
               <td>
                 <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['Id']&&!getEditable(PagingData[i])">

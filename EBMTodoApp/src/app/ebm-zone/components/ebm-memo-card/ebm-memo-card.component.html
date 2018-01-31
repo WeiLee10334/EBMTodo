@@ -1,7 +1,7 @@
 <ng-container *ngIf="value">
-  <div class="card">
+  <div class="card" style="width: 18rem;">
     <div class="card-header">
-      <div class="btn-group float-right" dropdown placement="bottom" *ngIf="!Editable">
+      <div class="btn-group float-right" dropdown placement="bottom" *ngIf="disabled">
         <button dropdownToggle type="button" class="btn btn-light">
           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
@@ -19,7 +19,7 @@
           <li class="list-inline-item">
             <dt class="font-weight-bold" *ngIf="Editable">Tag:</dt>
             <dd class="card-text">
-              <i class="fa fa-tag editable" aria-hidden="true" [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)"
+              <i class="fa fa-tag editable" aria-hidden="true" [disabled]="disabled" appContentEditable (ngModelChange)="onChange(value)"
                 [(ngModel)]="value['Tag']"></i>
             </dd>
           </li>
@@ -30,14 +30,14 @@
       </h6>
       <div class="card-body">
         <dt class="font-weight-bold">內容:</dt>
-        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Content']"
-          class="card-text editable"></dd>
+        <dd [disabled]="disabled" appContentEditable (ngModelChange)="onChange(value)" [(ngModel)]="value['Content']"
+          class="editable"></dd>
         <dt class="font-weight-bold">備註:</dt>
-        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['memo']"
-          class="card-text editable"></dd>
+        <dd [disabled]="disabled" appContentEditable (ngModelChange)="onChange(value)" [(ngModel)]="value['memo']"
+          class="editable"></dd>
       </div>
-      <button class="btn btn-success float-right" (click)="emit('save')" *ngIf="Editable">確認</button>
-      <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')" *ngIf="Editable">取消</button>
+      <button class="btn btn-success float-right" (click)="emit('save')" *ngIf="!disabled">確認</button>
+      <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')" *ngIf="!disabled">取消</button>
     </div>
   </div>
 </ng-container>

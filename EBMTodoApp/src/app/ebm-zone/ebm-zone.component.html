@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+<div [@routerAnimation]="getRouteAnimation(route)">
+    <router-outlet #route="outlet"></router-outlet>
+</div>

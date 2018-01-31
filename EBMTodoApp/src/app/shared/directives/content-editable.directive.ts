@@ -11,9 +11,8 @@ declare var $: any;
       DatePipe
     ]
 })
-export class ContentEditableDirective implements ControlValueAccessor, OnInit, AfterViewInit {
+export class ContentEditableDirective implements ControlValueAccessor {
   private innerValue = '';
-  @Input() propValueAccessor: string = 'innerText';
   @Input() type: string = 'text';
   @Input() dateformat: string = 'yyyy-MM-dd';
   private calendar;
@@ -24,19 +23,13 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit, A
    * 
    * @deprecated
    */
-  @Input() propValueAccesor: string;
-
+  @Input() disabled: boolean;
   private onChange: (value: string) => void;
   private onTouched: () => void;
   private removeDisabledState: () => void;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2, private datepipe: DatePipe) { }
-  ngAfterViewInit() {
 
-  }
-  ngOnInit() {
-    this.propValueAccessor = this.propValueAccesor || this.propValueAccessor;
-  }
 
   @HostListener('focus', ['$event'])
   callOnFocus(event) {
@@ -50,10 +43,9 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit, A
     if (typeof this.onChange == 'function') {
       switch (this.type) {
         default:
-          this.onChange(this.elementRef.nativeElement[this.propValueAccessor]);
+          this.onChange(this.elementRef.nativeElement['innerText']);
           break;
       }
-
     }
   }
 
@@ -65,21 +57,13 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit, A
           this.renderer.removeChild(this.elementRef.nativeElement, this.calendar);
         }
         catch (e) {
-          console.log(e);
+
         }
       }
       this.onTouched();
     }
-
   }
 
-  /**
-   * Writes a new value to the element.
-   * This method will be called by the forms API to write
-   * to the view when programmatic (model -> view) changes are requested.
-   * 
-   * See: [ControlValueAccessor](https://angular.io/api/forms/ControlValueAccessor#members)
-   */
   writeValue(value: any): void {
     switch (this.type) {
       case 'date':
@@ -89,17 +73,10 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit, A
         this.innerValue = value;
         break;
     }
-
-    this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, this.innerValue || '');
+    this.renderer.setProperty(this.elementRef.nativeElement, 'innerText', this.innerValue || '');
+    this.renderer.setAttribute(this.elementRef.nativeElement, 'contenteditable', this.disabled ? 'false' : 'true');
   }
 
-  /**
-   * Registers a callback function that should be called when
-   * the control's value changes in the UI.
-   * 
-   * This is called by the forms API on initialization so it can update
-   * the form model when values propagate from the view (view -> model).
-   */
   registerOnChange(fn: () => void): void {
     if (this.type === 'date') {
       this.calendar = this.renderer.createElement('div');
@@ -109,44 +86,22 @@ export class ContentEditableDirective implements ControlValueAccessor, OnInit, A
       $(this.calendar).datepicker({
         dateFormat: "yy-mm-dd",
         onSelect: (e) => {
-          console.log(e)
           this.renderer.removeChild(this.elementRef.nativeElement, this.calendar);
           this.innerValue = this.datepipe.transform(e, this.dateformat);
-          this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, this.innerValue || '');
-          this.onChange(this.elementRef.nativeElement[this.propValueAccessor]);
+          this.renderer.setProperty(this.elementRef.nativeElement, 'innerText', this.innerValue || '');
+          this.onChange(this.elementRef.nativeElement['innerText']);
         }
       });
     }
     this.onChange = fn;
   }
 
-  /**
-   * Registers a callback function that should be called when the control receives a blur event.
-   * This is called by the forms API on initialization so it can update the form model on blur.
-   */
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  /**
-   * This function is called by the forms API when the control status changes to or from "DISABLED".
-   * Depending on the value, it should enable or disable the appropriate DOM element.
-   */
   setDisabledState(isDisabled: boolean): void {
-    console.log('set disabled', isDisabled);
-    if (isDisabled) {
-      this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
-      this.removeDisabledState = this.renderer.listen(this.elementRef.nativeElement, 'keydown', this.listenerDisabledState);
-    }
-    else {
-      if (this.removeDisabledState) {
-        this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
-        this.removeDisabledState();
-      }
-    }
-  }
-
-  private listenerDisabledState(e: KeyboardEvent) {
-    e.preventDefault();
+    this.disabled = isDisabled;
+    this.renderer.setAttribute(this.elementRef.nativeElement, 'contenteditable', this.disabled ? 'false' : 'true');
   }
 }

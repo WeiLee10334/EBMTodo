@@ -1,44 +1,44 @@
 <ng-container *ngIf="value">
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'title'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'title'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['title']">
   </td>
   <!-- <td [attr.data-th]="'ApplyDateTime'">
     <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['ApplyDateTime']" (ngModelChange)="onChangeCallback(value)">
   </td> -->
-  <td [attr.contenteditable]="Editable" appJDatetimepicker appContentEditable [attr.data-th]="'ApplyDateTime'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appJDatetimepicker appContentEditable [attr.data-th]="'ApplyDateTime'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ApplyDateTime']" type="date">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ApplyDepartment'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'ApplyDepartment'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ApplyDepartment']">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ApplyName'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'ApplyName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ApplyName']">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Description'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'Description'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['Description']">
   </td>
   <!-- <td [attr.data-th]="'HandleDateTime'">
     <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['HandleDateTime']" (ngModelChange)="onChangeCallback(value)">
   </td> -->
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'HandleDateTime'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'HandleDateTime'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['HandleDateTime']" type="date">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'HandleName'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'HandleName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['HandleName']">
   </td>
   <!-- <td [attr.data-th]="'ResolveDateTime'">
     <input type="text" class="form-control" appJDatetimepicker [(ngModel)]="value['ResolveDateTime']" (ngModelChange)="onChangeCallback(value)">
   </td> -->
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ResolveDateTime'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'ResolveDateTime'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ResolveDateTime']" type="date">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'ResponseName'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'ResponseName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['ResponseName']">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Memo'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'Memo'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['Memo']">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'CompleteRate'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'CompleteRate'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['CompleteRate']">
   </td>
   <ng-content></ng-content>

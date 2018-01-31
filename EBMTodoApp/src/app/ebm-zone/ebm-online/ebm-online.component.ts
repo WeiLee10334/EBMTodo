@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataStoreService } from '../../shared/services';
 import { BaseServerPagingTableComponent } from '../basecomponent/base-server-paging-table/base-server-paging-table.component';
 
+
 @Component({
   selector: 'app-ebm-online',
   templateUrl: './ebm-online.component.html',

@@ -1,9 +1,9 @@
 <ng-container *ngIf="value">
   <ng-content></ng-content>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'UserName'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'UserName'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['UserName']">
   </td>
-  <td [attr.contenteditable]="Editable" appContentEditable [attr.data-th]="'Email'" (ngModelChange)="onChangeCallback(value)"
+  <td [disabled]="disabled" appContentEditable [attr.data-th]="'Email'" (ngModelChange)="onChangeCallback(value)"
     [(ngModel)]="value['Email']">
   </td>
   <td [attr.data-th]="'UID'">

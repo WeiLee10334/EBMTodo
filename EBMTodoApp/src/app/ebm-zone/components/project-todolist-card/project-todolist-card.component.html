@@ -1,7 +1,7 @@
 <ng-container *ngIf="value">
   <div class="card">
     <div class="card-header">
-      <div class="btn-group float-right" dropdown placement="bottom" *ngIf="!Editable">
+      <div class="btn-group float-right" dropdown placement="bottom" *ngIf="disabled">
         <button dropdownToggle type="button" class="btn btn-light">
           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
@@ -18,7 +18,7 @@
         <ul class="list-inline">
           <li class="list-inline-item h3 font-weight-bold">
             <dt class="font-weight-bold" *ngIf="Editable">標題:</dt>
-            <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['title']"
+            <dd [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['title']"
               class="card-text editable"></dd>
           </li>
           <li class="list-inline-item">
@@ -27,31 +27,31 @@
               <app-custom-select-input [(ngModel)]="value.PMID" [enableInput]="true" [LabelName]="value.MemberTitle" [filter]="{PID:value.PID}"
                 type="projectmember" *ngIf="Editable"></app-custom-select-input>
             </dd>
-            <dd class="card-text" *ngIf="!Editable">
+            <dd class="card-text" *ngIf="disabled">
               {{value['MemberTitle']}}
             </dd>
           </li>
           <li class="list-inline-item">
             <dt class="font-weight-bold" *ngIf="Editable">Tag:</dt>
             <dd class="card-text">
-              <i class="fa fa-tag editable" aria-hidden="true" [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)"
+              <i class="fa fa-tag editable" aria-hidden="true" [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)"
                 [(ngModel)]="value['Tag']"></i>
             </dd>
           </li>
         </ul>
       </div>
-      <h6 class="card-subtitle mb-2 text-muted" data-placeholder="提出時間" [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)"
+      <h6 class="card-subtitle mb-2 text-muted" data-placeholder="提出時間" [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)"
         [(ngModel)]="value['ApplyDateTime']" type="date">
       </h6>
-      <div [collapse]="isCollapsed&&!Editable" class="card-body">
+      <div [collapse]="isCollapsed&&disabled" class="card-body">
         <dt class="font-weight-bold">申請人:</dt>
-        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['ApplyName']"
+        <dd [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['ApplyName']"
           class="card-text editable"></dd>
         <dt class="font-weight-bold">內容:</dt>
-        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Description']"
+        <dd [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Description']"
           class="card-text editable"></dd>
         <dt class="font-weight-bold">備註:</dt>
-        <dd [attr.contenteditable]="Editable" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Memo']"
+        <dd [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['Memo']"
           class="card-text editable"></dd>
         <dt class="font-weight-bold">進度:</dt>
         <dd class="card-text">
@@ -61,7 +61,7 @@
       </div>
       <button class="btn btn-success float-right" (click)="emit('save')" *ngIf="Editable">確認</button>
       <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')" *ngIf="Editable">取消</button>
-      <button class="btn btn-light btn-sm btn-block" (click)="isCollapsed = !isCollapsed" *ngIf="!Editable">
+      <button class="btn btn-light btn-sm btn-block" (click)="isCollapsed = !isCollapsed" *ngIf="disabled">
         <i class="fa fa-arrow-down" aria-hidden="true" *ngIf="isCollapsed"></i>
         <i class="fa fa-arrow-up" aria-hidden="true" *ngIf="!isCollapsed"></i>
       </button>

@@ -14,7 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class BaseTableRowComponent implements ControlValueAccessor {
   //The internal data model
   private innerValue: any = '';
-  
+
   //Placeholders for the callbacks which are later provided
   //by the Control Value Accessor
   private onTouchedCallback: () => void = () => { };
@@ -55,10 +55,9 @@ export class BaseTableRowComponent implements ControlValueAccessor {
     this.onTouchedCallback = fn;
   }
   setDisabledState(isDisabled: boolean): void {
-    console.log('setDisabled', isDisabled);
   }
   @Input() Columns: any[];
-  @Input() Editable = true;
+  @Input() disabled: boolean;
   modelChanged(event, prop) {
     this.innerValue[prop] = event;
     this.onChangeCallback(this.innerValue);

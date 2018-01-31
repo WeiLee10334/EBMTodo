@@ -52,7 +52,6 @@ export class EbmProjectListComponent extends BaseServerPagingTableComponent impl
     }
     Save(event) {
         let model = Object.assign({}, event);
-        delete model._Editable;
         if (event.PID) {
             this.api.projectUpdate(model).subscribe(
                 (data) => {

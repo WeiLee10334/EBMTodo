@@ -53,7 +53,7 @@
         </tbody>
         <tbody>
           <ng-container *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-            <tr app-project-member-table-row [Editable]="PagingData[i]._Editable||!PagingData[i]['PMID']" [(ngModel)]="PagingData[i]">
+            <tr app-project-member-table-row [disabled]="!PagingData[i]._Editable&&PagingData[i]['PMID']" [(ngModel)]="PagingData[i]">
               <td>
                 <div class="btn-group" dropdown placement="bottom right" *ngIf="PagingData[i]['PMID']&&!PagingData[i]._Editable">
                   <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
