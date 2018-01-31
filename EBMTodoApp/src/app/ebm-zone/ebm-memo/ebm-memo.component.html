@@ -22,23 +22,10 @@
       <h2 *ngIf="PagingData.length==0" class="text-center">尚無資料</h2>
     </div>
   </div>
-  <div class="row">
-
-    <!-- <div class="d-flex p-2" appDraggableItem *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-      <app-ebm-memo-card [disabled]="!PagingData[i]._Editable&&PagingData[i]['MID']" [(ngModel)]="PagingData[i]" [@anim] (actionChanged)="DispatchAction($event,PagingData[i])"></app-ebm-memo-card>
-    </div> -->
-    <div class="p-2 d-block" style="position:relative" [@anim] appDraggableItem *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
+  <div class="row" [@anim]="PagingData.length">
+    <div class="p-2 d-block" style="position:relative" *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
       <app-ebm-memo-card [disabled]="!PagingData[i]._Editable&&PagingData[i]['MID']" [(ngModel)]="PagingData[i]" (actionChanged)="DispatchAction($event,PagingData[i])"></app-ebm-memo-card>
     </div>
-    <!-- <ul class="list-inline">
-      <li class="list-inline-item p-2" [@anim] appDraggableItem *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-        <app-ebm-memo-card [disabled]="!PagingData[i]._Editable&&PagingData[i]['MID']" [(ngModel)]="PagingData[i]" (actionChanged)="DispatchAction($event,PagingData[i])"></app-ebm-memo-card>
-      </li>
-    </ul> -->
-    <!-- <div class="col col-12 col-sm-6 col-md-4 col-lg-3 mb-2" *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
-      <app-ebm-memo-card title="{{row.MID}}" [disabled]="!PagingData[i]._Editable&&PagingData[i]['MID']" [(ngModel)]="PagingData[i]"
-        (actionChanged)="DispatchAction($event,PagingData[i])"></app-ebm-memo-card>
-    </div> -->
   </div>
   <div class="row">
     <div class="d-block mx-auto">
@@ -48,5 +35,3 @@
     </div>
   </div>
 </div>
-
-<div style="background:green;width:100px;height:100px;position:absolute;z-index:999" appDraggableItem></div>

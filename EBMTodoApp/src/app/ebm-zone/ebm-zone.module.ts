@@ -38,6 +38,7 @@ import { JDatetimepickerDirective } from '../shared/directives/j-datetimepicker.
 import { EbmProjectScheduleComponent } from './ebm-project/ebm-project-schedule/ebm-project-schedule.component';
 import { EbmMemoCardComponent } from './components/ebm-memo-card/ebm-memo-card.component';
 import { DraggableItemDirective } from '../shared/directives/draggable-item.directive';
+import { DynamicFormComponent } from './basecomponent/dynamic-form/dynamic-form.component';
 
 @NgModule({
   imports: [
@@ -85,7 +86,8 @@ import { DraggableItemDirective } from '../shared/directives/draggable-item.dire
     JDatetimepickerDirective,
     EbmProjectScheduleComponent,
     EbmMemoCardComponent,
-    DraggableItemDirective
+    DraggableItemDirective,
+    DynamicFormComponent
   ]
 })
 export class EbmZoneModule { }

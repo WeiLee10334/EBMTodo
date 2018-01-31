@@ -15,11 +15,14 @@
     <button class="btn btn-success" (click)="add()">
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
+    <button class="btn btn-info" (click)="refresh()">
+      <i class="fa fa-repeat" aria-hidden="true"></i>
+    </button>
     <div class="col col-12">
       <h2 *ngIf="PagingData.length==0" class="text-center">尚無資料</h2>
     </div>
   </div>
-  <div class="row">
+  <div class="row" [@anim]="PagingData.length">
     <div class="col col-12 col-sm-6 col-md-4 col-lg-3 mb-2" *ngFor="let row of PagingData;let i = index;trackBy:trackByFn">
       <app-project-todolist-card title="{{row.PTLID}}" [disabled]="!PagingData[i]._Editable&&PagingData[i]['PTLID']" [(ngModel)]="PagingData[i]"
         (actionChanged)="DispatchAction($event,PagingData[i])"></app-project-todolist-card>

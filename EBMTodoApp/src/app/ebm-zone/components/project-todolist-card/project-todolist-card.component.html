@@ -17,22 +17,22 @@
       <div class="card-title">
         <ul class="list-inline">
           <li class="list-inline-item h3 font-weight-bold">
-            <dt class="font-weight-bold" *ngIf="Editable">標題:</dt>
+            <dt class="font-weight-bold" *ngIf="!disabled">標題:</dt>
             <dd [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)" [(ngModel)]="value['title']"
               class="card-text editable"></dd>
           </li>
           <li class="list-inline-item">
-            <dt class="font-weight-bold" *ngIf="Editable">指派:</dt>
-            <dd *ngIf="Editable">
+            <dt class="font-weight-bold" *ngIf="!disabled">指派:</dt>
+            <dd *ngIf="!disabled">
               <app-custom-select-input [(ngModel)]="value.PMID" [enableInput]="true" [LabelName]="value.MemberTitle" [filter]="{PID:value.PID}"
-                type="projectmember" *ngIf="Editable"></app-custom-select-input>
+                type="projectmember" *ngIf="!disabled"></app-custom-select-input>
             </dd>
             <dd class="card-text" *ngIf="disabled">
               {{value['MemberTitle']}}
             </dd>
           </li>
           <li class="list-inline-item">
-            <dt class="font-weight-bold" *ngIf="Editable">Tag:</dt>
+            <dt class="font-weight-bold" *ngIf="!disabled">Tag:</dt>
             <dd class="card-text">
               <i class="fa fa-tag editable" aria-hidden="true" [disabled]="disabled" appContentEditable (ngModelChange)="onChangeCallback(value)"
                 [(ngModel)]="value['Tag']"></i>
@@ -55,12 +55,12 @@
           class="card-text editable"></dd>
         <dt class="font-weight-bold">進度:</dt>
         <dd class="card-text">
-          <input type="number" [(ngModel)]="value['CompleteRate']" (ngModelChange)="onChangeCallback(value)" *ngIf="Editable">
+          <input type="number" [(ngModel)]="value['CompleteRate']" (ngModelChange)="onChangeCallback(value)" *ngIf="!disabled">
           <progressbar class="progress progress-striped" [max]="100" [value]="value?.CompleteRate" type="success">{{value.CompleteRate}}%</progressbar>
         </dd>
       </div>
-      <button class="btn btn-success float-right" (click)="emit('save')" *ngIf="Editable">確認</button>
-      <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')" *ngIf="Editable">取消</button>
+      <button class="btn btn-success float-right" (click)="emit('save')" *ngIf="!disabled">確認</button>
+      <button type="button" class="btn btn-secondary float-right" (click)="emit('cancel')" *ngIf="!disabled">取消</button>
       <button class="btn btn-light btn-sm btn-block" (click)="isCollapsed = !isCollapsed" *ngIf="disabled">
         <i class="fa fa-arrow-down" aria-hidden="true" *ngIf="isCollapsed"></i>
         <i class="fa fa-arrow-up" aria-hidden="true" *ngIf="!isCollapsed"></i>
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <!-- <div class="card" *ngIf="Editable">
+  <!-- <div class="card" *ngIf="!disabled">
     <div class="card-body">
       <div class="form-group">
         <div class="input-group">

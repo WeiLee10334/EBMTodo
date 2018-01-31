@@ -4,12 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 import { BaseServerPagingTableComponent } from '../../basecomponent/base-server-paging-table/base-server-paging-table.component';
+import { itemAnimation } from '../../ebm-memo/ebm-memo.component';
 declare var $: any;
 
 @Component({
   selector: 'app-ebm-project-todolist',
   templateUrl: './ebm-project-todolist.component.html',
-  styleUrls: ['./ebm-project-todolist.component.scss']
+  styleUrls: ['./ebm-project-todolist.component.scss'],
+  animations: [itemAnimation]
 })
 export class EbmProjectTodolistComponent extends BaseServerPagingTableComponent implements OnInit {
 

@@ -15,7 +15,6 @@ import { DynamicFormComponent } from '../../basecomponent/dynamic-form/dynamic-f
 export class EbmMemoCardComponent extends DynamicFormComponent {
   @Output() actionChanged = new EventEmitter<any>();
   emit(action: string) {
-    this.disabled = true;
     this.actionChanged.emit(action);
   }
 }
