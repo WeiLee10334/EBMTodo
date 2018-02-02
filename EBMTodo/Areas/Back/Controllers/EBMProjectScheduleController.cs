@@ -1,4 +1,5 @@
 ﻿using EBMTodo.Areas.Back.Models;
+using EBMTodo.Filters;
 using EBMTodo.Models;
 using EBMTodo.Models.Base.Enum;
 using EBMTodo.Models.Todo;
@@ -13,6 +14,7 @@ using System.Web.Http;
 
 namespace EBMTodo.Areas.Back.Controllers
 {
+    [ValidateViewModelAttribute]
     [RoutePrefix("api/back/EBMProjectSchedule")]
     public class EBMProjectScheduleController : BaseApiController<EBMProjectScheduleViewModel, EBMProjectScheduleQueryModel, ApplicationDbContext>
     {

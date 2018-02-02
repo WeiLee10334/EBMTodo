@@ -110,61 +110,50 @@ namespace EBMTodo.Areas.Back.Controllers
         [HttpPost]
         public virtual IHttpActionResult Create(T model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                var result = Model.Create(db, model);
+                if (result != null)
                 {
-                    return Ok(Model.Create(db, model));
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
+                    return Ok(result);
+                }          
             }
-            else
+            catch (Exception e)
             {
-                return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+                return Content(HttpStatusCode.NotAcceptable, e.Message);
             }
+            return Content(HttpStatusCode.NotAcceptable, "");
         }
         [Route("Update")]
         [HttpPost]
         public virtual IHttpActionResult Update(T model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                var result = Model.Update(db, model);
+                if (result != null)
                 {
-                    return Ok(Model.Update(db, model));
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
+                    return Ok(result);
                 }
             }
-            else
+            catch (Exception e)
             {
-                return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+                return Content(HttpStatusCode.NotAcceptable, e.Message);
             }
+            return Content(HttpStatusCode.NotAcceptable, "");
         }
         [Route("Delete")]
         [HttpPost]
         public virtual IHttpActionResult Delete(T model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    Model.Delete(db, model);
-                    return Ok();
-                }
-                catch (Exception e)
-                {
-                    return Content(HttpStatusCode.NotAcceptable, e.Message);
-                }
+                Model.Delete(db, model);
+                return Ok();
             }
-            else
+            catch (Exception e)
             {
-                return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+                return Content(HttpStatusCode.NotAcceptable, e.Message);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using EBMTodo.Areas.Back.Models;
+using EBMTodo.Filters;
 using EBMTodo.Models;
 using EBMTodo.Models.Todo;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Http;
 
 namespace EBMTodo.Areas.Back.Controllers
 {
+    [ValidateViewModelAttribute]
     [RoutePrefix("api/back/EBMProjectTodoList")]
     public class EBMProjectTodoListController : BaseApiController<EBMTodoListViewModel, EBMTodoListQueryModel, ApplicationDbContext>
     {

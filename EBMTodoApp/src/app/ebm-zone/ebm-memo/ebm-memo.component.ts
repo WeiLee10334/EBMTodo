@@ -11,8 +11,8 @@ export const itemAnimation = trigger('anim', [
       ])
     ], { optional: true }),
     query(':leave', [
-      stagger(100, [
-        animate('0.3s', style({ opacity: 0 }))
+      stagger(50, [
+        animate('0.1s', style({ opacity: 0 }))
       ])
     ], { optional: true })
   ])

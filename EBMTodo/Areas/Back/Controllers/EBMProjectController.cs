@@ -1,4 +1,5 @@
 ﻿using EBMTodo.Areas.Back.Models;
+using EBMTodo.Filters;
 using EBMTodo.Models;
 using EBMTodo.Models.Todo;
 using System;
@@ -83,6 +84,7 @@ namespace EBMTodo.Areas.Back.Controllers
     {
 
     }
+    [ValidateViewModelAttribute]
     [RoutePrefix("api/back/EBMProject")]
     public class EBMProjectController : BaseApiController<EBMProjectViewModel, EBMProjectQueryModel, ApplicationDbContext>
     {

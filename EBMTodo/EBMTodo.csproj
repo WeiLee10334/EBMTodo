@@ -236,6 +236,7 @@
     <Compile Include="Controllers\RBUnitsController.cs" />
     <Compile Include="Controllers\TESTController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Filters\ValidateViewModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -746,6 +747,10 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Areas\Back\Views\web.config" />
+    <Content Include="ngApp\fontawesome-webfont.674f50d287a8c48dc19b.eot" />
+    <Content Include="ngApp\fontawesome-webfont.af7ae505a9eed503f8b8.woff2" />
+    <Content Include="ngApp\fontawesome-webfont.b06871f281fee6b241d6.ttf" />
+    <Content Include="ngApp\fontawesome-webfont.fee66e712a8a08eef580.woff" />
     <None Include="Properties\PublishProfiles\EBMEMRLineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ebmLineBot - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ebmLineBot - Web Deploy.pubxml" />
@@ -753,23 +758,19 @@
     <None Include="Properties\PublishProfiles\EDUZIP.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="ngApp\0.ac03c2f8b5d0c74f149d.chunk.js" />
+    <Content Include="ngApp\0.4d22e7697bd24cf62b8a.chunk.js" />
     <Content Include="ngApp\3rdpartylicenses.txt" />
     <Content Include="ngApp\assets\images\setting_icon.png" />
     <Content Include="ngApp\assets\images\sort_asc.png" />
     <Content Include="ngApp\assets\images\sort_desc.png" />
     <Content Include="ngApp\favicon.ico" />
-    <Content Include="ngApp\fontawesome-webfont.674f50d287a8c48dc19b.eot" />
     <Content Include="ngApp\fontawesome-webfont.912ec66d7572ff821749.svg" />
-    <Content Include="ngApp\fontawesome-webfont.af7ae505a9eed503f8b8.woff2" />
-    <Content Include="ngApp\fontawesome-webfont.b06871f281fee6b241d6.ttf" />
-    <Content Include="ngApp\fontawesome-webfont.fee66e712a8a08eef580.woff" />
     <Content Include="ngApp\index.html" />
-    <Content Include="ngApp\inline.424d97edcfc3a1e8803d.bundle.js" />
-    <Content Include="ngApp\main.08d4963773d221e5cba3.bundle.js" />
+    <Content Include="ngApp\inline.183736a115b80bfa7104.bundle.js" />
+    <Content Include="ngApp\main.da8d4bdc7eb3d9b7c6b8.bundle.js" />
     <Content Include="ngApp\polyfills.e6475d2787bb3154d59c.bundle.js" />
-    <Content Include="ngApp\scripts.9c4883adc1633503e9a1.bundle.js" />
-    <Content Include="ngApp\styles.9f9cd27685c704291ce1.bundle.css" />
+    <Content Include="ngApp\scripts.ebf0afe8768b9e5df205.bundle.js" />
+    <Content Include="ngApp\styles.b1ce37a7e78fb541c26a.bundle.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />

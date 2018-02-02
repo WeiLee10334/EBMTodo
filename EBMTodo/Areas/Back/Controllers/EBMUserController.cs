@@ -1,4 +1,5 @@
 ﻿using EBMTodo.Areas.Back.Models;
+using EBMTodo.Filters;
 using EBMTodo.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -14,6 +15,7 @@ using System.Web.Http;
 
 namespace EBMTodo.Areas.Back.Controllers
 {
+    [ValidateViewModelAttribute]
     [RoutePrefix("api/back/EBMUser")]
     public class EBMUserController : BaseApiController<EBMUserViewModel, EBMUserQueryModel, ApplicationDbContext>
     {
@@ -70,7 +72,18 @@ namespace EBMTodo.Areas.Back.Controllers
                 return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
             }
         }
-
+        [Route("ChangePassword")]
+        [HttpPost]
+        public IHttpActionResult ChangePassword(ChangePasswordModel model)
+        {
+            var user = UserManager.FindByIdAsync(model.Id).Result;
+            if (user != null)
+            {
+                UserManager.ResetPasswordAsync(user.Id, UserManager.GeneratePasswordResetTokenAsync(user.Id).Result, model.Password);
+                return Ok();
+            }
+            return Content(HttpStatusCode.NotAcceptable, "格式錯誤");
+        }
         [Route("Register")]
         [HttpPost]
         public IHttpActionResult Register(EBMUserRegisterViewModel model)
@@ -140,6 +153,14 @@ namespace EBMTodo.Areas.Back.Controllers
                 return query.OrderBy("UserName descending");
             }
         }
+    }
+    public class ChangePasswordModel
+    {
+        [Required]
+        public string Id { set; get; }
+        [Required]
+        [StringLength(20, MinimumLength = 6)]
+        public string Password { set; get; }
     }
     public class EBMUserRegisterViewModel
     {

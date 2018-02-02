@@ -9,9 +9,11 @@ using EBMTodo.Models;
 using EBMTodo.Models.Base.Enum;
 using System.Linq.Dynamic;
 using EBMTodo.Models.Todo;
+using EBMTodo.Filters;
 
 namespace EBMTodo.Areas.Back.Controllers
 {
+    [ValidateViewModelAttribute]
     [RoutePrefix("api/back/EBMMemo")]
     public class EBMMemoController : BaseApiController<EBMMemoViewModel, EBMMemoQueryModel, ApplicationDbContext>
     {
